@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "678063789079",
+    "project_id": "nowlocate-4f08a",
+    "storage_bucket": "nowlocate-4f08a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678063789079:android:063ad0c47db838698b3852",
+        "android_client_info": {
+          "package_name": "edu.bluejack23_1.nowlocate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdg4kIJarc7xB5oce3WbWaTUMactFRXG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
