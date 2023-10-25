@@ -33,6 +33,8 @@ class RegisterViewModel : ViewModel(){
             return
         }
 
+        //email unique validation
+
         if(!ValidationHelper.isAlphaNumeric(passwordString)){
             errorMessage.value = "Password must be alphanumeric"
             return
@@ -43,8 +45,7 @@ class RegisterViewModel : ViewModel(){
             return
         }
 
-
-
+        //create account logic
 
     }
 

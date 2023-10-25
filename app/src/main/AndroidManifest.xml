@@ -13,6 +13,12 @@
         android:theme="@style/Theme.nowlocate"
         tools:targetApi="31">
         <activity
+            android:name=".views.CreateReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.LoginActivity"
             android:exported="false" />
         <activity
