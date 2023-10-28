@@ -33,7 +33,10 @@ class RegisterViewModel : ViewModel(){
             return
         }
 
-        //email unique validation
+        if (ValidationHelper.emailExists(emailString)){
+            errorMessage.value = "Email is already taken"
+            return
+        }
 
         if(!ValidationHelper.isAlphaNumeric(passwordString)){
             errorMessage.value = "Password must be alphanumeric"

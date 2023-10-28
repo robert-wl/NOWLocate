@@ -13,7 +13,7 @@ class LoginViewModel: ViewModel() {
 
     fun getErrorMessage(): LiveData<String> = errorMessage
 
-    fun signInHandler(activity: Activity){
+    fun signInHandler(){
         val emailString = email.value ?: ""
         val passwordString = password.value ?: ""
         val rememberMeBool = rememberMe.value ?: false

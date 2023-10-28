@@ -53,15 +53,15 @@ class CreateReportViewModel : ViewModel() {
         val db = Firebase.firestore
         val report = Report(itemNameString, itemCategoryString, shortDescriptionString, descriptionString, lastSeenString)
 
-        db.collection("test")
-            .add(report)
-            .addOnSuccessListener { documentReference ->
-                val documentId = documentReference.id
-                ToastHelper.showMessage(activity, documentId)
-            }
-            .addOnFailureListener { e ->
-                ToastHelper.showMessage(activity, e.message.toString())
-            }
+//        db.collection("test")
+//            .add(report)
+//            .addOnSuccessListener { documentReference ->
+//                val documentId = documentReference.id
+//                ToastHelper.showMessage(activity, documentId)
+//            }
+//            .addOnFailureListener { e ->
+//                ToastHelper.showMessage(activity, e.message.toString())
+//            }
 
     }
 

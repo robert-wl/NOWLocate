@@ -59,7 +59,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         alreadyHaveTV.setOnClickListener {
-            IntentHelper.moveTo(this, LoginActivity::class.java)
+            IntentHelper.moveToFinish(this, LoginActivity::class.java)
         }
 
         genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

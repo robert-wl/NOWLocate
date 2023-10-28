@@ -11,6 +11,10 @@ class ValidationHelper {
             return str.split(Regex("\\s+")).count()
         }
 
+        fun emailExists(email: String): Boolean {
+            return false
+        }
+
     }
 
 }
