@@ -21,9 +21,7 @@ class ReportAdapter(private var context: Context) : Adapter<ReportViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: ReportViewHolder, position: Int) {
-//        holder.reportImageIV.set(reportList.get(position).reportImage)
-        holder.reportNameTV.text = reportList[position].name
-        holder.reportCategoryTV.text = reportList[position].category
-        holder.reportShortDescriptionTV.text = reportList[position].shortDescription
+        holder.setData(reportList[position])
+        holder.eventHandler(context)
     }
 }

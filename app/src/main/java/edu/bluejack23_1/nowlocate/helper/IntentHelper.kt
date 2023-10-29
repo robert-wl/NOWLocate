@@ -1,6 +1,7 @@
 package edu.bluejack23_1.nowlocate.helper
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,12 @@ class IntentHelper {
             val intent = Intent(activity, destination)
             intent.putExtra(key, value)
             activity.startActivity(intent)
+        }
+
+        fun moveToWithExtra(context: Context, destination: Class<out Any>, key: String, value: Parcelable){
+            val intent = Intent(context, destination)
+            intent.putExtra(key, value)
+            context.startActivity(intent)
         }
     }
 

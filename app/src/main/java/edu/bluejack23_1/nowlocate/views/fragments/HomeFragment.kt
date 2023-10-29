@@ -1,6 +1,7 @@
 package edu.bluejack23_1.nowlocate.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,19 +39,24 @@ class HomeFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragm
 
         elementHandler()
         eventHandler()
+
+        viewModel.getData()
     }
 
     override fun elementHandler() {
         reportRV = binding.rvReport
 
         reportAdapter = ReportAdapter(requireContext())
-        reportAdapter.reportList = viewModel.reportList.value ?: ArrayList<Report>()
 
         reportRV.layoutManager = LinearLayoutManager(requireContext())
         reportRV.adapter = reportAdapter
     }
 
     override fun eventHandler() {
-        //
+        viewModel.reportList.observe(viewLifecycleOwner) {
+            Log.wtf("HomeFragment", it.toString())
+            reportAdapter.reportList = it
+            reportAdapter.notifyDataSetChanged()
+        }
     }
 }

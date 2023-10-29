@@ -1,6 +1,7 @@
 package edu.bluejack23_1.nowlocate.repositories
 
 import android.net.Uri
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack23_1.nowlocate.models.Report
@@ -25,5 +26,30 @@ class ReportRepository {
         val taskSnapshot = storageDB.reference.child("images/$fileName").putFile(uri).await()
 
         return taskSnapshot.storage.downloadUrl.await().toString()
+    }
+
+    suspend fun getLatestReport(): Result<ArrayList<Report>> {
+        val documentReference = db.collection("reports").orderBy("reportDate")
+
+        return try {
+            val querySnapshot = documentReference.get().await()
+
+            if(!querySnapshot.isEmpty){
+                val reports = ArrayList<Report>()
+
+                for(document in querySnapshot.documents){
+                    val report = document.toObject(Report::class.java)
+                    reports.add(report!!)
+                }
+
+                Result.success(reports)
+            } else {
+                Result.failure(Exception("Report not found"))
+            }
+        } catch (e: Exception){
+            Log.wtf("a", e)
+            Result.failure(e)
+        }
+
     }
 }

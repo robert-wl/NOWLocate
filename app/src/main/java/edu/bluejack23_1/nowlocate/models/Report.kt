@@ -6,15 +6,15 @@ import java.sql.Time
 import java.util.Date
 
 data class Report(
-    var id: String,
-    var name: String,
-    var image: String,
-    var category: String,
-    var shortDescription: String,
-    var longDescription: String,
-    var lastSeen: String,
-    var reportDate: Date,
-    var reportedBy: String,
+    var id: String = "",
+    var name: String = "",
+    var image: String = "",
+    var category: String = "",
+    var shortDescription: String = "",
+    var longDescription: String = "",
+    var lastSeen: String = "",
+    var reportDate: Date = Date(),
+    var reportedBy: String = "",
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
