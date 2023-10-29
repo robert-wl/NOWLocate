@@ -9,63 +9,46 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.adapter.FilterAdapter
+import edu.bluejack23_1.nowlocate.databinding.FragmentSearchFilterBinding
+import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.models.Filter
+import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
 
-class SearchFilterFragment : Fragment() {
+class SearchFilterFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragment {
     private lateinit var filterRV : RecyclerView
+    private lateinit var binding: FragmentSearchFilterBinding
     private lateinit var filterAdapter : FilterAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_search_filter, container, false)
+        binding = FragmentSearchFilterBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        filterRV = view.findViewById(R.id.rvFilter)
+        binding.viewModel = viewModel
 
-        val filterArraylist = ArrayList<Filter>()
+        elementHandler()
+        eventHandler()
+    }
 
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
-        filterArraylist.add(Filter("Filter 1", 2))
+    override fun elementHandler() {
+        filterRV = binding.rvFilter
 
-        filterAdapter = FilterAdapter(view.context!!)
-        filterAdapter.filterList = filterArraylist
+        filterAdapter = FilterAdapter(requireContext())
+        filterAdapter.filterList = viewModel.filterList.value ?: ArrayList<Filter>()
 
-        filterRV.layoutManager = GridLayoutManager(view.context, 2)
+        filterRV.layoutManager = GridLayoutManager(requireContext(), 2)
         filterRV.adapter = filterAdapter
+    }
+
+    override fun eventHandler() {
+        //
     }
 
 }

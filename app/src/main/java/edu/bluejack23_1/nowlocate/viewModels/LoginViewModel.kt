@@ -23,6 +23,8 @@ class LoginViewModel() : ViewModel() {
     init {
         email.value = authRepository.getRememberMeEmailValue()
         password.value = authRepository.getRememberMePasswordValue()
+
+        signInHandler()
     }
 
     fun signInHandler(){

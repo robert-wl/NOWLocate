@@ -9,58 +9,46 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.adapter.ReportAdapter
+import edu.bluejack23_1.nowlocate.databinding.FragmentHomeSearchedBinding
+import edu.bluejack23_1.nowlocate.databinding.FragmentSearchFilterBinding
+import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.models.Report
+import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
 import java.util.Date
 
-class HomeSearchedFragment : Fragment() {
+class HomeSearchedFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragment {
     private lateinit var reportSearchedRV : RecyclerView
+    private lateinit var binding: FragmentHomeSearchedBinding
     private lateinit var reportAdapter : ReportAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home_searched, container, false)
+        binding = FragmentHomeSearchedBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        reportSearchedRV = view.findViewById(R.id.rvReportSearched)
+        binding.viewModel = viewModel
 
-        val reportArraylist = ArrayList<Report>()
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
-        reportArraylist.add(Report("Report 2", "Category 1", "Short Description 1", "a", "a",  Date()))
+        elementHandler()
+        eventHandler()
+    }
 
+    override fun elementHandler() {
+        reportSearchedRV = binding.rvReportSearched
 
+        reportAdapter = ReportAdapter(requireContext())
+        reportAdapter.reportList = viewModel.reportList.value ?: ArrayList<Report>()
 
-        reportAdapter = ReportAdapter(view.context!!)
-        reportAdapter.reportList = reportArraylist
-
-        reportSearchedRV.layoutManager = LinearLayoutManager(view.context)
+        reportSearchedRV.layoutManager = LinearLayoutManager(requireContext())
         reportSearchedRV.adapter = reportAdapter
+    }
+
+    override fun eventHandler() {
+        //
     }
 }
