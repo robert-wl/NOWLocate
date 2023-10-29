@@ -3,18 +3,21 @@ package edu.bluejack23_1.nowlocate.helper
 import android.content.Context
 import android.content.SharedPreferences
 
-object SharedPreferencesHelper {
-    private lateinit var sharedPreferences: SharedPreferences
+class SharedPreferencesHelper {
 
-    fun initialize(context: Context) {
-        sharedPreferences = context.getSharedPreferences("NOWLocate", Context.MODE_PRIVATE)
-    }
+    companion object {
+        private lateinit var sharedPreferences: SharedPreferences
 
-    fun setString(key: String, value: String) {
-        sharedPreferences.edit().putString(key, value).apply()
-    }
+        fun initialize(context: Context) {
+            sharedPreferences = context.getSharedPreferences("NOWLocate", Context.MODE_PRIVATE)
+        }
 
-    fun getString(key: String): String? {
-        return sharedPreferences.getString(key, null)
+        fun setString(key: String, value: String) {
+            sharedPreferences.edit().putString(key, value).apply()
+        }
+
+        fun getString(key: String): String? {
+            return sharedPreferences.getString(key, null)
+        }
     }
 }

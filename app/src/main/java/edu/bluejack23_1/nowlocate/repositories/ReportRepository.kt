@@ -16,7 +16,7 @@ class ReportRepository {
     }
 
     suspend fun uploadReportImage(uri: Uri?): String? {
-        if (uri == null) {
+        if (uri == null || uri == Uri.EMPTY) {
             return null
         }
 

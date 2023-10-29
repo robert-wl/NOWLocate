@@ -15,44 +15,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="@color/gray"
-            android:gravity="center_horizontal">
-
+            android:layout_height="0dp"
+            android:layout_weight="3" >
+            <ImageView
+                android:id="@+id/ivImage"
+                android:background="@color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="TODO" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="10dp"
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/btnBack"
-                    android:backgroundTint="@color/gray"
-                    android:contentDescription="@string/back_button"
-                    android:src="@drawable/baseline_arrow_back_ios_24"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="fitCenter"/>
-
-                <TextView
-                    android:text="@string/report_detail"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
+                    <ImageButton
+                        android:id="@+id/btnBack"
+                        android:background="@color/transparent"
+                        android:contentDescription="@string/back_button"
+                        android:src="@drawable/baseline_arrow_back_ios_24"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:text="@string/report_detail"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ivItemImage"
-                android:src="@drawable/baseline_camera_alt_24"
-                android:layout_width="200dp"
-                android:layout_height="200dp"/>
-
-        </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,7 +71,7 @@
                 android:textSize="20sp"
                 android:fontFamily="@font/open_sans_bold"
                 android:textStyle="bold"
-                android:text="@={viewModel.reportName}"
+                android:text="@={viewModel.report.name}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5sp" />
@@ -74,7 +79,7 @@
             <TextView
                 android:id="@+id/tvCategory"
                 android:fontFamily="@font/open_sans"
-                android:text="@={viewModel.category}"
+                android:text="@={viewModel.report.category}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5sp"/>
@@ -82,7 +87,7 @@
             <TextView
                 android:id="@+id/tvShortDescription"
                 android:fontFamily="@font/open_sans"
-                android:text="@={viewModel.shortDescription}"
+                android:text="@={viewModel.report.shortDescription}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -108,7 +113,7 @@
             <TextView
                 android:id="@+id/tvDescription"
                 android:fontFamily="@font/open_sans"
-                android:text="@={viewModel.description}"
+                android:text="@={viewModel.report.longDescription}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5sp"/>
@@ -135,7 +140,7 @@
             <TextView
                 android:id="@+id/tvLastSeen"
                 android:fontFamily="@font/open_sans"
-                android:text="@={viewModel.lastSeen}"
+                android:text="@={viewModel.report.lastSeen}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5sp"/>
@@ -165,13 +170,13 @@
 
                 <TextView
                     android:id="@+id/tvReportedBy"
-                    android:text="@={viewModel.reportedBy}"
+                    android:text="@={viewModel.report.reportedBy}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/tvReportedAt"
-                    android:text="@={viewModel.reportedAt}"
+                    android:text="@={viewModel.reportDate}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

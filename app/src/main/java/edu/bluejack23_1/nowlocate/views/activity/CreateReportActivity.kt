@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -103,6 +104,19 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
 
         viewModel.itemImage.observe(this){ itemImage ->
             imageView.setImageURI(itemImage)
+        }
+
+        viewModel.activityToStart.observe(this){ activityToStart ->
+            val extras = viewModel.extrasParcel.value
+
+            Log.wtf("a", "woiii")
+            Log.wtf("a", activityToStart.toString())
+            if(extras == null){
+                IntentHelper.moveTo(this, activityToStart.java)
+                return@observe
+            }
+
+            IntentHelper.moveToWithExtra(this, activityToStart.java, "report", extras)
         }
     }
 

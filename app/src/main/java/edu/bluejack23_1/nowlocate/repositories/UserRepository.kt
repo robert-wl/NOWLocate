@@ -13,6 +13,7 @@ class UserRepository {
     }
 
     suspend fun getUser(id: String): Result<User?> {
+
         val documentReference = db.collection("users").document(id)
 
         return try {

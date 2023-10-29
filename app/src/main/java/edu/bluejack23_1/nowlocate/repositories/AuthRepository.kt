@@ -49,6 +49,17 @@ class AuthRepository {
         SharedPreferencesHelper.setString("gender", user.gender)
     }
 
+    fun getCurrentUser(): User {
+        return User(
+            SharedPreferencesHelper.getString("id")!!,
+            SharedPreferencesHelper.getString("firstname")!!,
+            SharedPreferencesHelper.getString("lastname")!!,
+            SharedPreferencesHelper.getString("email")!!,
+            SharedPreferencesHelper.getString("username")!!,
+            SharedPreferencesHelper.getString("gender")!!
+        )
+    }
+
     fun signOut(){
         auth.signOut()
     }

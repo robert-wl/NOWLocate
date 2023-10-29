@@ -1,18 +1,26 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
 import android.net.Uri
+import android.os.Parcelable
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import edu.bluejack23_1.nowlocate.helper.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.Report
+import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.ReportRepository
+import edu.bluejack23_1.nowlocate.repositories.UserRepository
+import edu.bluejack23_1.nowlocate.views.activity.ReportDetailActivity
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
+import kotlin.reflect.KClass
 
 class CreateReportViewModel : ViewModel() {
 
@@ -22,9 +30,12 @@ class CreateReportViewModel : ViewModel() {
     val description = MutableLiveData<String>()
     val lastSeen = MutableLiveData<String>()
     val itemImage = MutableLiveData<Uri>()
+    val activityToStart = MutableLiveData<KClass<*>>()
+    val extrasParcel = MutableLiveData<Parcelable>()
     private val errorMessage = MutableLiveData<String>()
 
     private val reportRepository = ReportRepository()
+    private val authRepository = AuthRepository()
     fun getErrorMessage(): LiveData<String> = errorMessage
 
     fun handleCreateReport(){
@@ -74,6 +85,8 @@ class CreateReportViewModel : ViewModel() {
             return
         }
 
+        val user = authRepository.getCurrentUser()
+
         val report = Report(
             UUID.randomUUID().toString(),
             itemNameString,
@@ -82,20 +95,22 @@ class CreateReportViewModel : ViewModel() {
             shortDescriptionString,
             descriptionString,
             lastSeenString,
-            Date()
+            Date(),
+            user.id
         )
-        reportRepository.addReport(report)
 
-//        db.collection("test")
-//            .add(report)
-//            .addOnSuccessListener { documentReference ->
-//                val documentId = documentReference.id
-//                ToastHelper.showMessage(activity, documentId)
-//            }
-//            .addOnFailureListener { e ->
-//                ToastHelper.showMessage(activity, e.message.toString())
-//            }
-
+        addReport(report)
     }
 
+    private fun addReport(report: Report){
+        viewModelScope.launch {
+            val uri = reportRepository.uploadReportImage(report.image.toUri())
+            report.image = uri ?: ""
+
+            reportRepository.addReport(report)
+
+            extrasParcel.value = report
+            activityToStart.value = ReportDetailActivity::class
+        }
+    }
 }
