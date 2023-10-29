@@ -16,8 +16,8 @@ import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.databinding.ActivityCreateReportBinding
-import edu.bluejack23_1.nowlocate.helper.IntentHelper
-import edu.bluejack23_1.nowlocate.helper.ToastHelper
+import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.viewModels.CreateReportViewModel
 
 class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.interfaces.View {
@@ -109,14 +109,12 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
         viewModel.activityToStart.observe(this){ activityToStart ->
             val extras = viewModel.extrasParcel.value
 
-            Log.wtf("a", "woiii")
-            Log.wtf("a", activityToStart.toString())
             if(extras == null){
                 IntentHelper.moveTo(this, activityToStart.java)
                 return@observe
             }
 
-            IntentHelper.moveToWithExtra(this, activityToStart.java, "report", extras)
+            IntentHelper.moveToWithExtraFinish(this, activityToStart.java, "report", extras)
         }
     }
 

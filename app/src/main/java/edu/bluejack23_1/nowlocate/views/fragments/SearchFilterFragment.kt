@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import edu.bluejack23_1.nowlocate.R
-import edu.bluejack23_1.nowlocate.adapter.FilterAdapter
+import edu.bluejack23_1.nowlocate.adapters.FilterAdapter
 import edu.bluejack23_1.nowlocate.databinding.FragmentSearchFilterBinding
 import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.models.Filter

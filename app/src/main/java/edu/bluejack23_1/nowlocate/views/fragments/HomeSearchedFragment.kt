@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import edu.bluejack23_1.nowlocate.R
-import edu.bluejack23_1.nowlocate.adapter.ReportAdapter
+import edu.bluejack23_1.nowlocate.adapters.ReportAdapter
 import edu.bluejack23_1.nowlocate.databinding.FragmentHomeSearchedBinding
-import edu.bluejack23_1.nowlocate.databinding.FragmentSearchFilterBinding
 import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
-import java.util.Date
 
 class HomeSearchedFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragment {
     private lateinit var reportSearchedRV : RecyclerView

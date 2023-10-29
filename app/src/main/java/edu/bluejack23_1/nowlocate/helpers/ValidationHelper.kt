@@ -1,4 +1,4 @@
-package edu.bluejack23_1.nowlocate.helper
+package edu.bluejack23_1.nowlocate.helpers
 
 class ValidationHelper {
 

@@ -2,20 +2,15 @@ package edu.bluejack23_1.nowlocate.viewModels
 
 import android.net.Uri
 import android.os.Parcelable
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
-import edu.bluejack23_1.nowlocate.helper.ValidationHelper
+import edu.bluejack23_1.nowlocate.helpers.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.ReportRepository
-import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.ReportDetailActivity
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -82,6 +77,11 @@ class CreateReportViewModel : ViewModel() {
 
         if (descriptionString.length > 500){
             errorMessage.value = "Description length must not be more than 500 characters"
+            return
+        }
+
+        if(itemImage.value == null || itemImage.value.toString().isEmpty()){
+            errorMessage.value = "Image must be uploaded"
             return
         }
 

@@ -3,7 +3,7 @@ package edu.bluejack23_1.nowlocate.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.bluejack23_1.nowlocate.helper.SharedPreferencesHelper
+import edu.bluejack23_1.nowlocate.helpers.SharedPreferencesHelper
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
@@ -72,12 +72,10 @@ class LoginViewModel() : ViewModel() {
 
     private fun handleRememberMe(email: String, password: String, rememberMe: Boolean){
         if(rememberMe){
-            SharedPreferencesHelper.setString("emailLogin", email)
-            SharedPreferencesHelper.setString("passwordLogin", password)
+            authRepository.setRememberMeValues(email, password)
             return;
         }
-        SharedPreferencesHelper.setString("emailLogin", "")
-        SharedPreferencesHelper.setString("passwordLogin", "")
+        authRepository.removeRememberMeValues()
     }
 
 }

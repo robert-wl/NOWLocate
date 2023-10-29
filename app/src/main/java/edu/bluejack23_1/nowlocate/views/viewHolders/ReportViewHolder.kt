@@ -1,8 +1,6 @@
 package edu.bluejack23_1.nowlocate.views.viewHolders
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,7 +8,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
 import edu.bluejack23_1.nowlocate.R
-import edu.bluejack23_1.nowlocate.helper.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.views.activity.ReportDetailActivity
 import java.text.DateFormat

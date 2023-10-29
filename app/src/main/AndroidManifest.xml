@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.nowlocate"
         tools:targetApi="31">
+        <activity
+            android:name=".views.activity.EditReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activity.ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".views.activity.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activity.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".views.activity.HomeActivity"
             android:exported="false" />

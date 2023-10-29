@@ -7,8 +7,8 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.databinding.ActivityLoginBinding
-import edu.bluejack23_1.nowlocate.helper.IntentHelper
-import edu.bluejack23_1.nowlocate.helper.ToastHelper
+import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.viewModels.LoginViewModel
 

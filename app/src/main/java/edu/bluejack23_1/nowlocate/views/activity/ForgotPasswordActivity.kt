@@ -6,8 +6,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.databinding.ActivityForgotPasswordBinding
-import edu.bluejack23_1.nowlocate.helper.IntentHelper
-import edu.bluejack23_1.nowlocate.helper.ToastHelper
+import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.viewModels.ForgotPasswordViewModel
 

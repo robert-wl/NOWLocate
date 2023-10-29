@@ -14,20 +14,6 @@ class ReportRepository {
 
     fun addReport(report: Report){
         db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
-        db.collection("reports").document(report.id).set(report)
     }
 
     suspend fun uploadReportImage(uri: Uri?): String? {
@@ -45,11 +31,9 @@ class ReportRepository {
     suspend fun getLatestReport(start: Number, end: Number): Result<ArrayList<Report>> {
         val documentReference = db.collection("reports").orderBy("reportDate").limit(end.toLong())
 
-        Log.wtf("a", documentReference.toString())
         return try {
             val querySnapshot = documentReference.get().await()
 
-            Log.wtf("a", querySnapshot.size().toString())
             if(!querySnapshot.isEmpty){
                 val reports = ArrayList<Report>()
 
@@ -66,6 +50,9 @@ class ReportRepository {
             Log.wtf("a", e)
             Result.failure(e)
         }
+    }
 
+    fun deleteReport(id: String){
+        db.collection("reports").document(id).delete()
     }
 }

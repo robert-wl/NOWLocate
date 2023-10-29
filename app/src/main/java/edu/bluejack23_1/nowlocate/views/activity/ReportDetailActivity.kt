@@ -1,8 +1,8 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.view.isVisible
@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityReportDetailBinding
-import edu.bluejack23_1.nowlocate.helper.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.viewModels.ReportDetailViewModel
@@ -23,7 +23,7 @@ class ReportDetailActivity : AppCompatActivity(), View {
     private lateinit var deleteBtn: ImageButton
     private lateinit var dynamicBtn: ImageButton
     private lateinit var reportIV: ImageView
-    private val isSelf = false
+    private lateinit var alertDialog: AlertDialog.Builder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +49,13 @@ class ReportDetailActivity : AppCompatActivity(), View {
         dynamicBtn = binding.btnDynamic
         reportIV = binding.ivImage
 
+        alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Confirmation")
+        alertDialog.setMessage("Are you sure to delete this report?")
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
 
-       val report = intent.getParcelableExtra("report", Report::class.java)
+
+        val report = intent.getParcelableExtra("report", Report::class.java)
 
         if(report == null){
             IntentHelper.moveBack(this)
@@ -58,12 +63,6 @@ class ReportDetailActivity : AppCompatActivity(), View {
         }
 
         viewModel.handleExtrasData(report)
-
-        if(!isSelf){
-            deleteBtn.isVisible = false
-            dynamicBtn.setImageResource(R.drawable.baseline_chat_black_24)
-        }
-
     }
 
     override fun eventHandler() {
@@ -71,23 +70,42 @@ class ReportDetailActivity : AppCompatActivity(), View {
             IntentHelper.moveBack(this)
         }
         deleteBtn.setOnClickListener{
-            viewModel.handleDelete()
+            alertDialog.show()
         }
 
         viewModel.reportImage.observe(this) { reportImage ->
-            Log.wtf("reportImage", reportImage.toString())
             Picasso.get().load(reportImage).into(reportIV)
         }
 
-        if(isSelf) {
-            dynamicBtn.setOnClickListener {
-//                IntentHelper.moveTo(ChatActivity::class.java)
-            }
-        } else {
-            dynamicBtn.setOnClickListener {
-//                IntentHelper.moveTo(EditReportActivity::class.java)
+        viewModel.isSelf.observe(this) { isSelf ->
+            if(isSelf) {
+                deleteBtn.isVisible = true
+            } else {
+                deleteBtn.isVisible = false
+                dynamicBtn.setImageResource(R.drawable.baseline_chat_black_24)
             }
         }
+
+        dynamicBtn.setOnClickListener {
+            if(viewModel.isSelf.value == true){
+                IntentHelper.moveToWithExtra(this, EditReportActivity::class.java, "report", viewModel.report.value!!)
+            } else {
+//                IntentHelper
+            }
+        }
+
+        viewModel.activityToStart.observe(this) { activityToStart ->
+            IntentHelper.moveToFinish(this, activityToStart.java)
+        }
+
+        alertDialog.setPositiveButton("Yes"){_, _ ->
+            viewModel.handleDelete()
+        }
+
+        alertDialog.setNegativeButton("No"){_, _ ->
+
+        }
+
     }
 
 }

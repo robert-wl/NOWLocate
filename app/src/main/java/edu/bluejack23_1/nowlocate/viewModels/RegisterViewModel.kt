@@ -3,7 +3,7 @@ package edu.bluejack23_1.nowlocate.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.bluejack23_1.nowlocate.helper.ValidationHelper
+import edu.bluejack23_1.nowlocate.helpers.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.User
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
@@ -84,7 +84,7 @@ class RegisterViewModel : ViewModel(){
             }
             val user = result.getOrNull() ?: return@launch
 
-            userRepository.addUser(User(user.uid, firstName, lastName, email, userName, gender))
+            userRepository.addUser(User(user.uid, firstName, lastName, email, userName, "", gender))
 
             activityToStart.value = LoginActivity::class
         }

@@ -1,4 +1,4 @@
-package edu.bluejack23_1.nowlocate.adapter
+package edu.bluejack23_1.nowlocate.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
