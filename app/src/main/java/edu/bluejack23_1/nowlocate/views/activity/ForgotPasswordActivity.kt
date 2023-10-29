@@ -1,18 +1,17 @@
-package edu.bluejack23_1.nowlocate.views
+package edu.bluejack23_1.nowlocate.views.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
-import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityForgotPasswordBinding
 import edu.bluejack23_1.nowlocate.helper.IntentHelper
 import edu.bluejack23_1.nowlocate.helper.ToastHelper
+import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.viewModels.ForgotPasswordViewModel
 
-class ForgotPasswordActivity : AppCompatActivity() {
+class ForgotPasswordActivity : AppCompatActivity(), View {
 
     private lateinit var binding: ActivityForgotPasswordBinding
     private lateinit var viewModel: ForgotPasswordViewModel
@@ -21,23 +20,28 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        bindingHandler()
+        elementHandler()
+        eventHandler()
+
+        setContentView(binding.root)
+    }
+
+    override fun bindingHandler() {
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
 
         viewModel = ViewModelProvider(this)[ForgotPasswordViewModel::class.java]
         binding.viewModel = viewModel
-
-        elementHandler()
-        setContentView(binding.root)
     }
 
-    private fun elementHandler(){
+    override fun elementHandler(){
         backBtn = binding.btnBack
         resetBtn = binding.btnForgotPassword
-        listenerHandler()
     }
 
-    private fun listenerHandler(){
+    override fun eventHandler() {
         backBtn.setOnClickListener {
             IntentHelper.moveBack(this)
         }
@@ -48,5 +52,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
             ToastHelper.showMessage(this, errorMessage)
         }
     }
+
 
 }

@@ -13,28 +13,29 @@
         android:theme="@style/Theme.nowlocate"
         tools:targetApi="31">
         <activity
-            android:name=".views.ReportDetailActivity"
+            android:name=".views.activity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".views.ForgotPasswordActivity"
+            android:name=".views.activity.ReportDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".views.CreateReportActivity"
+            android:name=".views.activity.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".views.ChangePasswordActivity"
+            android:name=".views.activity.CreateReportActivity"
             android:exported="false" />
         <activity
-            android:name=".views.LoginActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".views.RegisterActivity"
+            android:name=".views.activity.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MainActivity"
-            android:exported="true" >
+            android:name=".views.activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activity.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

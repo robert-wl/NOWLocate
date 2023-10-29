@@ -1,4 +1,4 @@
-package edu.bluejack23_1.nowlocate.views
+package edu.bluejack23_1.nowlocate.views.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.databinding.ActivityLoginBinding
 import edu.bluejack23_1.nowlocate.helper.IntentHelper
-import edu.bluejack23_1.nowlocate.helper.SharedPreferences
 import edu.bluejack23_1.nowlocate.helper.ToastHelper
+import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.viewModels.LoginViewModel
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), View {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
@@ -24,26 +24,29 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        bindingHandler()
+        elementHandler()
+        eventHandler()
+
+        setContentView(binding.root)
+    }
+
+    override fun bindingHandler() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
 
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         binding.viewModel = viewModel
-
-        elementHandler()
-        setContentView(binding.root)
     }
 
-    private fun elementHandler() {
+    override fun elementHandler() {
         dontHaveTV = binding.tvDontHave
         signInBtn = binding.btnSignIn
         rememberMeCB = binding.cbRememberMe
         forgotPasswordTV = binding.tvForgotPassword
-
-        listenerHandler()
     }
 
-    private fun listenerHandler(){
+    override fun eventHandler() {
         signInBtn.setOnClickListener {
             viewModel.signInHandler()
         }
@@ -68,5 +71,6 @@ class LoginActivity : AppCompatActivity() {
             IntentHelper.moveToFinish(this, activityToStart.java)
         }
     }
+
 
 }

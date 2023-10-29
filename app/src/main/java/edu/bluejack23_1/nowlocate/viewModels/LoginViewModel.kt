@@ -1,21 +1,16 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
-import android.app.Activity
-import android.app.Application
-import android.preference.PreferenceManager
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.bluejack23_1.nowlocate.helper.SharedPreferences
-import edu.bluejack23_1.nowlocate.repository.AuthRepository
-import edu.bluejack23_1.nowlocate.views.MainActivity
+import edu.bluejack23_1.nowlocate.helper.SharedPreferencesHelper
+import edu.bluejack23_1.nowlocate.repositories.AuthRepository
+import edu.bluejack23_1.nowlocate.repositories.UserRepository
+import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
-class LoginViewModel(application: Application) : AndroidViewModel(application) {
+class LoginViewModel() : ViewModel() {
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
     val rememberMe = MutableLiveData<Boolean>()
@@ -23,15 +18,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val activityToStart = MutableLiveData<KClass<*>>()
 
     private val authRepository = AuthRepository()
-    private val sharedPreferences = SharedPreferences(application)
+    private val userRepository = UserRepository()
 
     init {
-        sharedPreferences.getString("email")?.let {
-            email.value = it
-        }
-        sharedPreferences.getString("password")?.let {
-            password.value = it
-        }
+        email.value = authRepository.getRememberMeEmailValue()
+        password.value = authRepository.getRememberMePasswordValue()
     }
 
     fun signInHandler(){
@@ -51,21 +42,39 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         signIn(emailString, passwordString, rememberMeBool);
     }
 
-    fun signIn(email: String, password: String, rememberMe: Boolean){
+    private fun signIn(email: String, password: String, rememberMe: Boolean){
         viewModelScope.launch {
             val result = authRepository.signIn(email, password)
 
             if(result.isSuccess){
-                if(rememberMe){
-                    sharedPreferences.setString("email", email)
-                    sharedPreferences.setString("password", password)
+                handleRememberMe(email, password, rememberMe)
+
+                val userResult = userRepository.getUser(result.getOrNull()!!.uid)
+
+                if(userResult.isFailure){
+                    errorMessage.value = userResult.exceptionOrNull()?.message ?: "Unknown error"
+                    return@launch
                 }
 
-                activityToStart.value = MainActivity::class
+                val user = userResult.getOrNull()!!
+
+                authRepository.signIn(user);
+
+                activityToStart.value = HomeActivity::class
                 return@launch
             }
             errorMessage.value = result.exceptionOrNull()?.message ?: "Unknown error"
         }
+    }
+
+    private fun handleRememberMe(email: String, password: String, rememberMe: Boolean){
+        if(rememberMe){
+            SharedPreferencesHelper.setString("emailLogin", email)
+            SharedPreferencesHelper.setString("passwordLogin", password)
+            return;
+        }
+        SharedPreferencesHelper.setString("emailLogin", "")
+        SharedPreferencesHelper.setString("passwordLogin", "")
     }
 
 }

@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-import edu.bluejack23_1.nowlocate.helper.ToastHelper
 import edu.bluejack23_1.nowlocate.helper.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.Report
+import java.util.Date
 
 class CreateReportViewModel : ViewModel() {
 
@@ -51,7 +51,7 @@ class CreateReportViewModel : ViewModel() {
         }
 
         val db = Firebase.firestore
-        val report = Report(itemNameString, itemCategoryString, shortDescriptionString, descriptionString, lastSeenString)
+        val report = Report(itemNameString, itemCategoryString, shortDescriptionString, descriptionString, lastSeenString, Date())
 
 //        db.collection("test")
 //            .add(report)

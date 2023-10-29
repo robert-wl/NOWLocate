@@ -3,7 +3,6 @@ package edu.bluejack23_1.nowlocate.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import edu.bluejack23_1.nowlocate.helper.ValidationHelper
 
 class ForgotPasswordViewModel : ViewModel() {
 

@@ -1,15 +1,13 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
-import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.bluejack23_1.nowlocate.helper.IntentHelper
 import edu.bluejack23_1.nowlocate.helper.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.User
-import edu.bluejack23_1.nowlocate.repository.AuthRepository
-import edu.bluejack23_1.nowlocate.repository.UserRepository
-import edu.bluejack23_1.nowlocate.views.LoginActivity
+import edu.bluejack23_1.nowlocate.repositories.AuthRepository
+import edu.bluejack23_1.nowlocate.repositories.UserRepository
+import edu.bluejack23_1.nowlocate.views.activity.LoginActivity
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
@@ -76,7 +74,7 @@ class RegisterViewModel : ViewModel(){
         signUp(firstNameString, lastNameString, emailString, usernameString, passwordString, genderString);
     }
 
-    fun signUp(firstName: String, lastName: String, email: String, userName: String, password: String, gender: String) {
+    private fun signUp(firstName: String, lastName: String, email: String, userName: String, password: String, gender: String) {
         viewModelScope.launch {
             val result = authRepository.createAuthAccount(email, password)
 

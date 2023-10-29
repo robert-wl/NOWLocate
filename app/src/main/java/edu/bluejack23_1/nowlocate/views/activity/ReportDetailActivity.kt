@@ -1,9 +1,7 @@
-package edu.bluejack23_1.nowlocate.views
+package edu.bluejack23_1.nowlocate.views.activity
 
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider

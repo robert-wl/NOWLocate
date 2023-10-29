@@ -1,4 +1,4 @@
-package edu.bluejack23_1.nowlocate.views
+package edu.bluejack23_1.nowlocate.views.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
-import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityCreateReportBinding
 import edu.bluejack23_1.nowlocate.helper.IntentHelper
 import edu.bluejack23_1.nowlocate.helper.ToastHelper
