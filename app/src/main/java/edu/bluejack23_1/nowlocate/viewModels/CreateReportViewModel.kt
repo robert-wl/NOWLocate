@@ -1,5 +1,7 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
+import android.net.Uri
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +10,9 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import edu.bluejack23_1.nowlocate.helper.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.Report
+import edu.bluejack23_1.nowlocate.repositories.ReportRepository
 import java.util.Date
+import java.util.UUID
 
 class CreateReportViewModel : ViewModel() {
 
@@ -17,21 +21,41 @@ class CreateReportViewModel : ViewModel() {
     val shortDescription = MutableLiveData<String>()
     val description = MutableLiveData<String>()
     val lastSeen = MutableLiveData<String>()
-    val itemImage = MutableLiveData<String>()
+    val itemImage = MutableLiveData<Uri>()
     private val errorMessage = MutableLiveData<String>()
 
+    private val reportRepository = ReportRepository()
     fun getErrorMessage(): LiveData<String> = errorMessage
 
-    fun handleCreateReport(activity: AppCompatActivity){
+    fun handleCreateReport(){
         val itemNameString = itemName.value ?: ""
         val itemCategoryString = itemCategory.value ?: ""
         val shortDescriptionString = shortDescription.value ?: ""
         val descriptionString = description.value ?: ""
         val lastSeenString = lastSeen.value ?: ""
 
-        if (itemNameString.isEmpty() || itemCategoryString.isEmpty() || shortDescriptionString.isEmpty() ||
-            descriptionString.isEmpty() || lastSeenString.isEmpty()) {
-            errorMessage.value = "All fields must not be empty"
+        if(itemNameString.isEmpty()){
+            errorMessage.value = "Report name must not be empty"
+            return
+        }
+
+        if(itemCategoryString.isEmpty()){
+            errorMessage.value = "Report category must not be empty"
+            return
+        }
+
+        if(shortDescriptionString.isEmpty()){
+            errorMessage.value = "Short description must not be empty"
+            return
+        }
+
+        if(descriptionString.isEmpty()){
+            errorMessage.value = "Description must not be empty"
+            return
+        }
+
+        if(lastSeenString.isEmpty()){
+            errorMessage.value = "Last seen must not be empty"
             return
         }
 
@@ -50,8 +74,17 @@ class CreateReportViewModel : ViewModel() {
             return
         }
 
-        val db = Firebase.firestore
-        val report = Report(itemNameString, itemCategoryString, shortDescriptionString, descriptionString, lastSeenString, Date())
+        val report = Report(
+            UUID.randomUUID().toString(),
+            itemNameString,
+            itemImage.value.toString(),
+            itemCategoryString,
+            shortDescriptionString,
+            descriptionString,
+            lastSeenString,
+            Date()
+        )
+        reportRepository.addReport(report)
 
 //        db.collection("test")
 //            .add(report)

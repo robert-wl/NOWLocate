@@ -15,49 +15,63 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
             android:background="@color/gray"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <ImageButton
-                    android:id="@+id/btnBack"
-                    android:backgroundTint="@color/gray"
-                    android:contentDescription="@string/back_button"
-                    android:src="@drawable/baseline_arrow_back_ios_24"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="fitCenter"/>
-
-                <TextView
-                    android:text="@string/create_report"
-                    android:layout_width="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
+            android:layout_height="0dp"
+            android:layout_weight="3" >
             <ImageButton
-                android:id="@+id/btnItemImage"
+                android:id="@+id/btnPickImage"
+                android:background="@color/gray"
                 android:src="@drawable/baseline_camera_alt_24"
+                android:layout_marginTop="75dp"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:scaleType="fitCenter"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="TODO" />
+            <ImageView
+                android:id="@+id/ivImage"
+                android:background="@color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="TODO" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
+                    <ImageButton
+                        android:id="@+id/btnBack"
+                        android:background="@color/transparent"
+                        android:contentDescription="@string/back_button"
+                        android:src="@drawable/baseline_arrow_back_ios_24"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:text="@string/create_report"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
             android:padding="25dp"
             android:orientation="vertical">
 
