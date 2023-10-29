@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_1.nowlocate.R
@@ -14,14 +16,17 @@ import edu.bluejack23_1.nowlocate.adapter.ReportAdapter
 import edu.bluejack23_1.nowlocate.databinding.FragmentHomeBinding
 import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.models.Report
+import edu.bluejack23_1.nowlocate.viewModels.HomeFragmentViewModel
 import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
 import java.util.Date
 
-class HomeFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragment {
+class HomeFragment : Fragment(), ViewFragment {
 
     private lateinit var reportRV : RecyclerView
     private lateinit var binding: FragmentHomeBinding
     private lateinit var reportAdapter : ReportAdapter
+    private lateinit var viewModel: HomeFragmentViewModel
+    private lateinit var reportPB: ProgressBar
 
 
     override fun onCreateView(
@@ -35,6 +40,7 @@ class HomeFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this)[HomeFragmentViewModel::class.java]
         binding.viewModel = viewModel
 
         elementHandler()
@@ -45,9 +51,10 @@ class HomeFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragm
 
     override fun elementHandler() {
         reportRV = binding.rvReport
+        reportPB = binding.pbReport
 
         reportAdapter = ReportAdapter(requireContext())
-
+        reportAdapter.reportList = ArrayList<Report>()
         reportRV.layoutManager = LinearLayoutManager(requireContext())
         reportRV.adapter = reportAdapter
     }
@@ -58,5 +65,28 @@ class HomeFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragm
             reportAdapter.reportList = it
             reportAdapter.notifyDataSetChanged()
         }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if(it){
+                reportPB.visibility = View.VISIBLE
+                return@observe
+            }
+
+            reportPB.visibility = View.GONE
+        }
+
+        reportRV.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val pastVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
+                val total = reportAdapter.itemCount
+
+                if(visibleItemCount + pastVisibleItem >= total && !viewModel.isLoading.value!!){
+                    viewModel.page++
+                    viewModel.getData()
+                }
+            }
+        })
     }
 }

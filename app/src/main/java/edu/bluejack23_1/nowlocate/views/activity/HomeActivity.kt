@@ -47,7 +47,7 @@ class HomeActivity : AppCompatActivity(), View {
     }
 
     override fun elementHandler() {
-        homeFragment = HomeFragment(viewModel)
+        homeFragment = HomeFragment()
         searchFilterFragment = SearchFilterFragment(viewModel)
         homeSearchedFragment = HomeSearchedFragment(viewModel)
         homeSV = binding.svHome

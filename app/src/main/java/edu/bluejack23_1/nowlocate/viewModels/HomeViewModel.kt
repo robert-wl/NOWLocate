@@ -12,12 +12,7 @@ import java.util.Date
 
 class HomeViewModel: ViewModel() {
     val searchQuery = MutableLiveData<String>()
-    val reportList = MutableLiveData<ArrayList<Report>>(arrayListOf(
-        Report("1", "rawr", "Bicycle", "Transportation", "A bicycle was stolen in front of the mall", "A bicycle was stolen in front of the mall", "a", Date(), "a"),
-        Report("1", "rawr", "Bicycle", "Transportation", "A bicycle was stolen in front of the mall", "A bicycle was stolen in front of the mall", "a", Date(), "a"),
-        Report("1", "rawr", "Bicycle", "Transportation", "A bicycle was stolen in front of the mall", "A bicycle was stolen in front of the mall", "a", Date(), "a"),
-        Report("1", "rawr", "Bicycle", "Transportation", "A bicycle was stolen in front of the mall", "A bicycle was stolen in front of the mall", "a", Date(), "a"),
-    ))
+    val reportList = MutableLiveData<ArrayList<Report>>()
     val filterList = MutableLiveData<ArrayList<Filter>>(arrayListOf(
         Filter("Filter 1", 2),
         Filter("Filter 1", 2),
@@ -28,14 +23,4 @@ class HomeViewModel: ViewModel() {
 
     private val reportRepository = ReportRepository()
 
-    fun getData(){
-        viewModelScope.launch {
-            val result = reportRepository.getLatestReport()
-
-            if(result.isSuccess){
-                Log.wtf("HomeViewModel",  result.getOrNull().toString())
-                reportList.value = result.getOrNull()
-            }
-        }
-    }
 }

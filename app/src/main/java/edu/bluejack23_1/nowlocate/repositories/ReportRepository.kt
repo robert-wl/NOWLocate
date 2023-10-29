@@ -14,6 +14,20 @@ class ReportRepository {
 
     fun addReport(report: Report){
         db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
+        db.collection("reports").document(report.id).set(report)
     }
 
     suspend fun uploadReportImage(uri: Uri?): String? {
@@ -28,12 +42,14 @@ class ReportRepository {
         return taskSnapshot.storage.downloadUrl.await().toString()
     }
 
-    suspend fun getLatestReport(): Result<ArrayList<Report>> {
-        val documentReference = db.collection("reports").orderBy("reportDate")
+    suspend fun getLatestReport(start: Number, end: Number): Result<ArrayList<Report>> {
+        val documentReference = db.collection("reports").orderBy("reportDate").limit(end.toLong())
 
+        Log.wtf("a", documentReference.toString())
         return try {
             val querySnapshot = documentReference.get().await()
 
+            Log.wtf("a", querySnapshot.size().toString())
             if(!querySnapshot.isEmpty){
                 val reports = ArrayList<Report>()
 
