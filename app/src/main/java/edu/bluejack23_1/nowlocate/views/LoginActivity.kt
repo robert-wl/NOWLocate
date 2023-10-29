@@ -1,16 +1,14 @@
 package edu.bluejack23_1.nowlocate.views
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityLoginBinding
-import edu.bluejack23_1.nowlocate.databinding.ActivityRegisterBinding
 import edu.bluejack23_1.nowlocate.helper.IntentHelper
+import edu.bluejack23_1.nowlocate.helper.SharedPreferences
 import edu.bluejack23_1.nowlocate.helper.ToastHelper
 import edu.bluejack23_1.nowlocate.viewModels.LoginViewModel
 
@@ -62,8 +60,12 @@ class LoginActivity : AppCompatActivity() {
             viewModel.rememberMe.value = rememberMeCB.isChecked
         }
 
-        viewModel.getErrorMessage().observe(this) { errorMessage ->
+        viewModel.errorMessage.observe(this) { errorMessage ->
             ToastHelper.showMessage(this, errorMessage)
+        }
+
+        viewModel.activityToStart.observe(this) { activityToStart ->
+            IntentHelper.moveToFinish(this, activityToStart.java)
         }
     }
 

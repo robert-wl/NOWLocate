@@ -19,10 +19,10 @@ class ForgotPasswordViewModel : ViewModel() {
             return
         }
 
-        if(!ValidationHelper.emailExists(emailString)){
-            errorMessage.value = "Email doesn't exist"
-            return
-        }
+//        if(!ValidationHelper.emailExists(emailString)){
+//            errorMessage.value = "Email doesn't exist"
+//            return
+//        }
 
         //handle reset password logic
 

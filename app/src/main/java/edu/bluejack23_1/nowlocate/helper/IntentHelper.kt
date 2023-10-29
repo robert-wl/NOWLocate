@@ -13,7 +13,7 @@ class IntentHelper {
             activity.startActivity(intent)
         }
 
-        fun moveToFinish(activity: Activity, destination: Class<out AppCompatActivity>){
+        fun moveToFinish(activity: Activity, destination: Class<out Any>){
             val intent = Intent(activity, destination)
             activity.startActivity(intent)
             activity.finish()

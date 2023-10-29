@@ -1,10 +1,17 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
-import android.widget.Toast
-import androidx.lifecycle.LiveData
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import edu.bluejack23_1.nowlocate.helper.IntentHelper
 import edu.bluejack23_1.nowlocate.helper.ValidationHelper
+import edu.bluejack23_1.nowlocate.models.User
+import edu.bluejack23_1.nowlocate.repository.AuthRepository
+import edu.bluejack23_1.nowlocate.repository.UserRepository
+import edu.bluejack23_1.nowlocate.views.LoginActivity
+import kotlinx.coroutines.launch
+import kotlin.reflect.KClass
 
 class RegisterViewModel : ViewModel(){
     val firstname = MutableLiveData<String>()
@@ -14,9 +21,13 @@ class RegisterViewModel : ViewModel(){
     val password = MutableLiveData<String>()
     val confirmPassword = MutableLiveData<String>()
     val gender = MutableLiveData<String>()
-    private val errorMessage = MutableLiveData<String>()
+    val errorMessage = MutableLiveData<String>()
+    val activityToStart = MutableLiveData<KClass<*>>()
 
-    fun getErrorMessage(): LiveData<String> = errorMessage
+
+    private val authRepository = AuthRepository()
+    private val userRepository = UserRepository()
+
 
     fun signUpHandler(){
         val firstNameString = firstname.value ?: ""
@@ -27,14 +38,28 @@ class RegisterViewModel : ViewModel(){
         val confirmPasswordString = confirmPassword.value ?: ""
         val genderString = gender.value ?: ""
 
-        if (firstNameString.isEmpty() || lastNameString.isEmpty() || emailString.isEmpty() || usernameString.isEmpty() ||
-            passwordString.isEmpty() || confirmPasswordString.isEmpty() || genderString.isEmpty()) {
-            errorMessage.value = "All fields must not  be empty"
+        if (firstNameString.isEmpty()){
+            errorMessage.value = "First name must not be empty"
             return
         }
 
-        if (ValidationHelper.emailExists(emailString)){
-            errorMessage.value = "Email is already taken"
+        if (lastNameString.isEmpty()){
+            errorMessage.value = "Last name must not be empty"
+            return
+        }
+
+        if (usernameString.isEmpty()){
+            errorMessage.value = "Username must not be empty"
+            return
+        }
+
+        if (emailString.isEmpty()){
+            errorMessage.value = "Email must not be empty"
+            return
+        }
+
+        if(genderString == "-"){
+            errorMessage.value = "Gender must be selected"
             return
         }
 
@@ -48,8 +73,23 @@ class RegisterViewModel : ViewModel(){
             return
         }
 
-        //create account logic
+        signUp(firstNameString, lastNameString, emailString, usernameString, passwordString, genderString);
+    }
 
+    fun signUp(firstName: String, lastName: String, email: String, userName: String, password: String, gender: String) {
+        viewModelScope.launch {
+            val result = authRepository.createAuthAccount(email, password)
+
+            if(result.isFailure){
+                errorMessage.value = result.exceptionOrNull()?.message ?: "Unknown error"
+                return@launch
+            }
+            val user = result.getOrNull() ?: return@launch
+
+            userRepository.addUser(User(user.uid, firstName, lastName, email, userName, gender))
+
+            activityToStart.value = LoginActivity::class
+        }
     }
 
 }

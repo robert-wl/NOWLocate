@@ -1,5 +1,6 @@
 package edu.bluejack23_1.nowlocate.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -44,11 +45,10 @@ class RegisterActivity : AppCompatActivity() {
 
         spinnerHandler()
         listenerHandler()
-
     }
 
     private fun spinnerHandler(){
-        val genders = listOf("Male", "Female", "Other")
+        val genders = listOf("-", "Male", "Female", "Other")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genders)
         genderSpinner.adapter = adapter
     }
@@ -73,8 +73,12 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getErrorMessage().observe(this) { errorMessage ->
+        viewModel.errorMessage.observe(this) { errorMessage ->
             ToastHelper.showMessage(this, errorMessage)
+        }
+
+        viewModel.activityToStart.observe(this) { activityToStart ->
+            IntentHelper.moveToFinish(this, activityToStart.java)
         }
 
     }
