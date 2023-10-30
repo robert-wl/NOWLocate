@@ -45,7 +45,7 @@ class CreateReportViewModel : ViewModel() {
             return
         }
 
-        if(itemCategoryString.isEmpty()){
+        if(itemCategoryString.isEmpty() || itemCategoryString == "Select Category"){
             errorMessage.value = "Report category must not be empty"
             return
         }

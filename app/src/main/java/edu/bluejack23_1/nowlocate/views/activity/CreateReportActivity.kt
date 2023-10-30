@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.databinding.ActivityCreateReportBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
+import edu.bluejack23_1.nowlocate.models.CategoryType
 import edu.bluejack23_1.nowlocate.viewModels.CreateReportViewModel
 
 class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.interfaces.View {
@@ -119,7 +120,8 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
     }
 
     private fun spinnerHandler(){
-        val categories = listOf("Electronics", "Stationary", "People", "Clothes", "Vehicles", "Pets", "Wallet", "Misc")
+        val categories = mutableListOf("Select Category")
+        categories.addAll(CategoryType.values().map { it.toString() })
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         categorySpinner.adapter = adapter
     }

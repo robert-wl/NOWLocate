@@ -5,6 +5,8 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
+import edu.bluejack23_1.nowlocate.models.CategoryType
+import edu.bluejack23_1.nowlocate.models.Filter
 import edu.bluejack23_1.nowlocate.models.Report
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
@@ -46,6 +48,79 @@ class ReportRepository {
                 for(document in querySnapshot.documents){
                     val report = document.toObject(Report::class.java)
                     reports.add(report!!)
+                }
+
+                Result.success(reports)
+            } else {
+                Result.failure(Exception("Report not found"))
+            }
+        } catch (e: Exception){
+            Log.wtf("a", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getAllCategory(): Result<ArrayList<Filter>> {
+        val documentReference = db.collection("reports")
+
+        return try {
+            val filterList = ArrayList<Filter>()
+
+            CategoryType.values().forEach {
+                val querySnapshot = documentReference.whereEqualTo("category", it.toString()).get().await()
+
+                if(!querySnapshot.isEmpty){
+                    val filter = Filter(it.toString(), querySnapshot.size())
+                    filterList.add(filter)
+                }
+            }
+
+            Result.success(filterList)
+        } catch (e: Exception){
+            Log.wtf("a", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getReportData(filter: String): Result<ArrayList<Report>> {
+        val documentReference = db.collection("reports").whereEqualTo("category", filter)
+
+        return try {
+            val querySnapshot = documentReference.get().await()
+
+            if(!querySnapshot.isEmpty){
+                val reports = ArrayList<Report>()
+
+                for(document in querySnapshot.documents){
+                    val report = document.toObject(Report::class.java)
+                    reports.add(report!!)
+                }
+
+                Result.success(reports)
+            } else {
+                Result.failure(Exception("Report not found"))
+            }
+        } catch (e: Exception){
+            Log.wtf("a", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getReportDataSearched(query: String): Result<ArrayList<Report>> {
+        val documentReference = db.collection("reports")
+
+        return try {
+            val querySnapshot = documentReference.get().await()
+
+            if(!querySnapshot.isEmpty){
+                val reports = ArrayList<Report>()
+
+                for(document in querySnapshot.documents){
+                    val report = document.toObject(Report::class.java)
+                    val name = report?.name
+                    if (name != null && name.contains(query)) {
+                        reports.add(report)
+                    }
                 }
 
                 Result.success(reports)

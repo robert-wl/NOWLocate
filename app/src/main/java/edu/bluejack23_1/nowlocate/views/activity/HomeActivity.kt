@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityHomeBinding
@@ -61,6 +60,7 @@ class HomeActivity : AppCompatActivity(), View {
 
     override fun eventHandler() {
         homeSV.setOnSearchClickListener {
+            viewModel.getCategoryData()
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.fragmentHome, searchFilterFragment)
                 commit()
@@ -78,6 +78,8 @@ class HomeActivity : AppCompatActivity(), View {
         homeSV.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.searchQuery.value = query
+//                viewModel.filterQuery.value = ""
+                viewModel.getReportDataSearched()
                 supportFragmentManager.beginTransaction().apply {
                     replace(R.id.fragmentHome, homeSearchedFragment)
                     commit()
@@ -92,6 +94,22 @@ class HomeActivity : AppCompatActivity(), View {
             }
 
         })
+
+
+        viewModel.filterQuery.observe(this) {
+            if(it == ""){
+                return@observe
+            }
+
+            viewModel.searchQuery.value = ""
+            viewModel.reportList.value = ArrayList()
+            viewModel.getReportDataFiltered()
+
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.fragmentHome, homeSearchedFragment)
+                commit()
+            }
+        }
 
         reportAddBtn.setOnClickListener {
             IntentHelper.moveTo(this, CreateReportActivity::class.java)

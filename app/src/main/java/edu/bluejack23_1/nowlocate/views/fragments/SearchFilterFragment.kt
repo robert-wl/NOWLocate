@@ -39,15 +39,19 @@ class SearchFilterFragment(private val viewModel: HomeViewModel) : Fragment(), V
     override fun elementHandler() {
         filterRV = binding.rvFilter
 
-        filterAdapter = FilterAdapter(requireContext())
+        filterAdapter = FilterAdapter(requireContext(), viewModel)
         filterAdapter.filterList = viewModel.filterList.value ?: ArrayList<Filter>()
 
         filterRV.layoutManager = GridLayoutManager(requireContext(), 2)
         filterRV.adapter = filterAdapter
+
     }
 
     override fun eventHandler() {
-        //
+        viewModel.filterList.observe(viewLifecycleOwner) {
+            filterAdapter.filterList = it
+            filterAdapter.notifyDataSetChanged()
+        }
     }
 
 }

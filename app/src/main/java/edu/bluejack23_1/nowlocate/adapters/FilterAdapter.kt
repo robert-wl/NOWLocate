@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.models.Filter
+import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
 import edu.bluejack23_1.nowlocate.views.viewHolders.FilterViewHolder
 
-class FilterAdapter(private var context: Context) : RecyclerView.Adapter<FilterViewHolder>() {
+class FilterAdapter(private var context: Context, private var viewModel: HomeViewModel) : RecyclerView.Adapter<FilterViewHolder>() {
     lateinit var filterList : ArrayList<Filter>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterViewHolder {
@@ -25,5 +26,9 @@ class FilterAdapter(private var context: Context) : RecyclerView.Adapter<FilterV
         holder.filterNameTV.text = filterList[position].filterName
         holder.filterAmountTV.text = filterList[position].filterItemCount.toString()
         holder.filterIconIV.setImageResource(R.drawable.baseline_add_24)
+
+        holder.filterCardCV.setOnClickListener {
+            viewModel.filterQuery.value = filterList[position].filterName
+        }
     }
 }
