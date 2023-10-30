@@ -1,5 +1,6 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.squareup.picasso.Picasso
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityEditReportBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.viewModels.EditReportViewModel
@@ -27,6 +29,7 @@ class EditReportActivity : AppCompatActivity(), View {
     private lateinit var lastseenET: EditText
     private lateinit var reportIV: ImageView
     private lateinit var saveBtn: ImageButton
+    private lateinit var alertDialog: AlertDialog.Builder
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +62,11 @@ class EditReportActivity : AppCompatActivity(), View {
         saveBtn = binding.btnSave
         reportIV = binding.ivReport
 
+        alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Confirmation")
+        alertDialog.setMessage("Are you sure to save this report?")
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
+
         val report = intent.getParcelableExtra("report", Report::class.java)
 
         if(report == null){
@@ -75,11 +83,24 @@ class EditReportActivity : AppCompatActivity(), View {
         }
 
         saveBtn.setOnClickListener {
-            handleSave()
+            alertDialog.show()
         }
 
         viewModel.reportImage.observe(this) {
             Picasso.get().load(it).into(reportIV)
+        }
+
+        viewModel.errorMessage.observe(this) { errorMessage ->
+            ToastHelper.showMessage(this, errorMessage)
+        }
+
+        alertDialog.setPositiveButton("Yes"){_, _ ->
+            Log.wtf("EditReportActivity", "eventHandler: " + viewModel.reportImage.value)
+            viewModel.handleEditReport()
+        }
+
+        alertDialog.setNegativeButton("No"){_, _ ->
+
         }
     }
 

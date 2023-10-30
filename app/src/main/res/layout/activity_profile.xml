@@ -32,127 +32,127 @@
                 android:layout_gravity="right" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="25dp"
-            android:paddingBottom="25dp"
-            android:background="@color/gray">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
-
-                <ImageView
-                    android:background="@color/gray2"
-                    android:src="@drawable/baseline_person_black_24"
-                    android:id="@+id/ivProfileImage"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
-                    android:layout_height="match_parent"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:gravity="left">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tvFirstName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@={viewModel.firstName}"
-                            android:fontFamily="@font/open_sans"
-                            android:layout_marginRight="5sp"/>
-
-                        <TextView
-                            android:id="@+id/tvLastName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@={viewModel.lastName}"
-                            android:fontFamily="@font/open_sans"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvUsername"
-                        android:text="@={viewModel.username}"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/open_sans"/>
-
-                    <TextView
-                        android:id="@+id/tvEmail"
-                        android:text="@={viewModel.email}"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/open_sans"/>
-
-                    <Button
-                        android:id="@+id/btnEditProfile"
-                        android:text="@string/edit_profile"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/open_sans"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"/>
-
-                    <Button
-                        android:id="@+id/btnChangePassword"
-                        android:text="@string/change_password"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/open_sans"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:padding="25dp"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="bottom">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/gray">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAddReport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/submit"
-                android:src="@drawable/baseline_add_24" />
+                    <ImageView
+                        android:background="@color/gray2"
+                        android:src="@drawable/baseline_person_black_24"
+                        android:id="@+id/ivProfileImage"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="match_parent"/>
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationView"
-                style="@style/BottomNavbar"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="left">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/tvFirstName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@={viewModel.firstName}"
+                                android:fontFamily="@font/open_sans"
+                                android:layout_marginRight="5sp"/>
+
+                            <TextView
+                                android:id="@+id/tvLastName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="@={viewModel.lastName}"
+                                android:fontFamily="@font/open_sans"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvUsername"
+                            android:text="@={viewModel.username}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/open_sans"/>
+
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:text="@={viewModel.email}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/open_sans"/>
+
+                        <Button
+                            android:id="@+id/btnEditProfile"
+                            android:text="@string/edit_profile"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/open_sans"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"/>
+
+                        <Button
+                            android:id="@+id/btnChangePassword"
+                            android:text="@string/change_password"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/open_sans"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragmentProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/nav_menu" />
-        </LinearLayout>
+                android:orientation="vertical"
+                android:layout_gravity="bottom">
 
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnAddReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="16dp"
+                    android:contentDescription="@string/submit"
+                    android:src="@drawable/baseline_add_24" />
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNavigationView"
+                    style="@style/BottomNavbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    app:labelVisibilityMode="unlabeled"
+                    app:menu="@menu/nav_menu" />
+            </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 </layout>

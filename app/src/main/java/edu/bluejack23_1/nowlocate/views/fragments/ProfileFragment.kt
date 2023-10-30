@@ -1,13 +1,11 @@
 package edu.bluejack23_1.nowlocate.views.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -15,35 +13,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.adapters.ReportAdapter
-import edu.bluejack23_1.nowlocate.databinding.FragmentHomeBinding
+import edu.bluejack23_1.nowlocate.databinding.FragmentProfileBinding
 import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
-import edu.bluejack23_1.nowlocate.models.Report
-import edu.bluejack23_1.nowlocate.viewModels.HomeFragmentViewModel
+import edu.bluejack23_1.nowlocate.viewModels.ProfileViewModel
 
-class HomeFragment : Fragment(), ViewFragment {
 
-    private lateinit var reportRV : RecyclerView
-    private lateinit var binding: FragmentHomeBinding
-    private lateinit var reportAdapter : ReportAdapter
-    private lateinit var viewModel: HomeFragmentViewModel
+class ProfileFragment : Fragment(), ViewFragment {
+    private lateinit var reportRV: RecyclerView
+    private lateinit var binding: FragmentProfileBinding
+    private lateinit var reportAdapter: ReportAdapter
+    private lateinit var viewModel: ProfileViewModel
     private lateinit var reportPB: ProgressBar
     private lateinit var orderByTV: TextView
     private lateinit var orderByIV: ImageView
     private var isAscending = false;
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentProfileBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[HomeFragmentViewModel::class.java]
+        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         binding.viewModel = viewModel
 
         elementHandler()
@@ -51,7 +48,6 @@ class HomeFragment : Fragment(), ViewFragment {
 
         viewModel.getData()
     }
-
     override fun elementHandler() {
         reportRV = binding.rvReport
         reportPB = binding.pbReport
@@ -59,7 +55,7 @@ class HomeFragment : Fragment(), ViewFragment {
         orderByIV = binding.ivOrderBy
 
         reportAdapter = ReportAdapter(requireContext())
-        reportAdapter.reportList = ArrayList<Report>()
+        reportAdapter.reportList = ArrayList()
         reportRV.layoutManager = LinearLayoutManager(requireContext())
         reportRV.adapter = reportAdapter
     }
@@ -108,4 +104,6 @@ class HomeFragment : Fragment(), ViewFragment {
             viewModel.getData()
         }
     }
+
+
 }

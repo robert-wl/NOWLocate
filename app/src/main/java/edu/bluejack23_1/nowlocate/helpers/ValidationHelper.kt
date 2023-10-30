@@ -11,6 +11,9 @@ class ValidationHelper {
             return str.split(Regex("\\s+")).count()
         }
 
+        fun hasValidDate(str: String): Boolean{
+            return str.matches(Regex(".*\\d{2}-\\d{2}-\\d{4}.*"))
+        }
     }
 
 }

@@ -14,21 +14,19 @@ import kotlinx.coroutines.launch
 class HomeFragmentViewModel: ViewModel() {
     val reportList = MutableLiveData<ArrayList<Report>>()
     val isLoading = MutableLiveData<Boolean>(false)
+    val isAscending = MutableLiveData<Boolean>(false)
     var page = 1
+
     private var limit = 10
     private val reportRepository = ReportRepository()
 
     fun getData(){
         isLoading.value = true
-        val start = (page - 1) * limit
-        val end = page * limit
 
 
         viewModelScope.launch {
-            val result = reportRepository.getLatestReport(start, end)
+            val result = reportRepository.getLatestReport(page * limit, isAscending.value!!)
 
-            Log.wtf("HomeViewModel",  result.toString())
-            Log.wtf("HomeViewModel",  "" + start + " " + end)
             if(result.isSuccess){
                 Log.wtf("HomeViewModel",  result.getOrNull()?.size.toString())
                 reportList.value = result.getOrNull()

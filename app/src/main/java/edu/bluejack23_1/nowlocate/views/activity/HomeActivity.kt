@@ -23,7 +23,6 @@ class HomeActivity : AppCompatActivity(), View {
     private lateinit var homeFragment : Fragment
     private lateinit var searchFilterFragment : Fragment
     private lateinit var homeSearchedFragment : Fragment
-    private lateinit var bottomNavigationView : BottomNavigationView
     private lateinit var homeSV : SearchView
     private lateinit var reportAddBtn: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {

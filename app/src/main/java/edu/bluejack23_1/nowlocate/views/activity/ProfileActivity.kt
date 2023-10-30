@@ -16,8 +16,10 @@ import edu.bluejack23_1.nowlocate.databinding.ActivityProfileBinding
 import edu.bluejack23_1.nowlocate.handlers.BottomNavigationViewHandler
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
+import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
 import edu.bluejack23_1.nowlocate.viewModels.ProfileViewModel
+import edu.bluejack23_1.nowlocate.views.fragments.ProfileFragment
 
 class ProfileActivity : AppCompatActivity(), View {
 
@@ -32,6 +34,7 @@ class ProfileActivity : AppCompatActivity(), View {
     private lateinit var emailTV: TextView
     private lateinit var usernameTV: TextView
     private lateinit var profileImageIV: ImageView
+    private lateinit var profileFragment: ProfileFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +66,12 @@ class ProfileActivity : AppCompatActivity(), View {
         logoutBtn = binding.btnSignOut
         profileImageIV = binding.ivProfileImage
 
+        profileFragment = ProfileFragment()
+
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragmentProfile, profileFragment)
+            commit()
+        }
         BottomNavigationViewHandler(this, binding.bottomNavigationView)
     }
 

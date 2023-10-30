@@ -2,13 +2,13 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".views.fragments.HomeFragment">
+    tools:context=".views.fragments.ProfileFragment">
 
 
     <data>
         <variable
             name="viewModel"
-            type="edu.bluejack23_1.nowlocate.viewModels.HomeFragmentViewModel" />
+            type="edu.bluejack23_1.nowlocate.viewModels.ProfileViewModel" />
     </data>
 
     <ScrollView

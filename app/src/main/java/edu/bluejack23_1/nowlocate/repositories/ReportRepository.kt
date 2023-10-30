@@ -3,6 +3,7 @@ package edu.bluejack23_1.nowlocate.repositories
 import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack23_1.nowlocate.models.Report
 import kotlinx.coroutines.tasks.await
@@ -13,6 +14,10 @@ class ReportRepository {
     private val storageDB = FirebaseStorage.getInstance()
 
     fun addReport(report: Report){
+        db.collection("reports").document(report.id).set(report)
+    }
+
+    fun editReport(report: Report){
         db.collection("reports").document(report.id).set(report)
     }
 
@@ -28,8 +33,9 @@ class ReportRepository {
         return taskSnapshot.storage.downloadUrl.await().toString()
     }
 
-    suspend fun getLatestReport(start: Number, end: Number): Result<ArrayList<Report>> {
-        val documentReference = db.collection("reports").orderBy("reportDate").limit(end.toLong())
+    suspend fun getLatestReport(limit: Number, isAscending: Boolean = false): Result<ArrayList<Report>> {
+        val direction = if(isAscending) Query.Direction.ASCENDING else Query.Direction.DESCENDING
+        val documentReference = db.collection("reports").orderBy("reportDate", direction).limit(limit.toLong())
 
         return try {
             val querySnapshot = documentReference.get().await()

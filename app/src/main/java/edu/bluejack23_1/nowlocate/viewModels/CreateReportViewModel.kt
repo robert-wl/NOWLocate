@@ -70,6 +70,11 @@ class CreateReportViewModel : ViewModel() {
             return
         }
 
+        if(!ValidationHelper.hasValidDate(lastSeenString)){
+            errorMessage.value = "Last seen must have a substring in a dd-mm-yyyy format"
+            return
+        }
+
         if (shortDescriptionString.length > 25){
             errorMessage.value = "Short description length must not be more than 25 characters"
             return

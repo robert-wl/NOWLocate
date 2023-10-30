@@ -44,4 +44,5 @@
     <string name="delete_button">Delete Button</string>
     <string name="write_a_message">Write a message</string>
     <string name="edit_report">Edit report</string>
+    <string name="descending">Descending</string>
 </resources>
