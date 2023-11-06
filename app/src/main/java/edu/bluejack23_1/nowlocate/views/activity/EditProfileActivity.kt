@@ -1,60 +1,89 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
+import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.R
+import edu.bluejack23_1.nowlocate.databinding.ActivityEditProfileBinding
+import edu.bluejack23_1.nowlocate.databinding.ActivityRegisterBinding
+import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.ToastHelper
+import edu.bluejack23_1.nowlocate.interfaces.View
+import edu.bluejack23_1.nowlocate.viewModels.EditProfileViewModel
+import edu.bluejack23_1.nowlocate.viewModels.RegisterViewModel
 
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity(), View {
 
-    private lateinit var backBtn: ImageButton
-    private lateinit var firstnameET: EditText
-    private lateinit var lastnameET: EditText
-    private lateinit var emailET: EditText
+    private lateinit var binding : ActivityEditProfileBinding
+    private lateinit var viewModel: EditProfileViewModel
     private lateinit var genderSpinner: Spinner
-    private lateinit var saveBtn: Button
+    private lateinit var saveButton: Button
+    private lateinit var backButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_profile)
 
+        bindingHandler()
         elementHandler()
+        spinnerHandler()
+        eventHandler()
     }
 
-    private fun elementHandler() {
-        backBtn = findViewById(R.id.btnBack)
-        firstnameET = findViewById(R.id.etFirstName)
-        lastnameET = findViewById(R.id.etLastName)
-        emailET = findViewById(R.id.etEmail)
-        genderSpinner = findViewById(R.id.spinnerGender)
-        saveBtn = findViewById(R.id.btnSave)
+    override fun bindingHandler() {
+        binding = ActivityEditProfileBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
 
-        val genders = listOf("Male", "Female", "Other")
+        viewModel = ViewModelProvider(this)[EditProfileViewModel::class.java]
+        binding.viewModel = viewModel
+    }
+
+    override fun elementHandler() {
+        genderSpinner = binding.spinnerGender
+        saveButton = binding.btnSave
+        backButton = binding.btnBack
+    }
+
+    override fun eventHandler() {
+        genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: android.view.View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedItem = genderSpinner.selectedItem.toString()
+                viewModel.gender.value = selectedItem
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                viewModel.gender.value = ""
+            }
+        }
+
+        viewModel.errorMessage.observe(this) { errorMessage ->
+            ToastHelper.showMessage(this, errorMessage)
+        }
+
+        backButton.setOnClickListener {
+            IntentHelper.moveBack(this)
+        }
+
+        saveButton.setOnClickListener {
+            viewModel.handleEditProfile()
+        }
+
+    }
+
+    private fun spinnerHandler(){
+        val genders = listOf("-", "Male", "Female", "Other")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genders)
         genderSpinner.adapter = adapter
-
-        backBtn.setOnClickListener {
-            handleBack()
-        }
-
-        saveBtn.setOnClickListener {
-            handleSaveChanges()
-        }
-
-    }
-
-    private fun handleBack() {
-        val intent = Intent(this, ProfileActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun handleSaveChanges() {
-
     }
 
 }

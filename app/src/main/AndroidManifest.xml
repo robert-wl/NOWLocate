@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -13,15 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.nowlocate"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".views.activity.EditProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".views.activity.EditReportActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activity.ChangePassword"
-            android:exported="false" />
-        <activity
-            android:name=".views.activity.EditProfileActivity"
+            android:name=".views.activity.ChangePasswordActivity"
             android:exported="false" />
         <activity
             android:name=".views.activity.ProfileActivity"
@@ -46,7 +47,7 @@
             android:exported="false" />
         <activity
             android:name=".views.activity.MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
