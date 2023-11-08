@@ -15,6 +15,7 @@ import edu.bluejack23_1.nowlocate.databinding.ActivityRegisterBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
+import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.viewModels.EditProfileViewModel
 import edu.bluejack23_1.nowlocate.viewModels.RegisterViewModel
 
@@ -26,6 +27,8 @@ class EditProfileActivity : AppCompatActivity(), View {
     private lateinit var saveButton: Button
     private lateinit var backButton: ImageButton
 
+    private val authRepository = AuthRepository()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,6 +36,8 @@ class EditProfileActivity : AppCompatActivity(), View {
         elementHandler()
         spinnerHandler()
         eventHandler()
+
+        setContentView(binding.root)
     }
 
     override fun bindingHandler() {
@@ -78,12 +83,18 @@ class EditProfileActivity : AppCompatActivity(), View {
             viewModel.handleEditProfile()
         }
 
+        viewModel.activityToStart.observe(this){ activityToStart ->
+            IntentHelper.moveTo(this, activityToStart.java)
+            return@observe
+        }
+
     }
 
     private fun spinnerHandler(){
         val genders = listOf("-", "Male", "Female", "Other")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genders)
         genderSpinner.adapter = adapter
+        genderSpinner.setSelection(genders.indexOf(authRepository.getCurrentUser().gender))
     }
 
 }

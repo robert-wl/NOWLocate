@@ -1,5 +1,9 @@
 package edu.bluejack23_1.nowlocate.repositories
 
+import android.util.Log
+import com.google.android.gms.tasks.TaskCompletionSource
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import edu.bluejack23_1.nowlocate.helpers.SharedPreferencesHelper
@@ -10,12 +14,20 @@ import java.lang.Exception
 class AuthRepository {
     private val auth = FirebaseAuth.getInstance()
 
+    suspend fun sendResetPasswordEmail(email: String): Result<Unit> {
+        return try {
+            auth.sendPasswordResetEmail(email).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     suspend fun createAuthAccount(email: String, password: String): Result<FirebaseUser?> {
         return try {
             val result = auth.createUserWithEmailAndPassword(email, password).await()
-
             Result.success(result.user)
-        } catch (e: Exception){
+        } catch (e: Exception) {
 
             Result.failure(e)
         }
@@ -26,8 +38,7 @@ class AuthRepository {
             val result = auth.signInWithEmailAndPassword(email, password).await()
 
             Result.success(result.user)
-        } catch (e: Exception){
-
+        } catch (e: Exception) {
             Result.failure(e)
         }
     }
@@ -35,12 +46,13 @@ class AuthRepository {
     fun isSelf(id: String?): Boolean {
         return getCurrentUser().id == id
     }
-    fun setRememberMeValues(email: String, password: String){
+
+    fun setRememberMeValues(email: String, password: String) {
         SharedPreferencesHelper.setString("emailLogin", email)
         SharedPreferencesHelper.setString("passwordLogin", password)
     }
 
-    fun removeRememberMeValues(){
+    fun removeRememberMeValues() {
         SharedPreferencesHelper.setString("emailLogin", "")
         SharedPreferencesHelper.setString("passwordLogin", "")
     }
@@ -53,7 +65,7 @@ class AuthRepository {
         return SharedPreferencesHelper.getString("passwordLogin")
     }
 
-    fun signIn(user: User){
+    fun signIn(user: User) {
         SharedPreferencesHelper.setString("id", user.id)
         SharedPreferencesHelper.setString("username", user.username)
         SharedPreferencesHelper.setString("email", user.email)
@@ -75,8 +87,50 @@ class AuthRepository {
         )
     }
 
-    fun signOut(){
+    fun signOut() {
         removeRememberMeValues()
         auth.signOut()
+    }
+
+    suspend fun updateUserPassword(password: String): String {
+        val user = auth.currentUser ?: return "User not found"
+        val credential = EmailAuthProvider.getCredential(user.email!!, password)
+
+        val reauthResult = reauthenticate(user, credential)
+
+        Log.wtf("a", reauthResult)
+
+        if (reauthResult != "Success") {
+            return reauthResult
+        }
+
+        val updateResult = updatePassword(user, password)
+        return updateResult
+    }
+
+    private suspend fun reauthenticate(user: FirebaseUser, credential: AuthCredential): String {
+        val tcs = TaskCompletionSource<String>()
+        user.reauthenticate(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    tcs.setResult("New password must not be the same as the old password")
+                } else {
+                    tcs.setResult("Success")
+                }
+            }
+        return tcs.task.await()
+    }
+
+    private suspend fun updatePassword(user: FirebaseUser, password: String): String {
+        val tcs = TaskCompletionSource<String>()
+        user.updatePassword(password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    tcs.setResult("Successfully updated password")
+                } else {
+                    tcs.setResult("Unknown error occurred")
+                }
+            }
+        return tcs.task.await()
     }
 }

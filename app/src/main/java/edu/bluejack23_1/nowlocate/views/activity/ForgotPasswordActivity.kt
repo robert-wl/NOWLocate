@@ -46,7 +46,7 @@ class ForgotPasswordActivity : AppCompatActivity(), View {
             IntentHelper.moveBack(this)
         }
         resetBtn.setOnClickListener {
-            viewModel.handleResetPassword()
+            viewModel.handleResetPassword(this)
         }
         viewModel.getErrorMessage().observe(this){ errorMessage ->
             ToastHelper.showMessage(this, errorMessage)

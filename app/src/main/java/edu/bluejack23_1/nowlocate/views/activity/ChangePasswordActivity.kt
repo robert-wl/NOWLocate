@@ -6,71 +6,54 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.R
+import edu.bluejack23_1.nowlocate.databinding.ActivityChangePasswordBinding
+import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.helpers.ValidationHelper
+import edu.bluejack23_1.nowlocate.interfaces.View
+import edu.bluejack23_1.nowlocate.viewModels.ChangePasswordViewModel
 
-class ChangePasswordActivity : AppCompatActivity() {
+class ChangePasswordActivity : AppCompatActivity(), View {
 
     private lateinit var backBtn: ImageButton
-    private lateinit var passwordET: EditText
-    private lateinit var confirmpasswordET: EditText
+    private lateinit var binding: ActivityChangePasswordBinding
+    private lateinit var viewModel: ChangePasswordViewModel
     private lateinit var saveBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_change_password)
+        bindingHandler()
+        elementHandler()
+        eventHandler()
 
-        handleElement()
-
+        setContentView(binding.root)
     }
 
-    private fun handleElement(){
-        backBtn = findViewById(R.id.btnBack)
-        passwordET = findViewById(R.id.etPassword)
-        confirmpasswordET = findViewById(R.id.etConfirmPassword)
-        saveBtn = findViewById(R.id.btnSave)
+    override fun bindingHandler() {
+        binding = ActivityChangePasswordBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
 
+        viewModel = ViewModelProvider(this)[ChangePasswordViewModel::class.java]
+        binding.viewModel = viewModel
+    }
+
+    override fun elementHandler() {
+        backBtn = binding.btnBack
+        saveBtn = binding.btnSave
+    }
+
+    override fun eventHandler() {
         backBtn.setOnClickListener {
-            handleBack()
+            IntentHelper.moveBack(this)
         }
-
         saveBtn.setOnClickListener {
-            handleSave()
+            viewModel.handleChangePassword()
         }
-
-    }
-
-    private fun handleBack(){
-        val intent = Intent(this, ProfileActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun handleSave(){
-        val password = passwordET.text.toString()
-        val confirmPassword = confirmpasswordET.text.toString()
-
-        if(password.isEmpty()){
-
-            return
+        viewModel.errorMessage.observe(this){errorMsg ->
+            ToastHelper.showMessage(this, errorMsg)
         }
-
-        if(confirmPassword.isEmpty()){
-
-            return
-        }
-
-        if(!ValidationHelper.isAlphaNumeric(password)){
-
-            return
-        }
-
-        if(password != confirmPassword){
-
-            return
-        }
-
-
-
     }
 
 }

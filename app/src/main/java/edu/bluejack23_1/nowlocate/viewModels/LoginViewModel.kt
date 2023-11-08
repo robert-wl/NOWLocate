@@ -23,9 +23,11 @@ class LoginViewModel() : ViewModel() {
     init {
         email.value = authRepository.getRememberMeEmailValue()
         password.value = authRepository.getRememberMePasswordValue()
-        rememberMe.value = email.value != null && password.value != null
+        rememberMe.value = email.value != "" && password.value != ""
 
-        signInHandler()
+        if(rememberMe.value != null && rememberMe.value != false){
+            signInHandler()
+        }
     }
 
     fun signInHandler(){

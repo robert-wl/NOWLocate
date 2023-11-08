@@ -31,7 +31,6 @@ class EditReportActivity : AppCompatActivity(), View {
     private lateinit var saveBtn: ImageButton
     private lateinit var alertDialog: AlertDialog.Builder
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -79,7 +78,7 @@ class EditReportActivity : AppCompatActivity(), View {
 
     override fun eventHandler() {
         backBtn.setOnClickListener {
-            handleBack()
+            IntentHelper.moveTo(this, HomeActivity::class.java, false)
         }
 
         saveBtn.setOnClickListener {
@@ -102,16 +101,6 @@ class EditReportActivity : AppCompatActivity(), View {
         alertDialog.setNegativeButton("No"){_, _ ->
 
         }
-    }
-
-
-    private fun handleBack(){
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun handleSave(){
-
     }
 
 }
