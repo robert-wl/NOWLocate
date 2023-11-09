@@ -22,7 +22,6 @@ class EditProfileViewModel : ViewModel() {
     private val userRepository = UserRepository()
     private val authRepository = AuthRepository()
 
-
     init {
         val user = authRepository.getCurrentUser()
         firstname.value = user.firstName

@@ -2,12 +2,14 @@ package edu.bluejack23_1.nowlocate.views.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityEditProfileBinding
@@ -26,6 +28,8 @@ class EditProfileActivity : AppCompatActivity(), View {
     private lateinit var genderSpinner: Spinner
     private lateinit var saveButton: Button
     private lateinit var backButton: ImageButton
+
+    private lateinit var alertDialog: AlertDialog.Builder
 
     private val authRepository = AuthRepository()
 
@@ -52,6 +56,12 @@ class EditProfileActivity : AppCompatActivity(), View {
         genderSpinner = binding.spinnerGender
         saveButton = binding.btnSave
         backButton = binding.btnBack
+
+        alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Confirmation")
+        alertDialog.setMessage("Are you sure to edit your profile?")
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
+
     }
 
     override fun eventHandler() {
@@ -71,6 +81,14 @@ class EditProfileActivity : AppCompatActivity(), View {
             }
         }
 
+        alertDialog.setPositiveButton("Yes"){_, _ ->
+            viewModel.handleEditProfile()
+        }
+
+        alertDialog.setNegativeButton("No"){_, _ ->
+
+        }
+
         viewModel.errorMessage.observe(this) { errorMessage ->
             ToastHelper.showMessage(this, errorMessage)
         }
@@ -80,7 +98,7 @@ class EditProfileActivity : AppCompatActivity(), View {
         }
 
         saveButton.setOnClickListener {
-            viewModel.handleEditProfile()
+            alertDialog.show()
         }
 
         viewModel.activityToStart.observe(this){ activityToStart ->
