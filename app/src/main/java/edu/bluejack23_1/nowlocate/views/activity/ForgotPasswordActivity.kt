@@ -1,9 +1,9 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.databinding.ActivityForgotPasswordBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper

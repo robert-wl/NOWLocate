@@ -2,15 +2,20 @@ package edu.bluejack23_1.nowlocate.repositories
 
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.toObject
 import edu.bluejack23_1.nowlocate.models.Chat
+import edu.bluejack23_1.nowlocate.models.ChatDoc
 import edu.bluejack23_1.nowlocate.models.Message
 import kotlinx.coroutines.tasks.await
+import java.util.Date
 import java.util.UUID
 
 class ChatRepository {
 
     private val db = FirebaseFirestore.getInstance()
     private val collection = db.collection("chats")
+    private val userRepository = UserRepository()
+    private val authRepository = AuthRepository()
 
     private suspend fun chatExists(id1: String, id2: String): Chat? {
         val chatQuery = collection
@@ -25,25 +30,25 @@ class ChatRepository {
                         Filter.equalTo("person2", id1)
                     )
                 )
-            ).get().await()
+            ).limit(1).get().await()
 
-        if(!chatQuery.isEmpty){
+        if (chatQuery.isEmpty) {
             return null
         }
 
-        return chatQuery.documents[0].toObject(Chat::class.java)
+        return docToChat(chatQuery.documents[0].toObject(ChatDoc::class.java)!!)
     }
 
-    suspend fun addChat(id1: String, id2: String): Chat{
+    suspend fun addChat(id1: String, id2: String): Chat {
         val result = chatExists(id1, id2)
 
-        if(result != null){
+        if (result != null) {
             return result
         }
 
-        val chat = Chat(UUID.randomUUID().toString(), id1, id2)
-        collection.document(chat.id).set(chat).await()
-        return chat
+        val chatDoc = ChatDoc(UUID.randomUUID().toString(), id1, id2, ArrayList(), "", Date())
+        collection.document(chatDoc.id).set(chatDoc).await()
+        return docToChat(chatDoc)
     }
 
     suspend fun getUserChats(id: String): ArrayList<Chat> {
@@ -55,18 +60,34 @@ class ChatRepository {
                 )
             ).get().await()
         val chats: ArrayList<Chat> = ArrayList()
-        if(chatQuery.isEmpty){
+        if (chatQuery.isEmpty) {
             return chats
         }
-        for(chat in chatQuery.documents){
-            val temp = chat.toObject(Chat::class.java)
-            chats.add(temp!!)
+        for (chatDoc in chatQuery.documents) {
+            chats.add(docToChat(chatDoc.toObject(ChatDoc::class.java)!!))
         }
+        chats.sortByDescending { chat -> chat.lastTime }
         return chats
     }
 
     fun sendMessage(id: String, message: Message) {
         collection.document(id).collection("messages").add(message)
+        collection.document(id).update("lastMessage", message)
+        collection.document(id).update("lastTime", Date())
+    }
+
+    private suspend fun docToChat(chatDoc: ChatDoc): Chat {
+        val sender = authRepository.getCurrentUser()
+        val recipientId = if (chatDoc.person1 == sender.id) chatDoc.person2 else chatDoc.person1
+        val recipient = userRepository.getUser(recipientId).getOrNull()
+        return Chat(
+            chatDoc.id,
+            sender,
+            recipient!!,
+            ArrayList(),
+            chatDoc.lastMessage,
+            chatDoc.lastTime
+        )
     }
 
 }

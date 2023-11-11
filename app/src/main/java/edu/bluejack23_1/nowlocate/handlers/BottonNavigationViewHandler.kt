@@ -6,6 +6,7 @@ import android.content.Intent
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.views.activity.ConversationActivity
 import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
 import edu.bluejack23_1.nowlocate.views.activity.ProfileActivity
 
@@ -31,6 +32,7 @@ class BottomNavigationViewHandler(
                 true
             }
             R.id.chat -> {
+                moveTo(context, ConversationActivity::class.java, R.id.chat)
 
                 true
             }

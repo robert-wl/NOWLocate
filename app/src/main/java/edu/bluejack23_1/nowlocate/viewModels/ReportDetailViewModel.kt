@@ -11,6 +11,7 @@ import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.ChatRepository
 import edu.bluejack23_1.nowlocate.repositories.ReportRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
+import edu.bluejack23_1.nowlocate.views.activity.ConversationActivity
 import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
 import kotlinx.coroutines.launch
 import java.text.DateFormat
@@ -33,17 +34,18 @@ class ReportDetailViewModel : ViewModel() {
     private val reportRepository = ReportRepository()
     private val chatRepository = ChatRepository()
 
-    fun handleExtrasData(reportData: Report){
+    fun handleExtrasData(reportData: Report) {
         report.value = reportData
         reportImage.value = Uri.parse(reportData.image)
-        reportDate.value = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(reportData.reportDate)
+        reportDate.value =
+            DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(reportData.reportDate)
 
         viewModelScope.launch {
             val result = report.value?.reportedBy?.let {
                 userRepository.getUser(it)
             }
 
-            if(result?.isFailure == true){
+            if (result?.isFailure == true) {
                 return@launch
             }
 
@@ -55,15 +57,15 @@ class ReportDetailViewModel : ViewModel() {
         }
     }
 
-    fun handleMoveToConversation(){
+    fun handleMoveToConversation() {
         viewModelScope.launch {
             val user = authRepository.getCurrentUser()
             val result = chatRepository.addChat(id.value!!, user.id)
-
+//            activityToStart.value = ConversationActivity::class
         }
     }
 
-    fun handleDelete(){
+    fun handleDelete() {
         reportRepository.deleteReport(report.value?.id!!)
         activityToStart.value = HomeActivity::class
     }
