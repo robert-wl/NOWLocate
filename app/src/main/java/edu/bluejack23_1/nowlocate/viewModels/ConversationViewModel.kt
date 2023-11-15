@@ -15,11 +15,18 @@ class ConversationViewModel: ViewModel() {
     private val chatRepository = ChatRepository()
     private val authRepository = AuthRepository()
 
-    fun getUserChats(){
+    init {
+        getUserChats()
+    }
+
+    private fun getUserChats(){
         viewModelScope.launch {
             val user = authRepository.getCurrentUser()
-            chats.value = chatRepository.getUserChats(user.id)
+            chatRepository.addRealTimeConversationListener(user.id) { updatedChats ->
+                chats.value = updatedChats
+            }
         }
     }
+
 
 }

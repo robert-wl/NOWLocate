@@ -6,7 +6,12 @@ import com.google.firebase.firestore.toObject
 import edu.bluejack23_1.nowlocate.models.Chat
 import edu.bluejack23_1.nowlocate.models.ChatDoc
 import edu.bluejack23_1.nowlocate.models.Message
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.UUID
 
@@ -88,6 +93,74 @@ class ChatRepository {
             chatDoc.lastMessage,
             chatDoc.lastTime
         )
+    }
+
+    suspend fun addConversationListener(id: String): ArrayList<Chat>{
+        val chatDocs: ArrayList<ChatDoc> = ArrayList()
+        val chats: ArrayList<Chat> = ArrayList()
+        collection.where(
+            Filter.or(
+                Filter.equalTo("person1", id),
+                Filter.equalTo("person2", id)
+            )
+        ).addSnapshotListener{snapshot, e ->
+            if(snapshot != null && !snapshot.isEmpty){
+                for (chatDoc in snapshot.documents) {
+                    chatDocs.add(chatDoc.toObject(ChatDoc::class.java)!!)
+                }
+            }
+        }
+        for (chatDoc in chatDocs){
+            chats.add(docToChat(chatDoc))
+        }
+        chats.sortByDescending { chat -> chat.lastTime }
+        return chats
+    }
+
+    suspend fun addRealTimeConversationListener(id: String, callback: (ArrayList<Chat>) -> Unit) {
+        // Use coroutineScope to handle the asynchronous nature of addSnapshotListener
+        collection
+            .where(
+                Filter.or(
+                    Filter.equalTo("person1", id),
+                    Filter.equalTo("person2", id)
+                )
+            )
+            .addSnapshotListener { snapshot, e ->
+                if (snapshot != null && !snapshot.isEmpty) {
+                    // Use launch to create a coroutine within the callback
+                    CoroutineScope(Dispatchers.Default).launch {
+                        val chatDocs: ArrayList<ChatDoc> = ArrayList()
+
+                        for (chatDoc in snapshot.documents) {
+                            chatDocs.add(chatDoc.toObject(ChatDoc::class.java)!!)
+                        }
+
+                        // Process the data using suspend functions within coroutineScope
+                        val chats: ArrayList<Chat> = ArrayList()
+                        for (chatDoc in chatDocs) {
+                            try {
+                                val chat = withContext(Dispatchers.Default) {
+                                    docToChat(chatDoc)
+                                }
+                                chats.add(chat)
+                            } catch (conversionException: Exception) {
+                                // Handle errors during conversion for a specific document
+                                // Log or handle the error for a specific document
+                            }
+                        }
+
+                        // Invoke the callback with the processed data
+                        callback(chats)
+                    }
+                } else {
+                    // Handle errors, if any
+                    e?.let {
+                        // Log or handle the error
+                        callback(ArrayList()) // or callback(emptyList()) depending on your error handling strategy
+                    }
+                }
+            }
     }
 
 }

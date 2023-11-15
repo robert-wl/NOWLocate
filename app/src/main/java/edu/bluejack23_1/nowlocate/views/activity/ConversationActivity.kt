@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityConversationBinding
 import edu.bluejack23_1.nowlocate.handlers.BottomNavigationViewHandler
+import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.viewModels.ConversationViewModel
 import edu.bluejack23_1.nowlocate.views.fragments.ConversationFragment
@@ -46,6 +47,13 @@ class ConversationActivity : AppCompatActivity(), View {
     }
 
     override fun eventHandler() {
-
+        viewModel.chats.observe(this){
+            ToastHelper.showMessage(this,"hehehehhehehehe")
+            conversationFragment = ConversationFragment()
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.fragmentConversation, conversationFragment)
+                commit()
+            }
+        }
     }
 }
