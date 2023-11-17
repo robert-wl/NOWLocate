@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity(), View {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
-    private lateinit var dontHaveTV: TextView
+    private lateinit var registerTV: TextView
     private lateinit var forgotPasswordTV: TextView
     private lateinit var rememberMeCB: CheckBox
     private lateinit var signInBtn: Button
@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity(), View {
     }
 
     override fun elementHandler() {
-        dontHaveTV = binding.tvDontHave
+        registerTV = binding.tvRegister
         signInBtn = binding.btnSignIn
         rememberMeCB = binding.cbRememberMe
         forgotPasswordTV = binding.tvForgotPassword
@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity(), View {
             viewModel.signInHandler()
         }
 
-        dontHaveTV.setOnClickListener {
+        registerTV.setOnClickListener {
             IntentHelper.moveToFinish(this, RegisterActivity::class.java)
         }
 

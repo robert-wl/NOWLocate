@@ -13,259 +13,182 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="30dp"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_bold"
-            android:gravity="center"
-            android:padding="20sp"
-            android:text="@string/create_your_account"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginHorizontal="20sp"
-            android:padding="5dp">
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/create_your_account"
+                android:textAlignment="textStart"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:textColor="@color/orange" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="Create an account to continue"
+                android:textAlignment="textStart"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/dark_gray"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:baselineAligned="false">
+                android:layout_marginBottom="10dp">
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:flexDirection="column"
                     android:gravity="start"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:layout_marginEnd="15sp">
+                    android:layout_marginEnd="5sp">
 
-                    <TextView
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:gravity="start"
-                        android:paddingBottom="5dp"
-                        android:text="@string/first_name"
-                        android:textStyle="bold" />
+                        android:hint="@string/first_name"
+                        app:endIconMode="none"
+                        android:autofillHints="emailAddress"
+                        tools:ignore="RtlSymmetry">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal"
-                        android:background="@drawable/edittext_border"
-                        android:gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:paddingStart="10dp">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/baseline_person_24"
-                            />
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etFirstName"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:autofillHints=""
-                            android:fontFamily="@font/open_sans"
-                            android:background="@drawable/edittext_border"
-                            android:hint="@string/first_name"
+                            android:layout_height="match_parent"
                             android:inputType="text"
-                            android:padding="5dp"
-                            android:textSize="15sp"
-                            android:text="@={viewModel.firstname}"/>
-                    </LinearLayout>
+                            android:text="@={viewModel.firstname}"
+                            android:textColor="#000" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:flexDirection="column"
                     android:gravity="start"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:layout_marginStart="15sp">
+                    android:layout_marginStart="5sp">
 
-                    <TextView
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:gravity="start"
-                        android:paddingBottom="5dp"
-                        android:text="@string/last_name"
-                        android:textStyle="bold" />
+                        android:hint="@string/last_name"
+                        app:endIconMode="none"
+                        tools:ignore="RtlSymmetry">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal"
-                        android:background="@drawable/edittext_border"
-                        android:gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:paddingStart="10dp">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/baseline_person_24"
-                            />
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etLastName"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:autofillHints=""
-                            android:fontFamily="@font/open_sans"
-                            android:background="@drawable/edittext_border"
-                            android:hint="@string/last_name"
+                            android:layout_height="match_parent"
                             android:inputType="text"
-                            android:padding="5dp"
-                            android:textSize="15sp"
-                            android:text="@={viewModel.lastname}"/>
-                    </LinearLayout>
+                            android:text="@={viewModel.lastname}"
+                            android:textColor="#000" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/InputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="start"
-                android:paddingBottom="5dp"
-                android:text="@string/email"
-                android:textStyle="bold" />
+                android:hint="@string/email"
+                app:endIconMode="none"
+                tools:ignore="RtlSymmetry"
+                android:layout_marginBottom="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:background="@drawable/edittext_border"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:paddingStart="10dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_email_24"
-                    />
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:autofillHints=""
-                    android:fontFamily="@font/open_sans"
-                    android:background="@drawable/edittext_border"
-                    android:hint="@string/email"
+                    android:layout_height="match_parent"
                     android:inputType="text"
-                    android:padding="5dp"
-                    android:textSize="15sp"
-                    android:text="@={viewModel.email}"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="start"
-                android:paddingBottom="5dp"
-                android:text="@string/username"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:background="@drawable/edittext_border"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:paddingStart="10dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_account_box_24"
-                    />
-                <EditText
-                    android:id="@+id/etUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:autofillHints=""
-                    android:fontFamily="@font/open_sans"
-                    android:background="@drawable/edittext_border"
-                    android:hint="@string/username"
-                    android:inputType="text"
-                    android:padding="5dp"
-                    android:textSize="15sp"
-                    android:text="@={viewModel.username}"/>
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="start"
-                android:paddingBottom="5dp"
-                android:text="@string/password"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:background="@drawable/edittext_border"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:paddingStart="10dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_key_24"
-                    />
-
-                <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                app:hintEnabled="false"
-                app:passwordToggleEnabled="true"
-                android:padding="0dp"
-                android:layout_margin="0dp">
-
-                <EditText
-                    android:id="@+id/etPassword"
-                    style="@style/Widget.AppCompat.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/edittext_border"
-                    android:fontFamily="@font/open_sans"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:paddingStart="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingRight="5dp"
-                    android:text="@={viewModel.password}"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:text="@={viewModel.email}"
+                    android:textColor="#000" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/InputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="start"
-                android:paddingBottom="5dp"
-                android:text="@string/confirm_password"
-                android:textStyle="bold" />
+                android:hint="@string/username"
+                app:endIconMode="none"
+                tools:ignore="RtlSymmetry"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:text="@={viewModel.username}"
+                    android:textColor="#000" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/InputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                app:endIconMode="password_toggle"
+                tools:ignore="RtlSymmetry"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.password}"
+                    android:textColor="#000" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/InputLayout"
+                android:id="@+id/etConfirmPasswordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/confirm_password"
+                app:endIconMode="password_toggle"
+                tools:ignore="RtlSymmetry"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.confirmPassword}"
+                    android:textColor="#000" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -273,76 +196,16 @@
                 android:orientation="horizontal"
                 android:background="@drawable/edittext_border"
                 android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:paddingStart="10dp">
+                android:layout_marginBottom="15dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_key_24"
-                    />
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    app:hintEnabled="false"
-                    app:passwordToggleEnabled="true"
-                    android:padding="0dp"
-                    android:layout_margin="0dp">
-
-                    <EditText
-                        android:id="@+id/etConfirmPassword"
-                        style="@style/Widget.AppCompat.EditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/edittext_border"
-                        android:fontFamily="@font/open_sans"
-                        android:hint="@string/confirm_password"
-                        android:inputType="textPassword"
-                        android:paddingStart="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="5dp"
-                        android:text="@={viewModel.confirmPassword}"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="start"
-                android:paddingBottom="5dp"
-                android:text="@string/gender"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:background="@drawable/edittext_border"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:paddingStart="10dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_male_24"
-                    />
                 <Spinner
                     android:id="@+id/spinnerGender"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edittext_border"
-                    android:padding="5dp"
-                    android:theme="@style/SpinnerTheme"
-
-                    />
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textColor="@color/black"
+                    android:theme="@style/SpinnerTheme" />
             </LinearLayout>
 
         </LinearLayout>
@@ -350,8 +213,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_weight="4"
+            android:gravity="center|bottom"
             android:orientation="vertical">
 
             <Button
@@ -360,19 +223,34 @@
                 android:layout_height="55dp"
                 android:layout_marginBottom="20dp"
                 android:width="250dp"
-                android:backgroundTint="#339FDC"
+                android:backgroundTint="@color/light_blue"
                 android:fontFamily="@font/open_sans_bold"
                 android:text="@string/sign_up"
                 android:textSize="20sp"
                 app:cornerRadius="10dp" />
 
-            <TextView
-                android:id="@+id/tvAlreadyHave"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:text="@string/already_have_an_account"
-                android:textSize="15sp" />
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/tvAlreadyHave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/already_have_an_account"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/tvLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Login"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/orange"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
 
         </LinearLayout>

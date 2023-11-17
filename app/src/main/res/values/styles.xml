@@ -15,4 +15,20 @@
         <item name="android:homeAsUpIndicator">@drawable/baseline_arrow_back_24</item>
         <item name="android:background">@color/blue</item>
     </style>
+    <style name="InputLinearLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:background">@drawable/edittext_border</item>
+        <item name="boxBackgroundColor">@color/light_blue</item>
+    </style>
+    <style name="InputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="endIconTint">@color/dark_gray</item>
+        <item name="hintTextColor">@color/light_blue</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="boxBackgroundMode">filled</item>
+        <item name="boxBackgroundColor">@color/transparent</item>
+        <item name="backgroundColor">@color/transparent</item>
+        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+        <item name="android:layout_marginStart">-14dp</item>
+<!--        <item name="boxStrokeWidth">2dp</item>-->
+    </style>
+
 </resources>

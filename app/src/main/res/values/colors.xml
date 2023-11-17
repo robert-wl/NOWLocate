@@ -3,8 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#339fdc</color>
+    <color name="light_blue">#30C3CD</color>
+    <color name="light_blue_transparent">#F4FBFF</color>
     <color name="gray">#D9D9D9</color>
     <color name="gray2">#D8D2D2</color>
     <color name="dark_gray">#676464</color>
+    <color name="purple">#7E54B0</color>
+    <color name="orange">#F8A06C</color>
     <color name="transparent">@android:color/transparent</color>
 </resources>

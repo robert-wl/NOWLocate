@@ -1,5 +1,6 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
@@ -45,6 +46,7 @@ class RegisterActivity : AppCompatActivity(), View {
         genderSpinner = binding.spinnerGender
         signUpButton = binding.btnSignUp
         alreadyHaveTV = binding.tvAlreadyHave
+
 
         spinnerHandler()
     }
