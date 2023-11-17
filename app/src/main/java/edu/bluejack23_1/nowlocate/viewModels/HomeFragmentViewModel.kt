@@ -17,7 +17,7 @@ class HomeFragmentViewModel: ViewModel() {
     val isAscending = MutableLiveData<Boolean>(false)
     var page = 1
 
-    private var limit = 10
+    private var limit = 5
     private val reportRepository = ReportRepository()
 
     fun getData(){

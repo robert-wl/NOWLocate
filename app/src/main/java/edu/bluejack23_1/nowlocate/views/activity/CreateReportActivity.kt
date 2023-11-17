@@ -32,7 +32,6 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
     private lateinit var imageView: ImageView
     private lateinit var alertDialog: AlertDialog.Builder
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

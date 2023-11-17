@@ -30,7 +30,7 @@ class ProfileViewModel: ViewModel() {
     var page = 1
 
 
-    private var limit = 10
+    private var limit = 5
     private val reportRepository = ReportRepository()
     private val authRepository = AuthRepository()
 
