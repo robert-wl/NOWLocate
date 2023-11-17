@@ -2,6 +2,7 @@ package edu.bluejack23_1.nowlocate.views.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
@@ -68,6 +69,7 @@ class LoginActivity : AppCompatActivity(), View {
         }
 
         viewModel.activityToStart.observe(this) { activityToStart ->
+            Log.wtf("a", "akjsfhahjkhfasjkahhfkjhskjfhajkhfajksjhjfkashjkfashfjks")
             IntentHelper.moveToFinish(this, activityToStart.java)
         }
     }

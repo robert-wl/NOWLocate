@@ -4,10 +4,10 @@ import java.lang.reflect.Constructor
 
 data class User (
     val id: String = "",
-    val firstName: String = "",
-    val lastName: String = "",
+    var firstName: String = "",
+    var lastName: String = "",
     val email: String = "",
-    val username: String = "",
-    val image: String = "",
-    val gender: String = "",
+    var username: String = "",
+    var image: String = "",
+    var gender: String = "",
 )

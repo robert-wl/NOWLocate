@@ -94,8 +94,8 @@ class EditReportViewModel: ViewModel() {
             return
         }
 
-        if (ValidationHelper.numOfWords(itemNameString) < 1){
-            errorMessage.value = "Report name must be at least 1 word"
+        if (ValidationHelper.numOfWords(itemNameString) < 2){
+            errorMessage.value = "Report name must be at least 2 words"
             return
         }
 

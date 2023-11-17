@@ -45,4 +45,6 @@
     <string name="write_a_message">Write a message</string>
     <string name="edit_report">Edit report</string>
     <string name="descending">Descending</string>
+    <string name="date">date</string>
+    <string name="last_message">Last message</string>
 </resources>

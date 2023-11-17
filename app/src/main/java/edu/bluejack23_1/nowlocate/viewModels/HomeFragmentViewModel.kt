@@ -23,7 +23,6 @@ class HomeFragmentViewModel: ViewModel() {
     fun getData(){
         isLoading.value = true
 
-
         viewModelScope.launch {
             val result = reportRepository.getLatestReport(page * limit, isAscending.value!!)
 

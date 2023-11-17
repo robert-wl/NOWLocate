@@ -13,15 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.nowlocate"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".views.activity.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activity.ConversationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activity.EditProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".views.activity.EditReportActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activity.ChangePassword"
-            android:exported="false" />
-        <activity
-            android:name=".views.activity.EditProfileActivity"
+            android:name=".views.activity.ChangePasswordActivity"
             android:exported="false" />
         <activity
             android:name=".views.activity.ProfileActivity"

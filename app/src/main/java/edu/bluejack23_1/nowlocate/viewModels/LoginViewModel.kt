@@ -1,5 +1,6 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,9 +24,11 @@ class LoginViewModel() : ViewModel() {
     init {
         email.value = authRepository.getRememberMeEmailValue()
         password.value = authRepository.getRememberMePasswordValue()
-        rememberMe.value = email.value != null && password.value != null
+        rememberMe.value = email.value != "" && password.value != ""
 
-        signInHandler()
+        if(rememberMe.value != null && rememberMe.value != false){
+            signInHandler()
+        }
     }
 
     fun signInHandler(){
@@ -46,6 +49,7 @@ class LoginViewModel() : ViewModel() {
     }
 
     private fun signIn(email: String, password: String, rememberMe: Boolean){
+        Log.wtf("a", "woiiiiiiiiiiiiiii")
         viewModelScope.launch {
             val result = authRepository.signIn(email, password)
 

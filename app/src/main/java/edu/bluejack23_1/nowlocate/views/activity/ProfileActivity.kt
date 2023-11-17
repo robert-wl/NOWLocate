@@ -1,6 +1,5 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -11,13 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 import edu.bluejack23_1.nowlocate.R
-import edu.bluejack23_1.nowlocate.databinding.ActivityHomeBinding
 import edu.bluejack23_1.nowlocate.databinding.ActivityProfileBinding
 import edu.bluejack23_1.nowlocate.handlers.BottomNavigationViewHandler
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
-import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
-import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
 import edu.bluejack23_1.nowlocate.viewModels.ProfileViewModel
 import edu.bluejack23_1.nowlocate.views.fragments.ProfileFragment
 
