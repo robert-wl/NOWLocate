@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import edu.bluejack23_1.nowlocate.models.Chat
 import edu.bluejack23_1.nowlocate.models.ChatDoc
 import edu.bluejack23_1.nowlocate.models.Message
+import edu.bluejack23_1.nowlocate.models.MessageDoc
 import edu.bluejack23_1.nowlocate.models.User
 import kotlinx.coroutines.tasks.await
 import java.util.Date
@@ -49,16 +50,16 @@ class ChatRepository {
             return result
         }
 
-        val chatDoc = ChatDoc(UUID.randomUUID().toString(), id1, id2, ArrayList(), "", Date())
+        val chatDoc = ChatDoc(UUID.randomUUID().toString(), id1, id2,"", Date())
         collection.document(chatDoc.id).set(chatDoc).await()
 
         val sender = authRepository.getCurrentUser()
         return docToChat(chatDoc, sender)
     }
 
-    fun sendMessage(id: String, message: Message) {
+    fun sendMessage(id: String, message: MessageDoc) {
         collection.document(id).collection("messages").add(message)
-        collection.document(id).update("lastMessage", message)
+        collection.document(id).update("lastMessage", message.message)
         collection.document(id).update("lastTime", Date())
     }
 
@@ -69,7 +70,6 @@ class ChatRepository {
             chatDoc.id,
             sender,
             recipient!!,
-            ArrayList(),
             chatDoc.lastMessage,
             chatDoc.lastTime
         )
@@ -87,13 +87,26 @@ class ChatRepository {
             )
             .addSnapshotListener { value, e ->
                 chatDocs.clear()
-                if (value == null || value.isEmpty) {
-                    return@addSnapshotListener
+                if (value != null && !value.isEmpty) {
+                    for (chatDoc in value.documents) {
+                        chatDoc.toObject(ChatDoc::class.java)?.let { chatDocs.add(it) }
+                    }
+                    chatData.value = chatDocs
                 }
-                for (chatDoc in value.documents) {
-                    chatDocs.add(chatDoc.toObject(ChatDoc::class.java)!!)
+            }
+    }
+
+    fun addRealTimeMessageListener(id: String, messageData: MutableLiveData<ArrayList<MessageDoc>>){
+        val messageDocs = ArrayList<MessageDoc>()
+        collection.document(id).collection("messages")
+            .addSnapshotListener { value, e ->
+                messageDocs.clear()
+                if (value != null && !value.isEmpty) {
+                    for (chatDoc in value.documents) {
+                        chatDoc.toObject(MessageDoc::class.java)?.let { messageDocs.add(it) }
+                    }
+                    messageData.value = messageDocs
                 }
-                chatData.value = chatDocs
             }
     }
 

@@ -52,9 +52,12 @@ class ConversationFragment : Fragment(), ViewFragment {
     }
 
     override fun eventHandler() {
+
         viewModel.chatDocs.observe(viewLifecycleOwner){
+            it.sortByDescending { con -> con.lastTime }
             viewModel.updateChatData(it)
         }
+
         viewModel.chats.observe(viewLifecycleOwner){
             conversationAdapter.conversationList = it
             conversationAdapter.notifyDataSetChanged()

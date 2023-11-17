@@ -49,7 +49,6 @@ class LoginViewModel() : ViewModel() {
     }
 
     private fun signIn(email: String, password: String, rememberMe: Boolean){
-        Log.wtf("a", "woiiiiiiiiiiiiiii")
         viewModelScope.launch {
             val result = authRepository.signIn(email, password)
 
