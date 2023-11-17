@@ -1,17 +1,14 @@
 package edu.bluejack23_1.nowlocate.repositories
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
 import edu.bluejack23_1.nowlocate.models.Chat
 import edu.bluejack23_1.nowlocate.models.ChatDoc
 import edu.bluejack23_1.nowlocate.models.Message
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import edu.bluejack23_1.nowlocate.models.User
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.UUID
 
@@ -40,8 +37,9 @@ class ChatRepository {
         if (chatQuery.isEmpty) {
             return null
         }
-
-        return docToChat(chatQuery.documents[0].toObject(ChatDoc::class.java)!!)
+        val chatDoc = chatQuery.documents[0].toObject(ChatDoc::class.java)!!
+        val sender = authRepository.getCurrentUser()
+        return docToChat(chatDoc, sender)
     }
 
     suspend fun addChat(id1: String, id2: String): Chat {
@@ -53,26 +51,9 @@ class ChatRepository {
 
         val chatDoc = ChatDoc(UUID.randomUUID().toString(), id1, id2, ArrayList(), "", Date())
         collection.document(chatDoc.id).set(chatDoc).await()
-        return docToChat(chatDoc)
-    }
 
-    suspend fun getUserChats(id: String): ArrayList<Chat> {
-        val chatQuery = collection
-            .where(
-                Filter.or(
-                    Filter.equalTo("person1", id),
-                    Filter.equalTo("person2", id)
-                )
-            ).get().await()
-        val chats: ArrayList<Chat> = ArrayList()
-        if (chatQuery.isEmpty) {
-            return chats
-        }
-        for (chatDoc in chatQuery.documents) {
-            chats.add(docToChat(chatDoc.toObject(ChatDoc::class.java)!!))
-        }
-        chats.sortByDescending { chat -> chat.lastTime }
-        return chats
+        val sender = authRepository.getCurrentUser()
+        return docToChat(chatDoc, sender)
     }
 
     fun sendMessage(id: String, message: Message) {
@@ -81,9 +62,8 @@ class ChatRepository {
         collection.document(id).update("lastTime", Date())
     }
 
-    private suspend fun docToChat(chatDoc: ChatDoc): Chat {
-        val sender = authRepository.getCurrentUser()
-        val recipientId = if (chatDoc.person1 == sender.id) chatDoc.person2 else chatDoc.person1
+    suspend fun docToChat(chatDoc: ChatDoc, sender: User): Chat {
+        val recipientId = if(chatDoc.person1 == sender.id) chatDoc.person2 else chatDoc.person1
         val recipient = userRepository.getUser(recipientId).getOrNull()
         return Chat(
             chatDoc.id,
@@ -95,30 +75,9 @@ class ChatRepository {
         )
     }
 
-    suspend fun addConversationListener(id: String): ArrayList<Chat>{
-        val chatDocs: ArrayList<ChatDoc> = ArrayList()
-        val chats: ArrayList<Chat> = ArrayList()
-        collection.where(
-            Filter.or(
-                Filter.equalTo("person1", id),
-                Filter.equalTo("person2", id)
-            )
-        ).addSnapshotListener{snapshot, e ->
-            if(snapshot != null && !snapshot.isEmpty){
-                for (chatDoc in snapshot.documents) {
-                    chatDocs.add(chatDoc.toObject(ChatDoc::class.java)!!)
-                }
-            }
-        }
-        for (chatDoc in chatDocs){
-            chats.add(docToChat(chatDoc))
-        }
-        chats.sortByDescending { chat -> chat.lastTime }
-        return chats
-    }
 
-    suspend fun addRealTimeConversationListener(id: String, callback: (ArrayList<Chat>) -> Unit) {
-        // Use coroutineScope to handle the asynchronous nature of addSnapshotListener
+    fun addRealTimeConversationListener(id: String, chatData: MutableLiveData<ArrayList<ChatDoc>>) {
+        val chatDocs = ArrayList<ChatDoc>()
         collection
             .where(
                 Filter.or(
@@ -126,41 +85,17 @@ class ChatRepository {
                     Filter.equalTo("person2", id)
                 )
             )
-            .addSnapshotListener { snapshot, e ->
-                if (snapshot != null && !snapshot.isEmpty) {
-                    // Use launch to create a coroutine within the callback
-                    CoroutineScope(Dispatchers.Default).launch {
-                        val chatDocs: ArrayList<ChatDoc> = ArrayList()
-
-                        for (chatDoc in snapshot.documents) {
-                            chatDocs.add(chatDoc.toObject(ChatDoc::class.java)!!)
-                        }
-
-                        // Process the data using suspend functions within coroutineScope
-                        val chats: ArrayList<Chat> = ArrayList()
-                        for (chatDoc in chatDocs) {
-                            try {
-                                val chat = withContext(Dispatchers.Default) {
-                                    docToChat(chatDoc)
-                                }
-                                chats.add(chat)
-                            } catch (conversionException: Exception) {
-                                // Handle errors during conversion for a specific document
-                                // Log or handle the error for a specific document
-                            }
-                        }
-
-                        // Invoke the callback with the processed data
-                        callback(chats)
-                    }
-                } else {
-                    // Handle errors, if any
-                    e?.let {
-                        // Log or handle the error
-                        callback(ArrayList()) // or callback(emptyList()) depending on your error handling strategy
-                    }
+            .addSnapshotListener { value, e ->
+                chatDocs.clear()
+                if (value == null || value.isEmpty) {
+                    return@addSnapshotListener
                 }
+                for (chatDoc in value.documents) {
+                    chatDocs.add(chatDoc.toObject(ChatDoc::class.java)!!)
+                }
+                chatData.value = chatDocs
             }
     }
+
 
 }
