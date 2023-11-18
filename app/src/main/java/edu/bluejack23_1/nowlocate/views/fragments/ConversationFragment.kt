@@ -1,10 +1,10 @@
 package edu.bluejack23_1.nowlocate.views.fragments
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +21,9 @@ class ConversationFragment : Fragment(), ViewFragment {
     private lateinit var conversationAdapter: ConversationAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentConversationBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -36,7 +37,7 @@ class ConversationFragment : Fragment(), ViewFragment {
         elementHandler()
         eventHandler()
 
-        viewModel.getData()
+        viewModel.getUserChats()
 
     }
 
@@ -51,9 +52,15 @@ class ConversationFragment : Fragment(), ViewFragment {
     }
 
     override fun eventHandler() {
-        viewModel.chatList.observe(viewLifecycleOwner) {
+
+        viewModel.chatDocs.observe(viewLifecycleOwner){
+            it.sortByDescending { con -> con.lastTime }
+            viewModel.updateChatData(it)
+        }
+
+        viewModel.chats.observe(viewLifecycleOwner){
             conversationAdapter.conversationList = it
-            conversationAdapter.notifyItemRangeChanged(0, it.size)
+            conversationAdapter.notifyDataSetChanged()
         }
     }
 

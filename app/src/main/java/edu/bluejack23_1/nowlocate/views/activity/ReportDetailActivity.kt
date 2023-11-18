@@ -90,7 +90,7 @@ class ReportDetailActivity : AppCompatActivity(), View {
             if(viewModel.isSelf.value == true){
                 IntentHelper.moveToWithExtra(this, EditReportActivity::class.java, "report", viewModel.report.value!!)
             } else {
-                viewModel.handleMoveToConversation()
+                viewModel.handleMoveToConversation(this)
             }
         }
 

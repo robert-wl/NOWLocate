@@ -25,8 +25,4 @@ class ConversationAdapter(private var context: Context): Adapter<ConversationVie
         holder.eventHandler(context)
     }
 
-    fun setData(data: ArrayList<Chat>){
-        this.conversationList = data
-    }
-
 }
