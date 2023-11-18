@@ -14,9 +14,9 @@ class FilterViewHolder : ViewHolder {
     var filterAmountTV: TextView
     var filterCardCV: CardView
     constructor(itemView: View) : super(itemView) {
-        filterIconIV = itemView.findViewById(R.id.ivFilterIcon)
-        filterNameTV = itemView.findViewById(R.id.tvFilterName)
-        filterAmountTV = itemView.findViewById(R.id.tvFilterAmount)
+        filterIconIV = itemView.findViewById(R.id.tv_filter_icon)
+        filterNameTV = itemView.findViewById(R.id.tv_filter_name)
+        filterAmountTV = itemView.findViewById(R.id.tv_filter_amount)
         filterCardCV = itemView.findViewById(R.id.cvFilterCard)
     }
 }

@@ -1,28 +1,28 @@
 package edu.bluejack23_1.nowlocate.views.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_1.nowlocate.adapters.ReportAdapter
 import edu.bluejack23_1.nowlocate.databinding.FragmentHomeSearchedBinding
+import edu.bluejack23_1.nowlocate.interfaces.Sortable
 import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
 
-class HomeSearchedFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragment {
-    private lateinit var reportSearchedRV : RecyclerView
+class HomeSearchedFragment(private val viewModel: HomeViewModel) : Fragment(), ViewFragment,
+    Sortable {
+    private lateinit var reportSearchedRV: RecyclerView
     private lateinit var binding: FragmentHomeSearchedBinding
-    private lateinit var reportAdapter : ReportAdapter
+    private lateinit var reportAdapter: ReportAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         binding = FragmentHomeSearchedBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -48,9 +48,22 @@ class HomeSearchedFragment(private val viewModel: HomeViewModel) : Fragment(), V
 
     override fun eventHandler() {
         viewModel.reportList.observe(viewLifecycleOwner) {
-            Log.wtf("HomeSearchedFragment", "hahahah" + it.size.toString())
             reportAdapter.reportList = it
-            reportAdapter.notifyDataSetChanged()
+            reportAdapter.notifyItemRangeChanged(0, it.size)
         }
+    }
+
+    override fun setSort(isAscending: Boolean) {
+        viewModel.isAscending.value = isAscending
+
+        val list = viewModel.reportList.value ?: ArrayList<Report>()
+
+        if (isAscending) {
+            list.sortBy { it.reportDate }
+        } else {
+            list.sortByDescending { it.reportDate }
+        }
+
+        viewModel.reportList.value = list
     }
 }

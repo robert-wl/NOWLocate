@@ -2,11 +2,9 @@ package edu.bluejack23_1.nowlocate.viewModels
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.bluejack23_1.nowlocate.models.Filter
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.repositories.ReportRepository
 import kotlinx.coroutines.launch
@@ -27,7 +25,6 @@ class HomeFragmentViewModel: ViewModel() {
             val result = reportRepository.getLatestReport(page * limit, isAscending.value!!)
 
             if(result.isSuccess){
-                Log.wtf("HomeViewModel",  result.getOrNull()?.size.toString())
                 reportList.value = result.getOrNull()
             }
         }

@@ -214,7 +214,7 @@
                 >
 
                 <Button
-                    android:id="@+id/btnAddReport"
+                    android:id="@+id/btn_add_report"
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:width="250dp"

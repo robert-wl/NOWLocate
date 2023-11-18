@@ -9,6 +9,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         SharedPreferencesHelper.initialize(this);
-        IntentHelper.moveTo(this, LoginActivity::class.java)
+        IntentHelper.moveTo(this, HomeActivity::class.java)
     }
 }

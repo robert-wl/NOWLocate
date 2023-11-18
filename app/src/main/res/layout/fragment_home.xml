@@ -12,32 +12,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/light_blue_transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center|start">
-
-                <ImageView
-                    android:id="@+id/ivOrderBy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_keyboard_arrow_down_24"
-                    android:contentDescription="TODO" />
-                <TextView
-                    android:id="@+id/tvOrderBy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/descending"/>
-
-            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvReport"
                 android:layout_width="match_parent"

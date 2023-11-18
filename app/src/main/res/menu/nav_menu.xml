@@ -2,14 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-        android:icon="@drawable/baseline_home_24"
-        android:title="Home"  />
+        android:icon="@drawable/outline_home_24"
+        android:iconTint="@color/light_blue"
+        android:title="@string/home"  />
     <item
         android:id="@+id/chat"
-        android:icon="@drawable/baseline_chat_24"
+        android:icon="@drawable/outline_chat_24"
+        android:iconTint="@color/light_blue"
         android:title="Chat" />
     <item
         android:id="@+id/profile"
-        android:icon="@drawable/baseline_person_24"
+        android:icon="@drawable/outline_person_24"
+        android:iconTint="@color/light_blue"
         android:title="Profile" />
 </menu>

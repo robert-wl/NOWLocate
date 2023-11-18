@@ -2,76 +2,111 @@
 
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".views.activity.HomeActivity">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".views.activity.HomeActivity">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="edu.bluejack23_1.nowlocate.viewModels.HomeViewModel" />
-    </data>
+	<data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+		<variable
+			name="viewModel"
+			type="edu.bluejack23_1.nowlocate.viewModels.HomeViewModel" />
+	</data>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_home"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/blue"
-                app:titleTextColor="@color/white"
-                android:elevation="4dp"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+		<androidx.coordinatorlayout.widget.CoordinatorLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:padding="0dp"
+			android:translationZ="1dp">
 
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/svHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:queryHint="Search"
-                    android:background="@drawable/searchview_background"
-                    android:layout_marginEnd="15dp"/>
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/white"
+				android:orientation="vertical">
 
-            </androidx.appcompat.widget.Toolbar>
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragmentHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+					<com.google.android.material.search.SearchBar
+						style="@style/SearchBar"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="-10dp"
+						android:background="@color/white"
+						android:hint="@string/search_results" />
 
-        </LinearLayout>
+					<androidx.fragment.app.FragmentContainerView
+						android:id="@+id/fragment_home"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_marginTop="20dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom">
+				</LinearLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAddReport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/submit"
-                android:src="@drawable/baseline_add_24" />
+				<androidx.cardview.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="10dp"
+					android:padding="0dp"
+					app:cardElevation="10dp">
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationView"
-                style="@style/BottomNavbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/nav_menu" />
-        </LinearLayout>
-    </FrameLayout>
+					<com.google.android.material.search.SearchBar
+						android:id="@+id/search_bar"
+						style="@style/SearchBar"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:background="@color/white"
+						android:elevation="10dp"
+						android:hint="@string/search_results"
+						app:elevation="10dp" />
+				</androidx.cardview.widget.CardView>
+
+			</FrameLayout>
+
+			<com.google.android.material.search.SearchView
+				android:id="@+id/search_view"
+				style="@style/SearchView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:layout_anchor="@id/search_bar">
+
+				<androidx.fragment.app.FragmentContainerView
+					android:id="@+id/fragment_filter"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent" />
+
+			</com.google.android.material.search.SearchView>
+
+		</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/transparent"
+			android:gravity="bottom"
+			android:layout_gravity="bottom"
+			android:orientation="vertical"
+			android:isScrollContainer="true"
+			android:translationZ="1dp">
+
+			<com.google.android.material.floatingactionbutton.FloatingActionButton
+				android:id="@+id/btn_add_report"
+				style="@style/FloatingActionButton"
+				android:contentDescription="@string/add_report" />
+
+			<com.google.android.material.bottomnavigation.BottomNavigationView
+				android:id="@+id/bottom_navigation_view"
+				style="@style/BottomNavigationBar" />
+		</LinearLayout>
+
+	</FrameLayout>
 
 </layout>

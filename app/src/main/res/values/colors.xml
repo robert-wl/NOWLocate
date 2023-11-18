@@ -9,6 +9,6 @@
     <color name="gray2">#D8D2D2</color>
     <color name="dark_gray">#676464</color>
     <color name="purple">#7E54B0</color>
-    <color name="orange">#F8A06C</color>
+    <color name="orange">#F3AD78</color>
     <color name="transparent">@android:color/transparent</color>
 </resources>

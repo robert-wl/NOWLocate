@@ -1,15 +1,22 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.search.SearchBar
+import com.google.android.material.search.SearchView
 import edu.bluejack23_1.nowlocate.R
+import edu.bluejack23_1.nowlocate.builder.FragmentBuilder
 import edu.bluejack23_1.nowlocate.databinding.ActivityHomeBinding
 import edu.bluejack23_1.nowlocate.handlers.BottomNavigationViewHandler
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.interfaces.Sortable
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.viewModels.HomeViewModel
 import edu.bluejack23_1.nowlocate.views.fragments.HomeFragment
@@ -19,11 +26,14 @@ import edu.bluejack23_1.nowlocate.views.fragments.SearchFilterFragment
 class HomeActivity : AppCompatActivity(), View {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeViewModel
-    private lateinit var homeFragment : Fragment
-    private lateinit var searchFilterFragment : Fragment
-    private lateinit var homeSearchedFragment : Fragment
-    private lateinit var homeSV : SearchView
+    private lateinit var homeFragment: HomeFragment
+    private lateinit var searchFilterFragment: SearchFilterFragment
+    private lateinit var homeSearchedFragment: HomeSearchedFragment
+    private lateinit var currentFragment: Fragment
+    private lateinit var homeSB: SearchBar
+    private lateinit var homeSV: SearchView
     private lateinit var reportAddBtn: FloatingActionButton
+    private var isAscending: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,68 +57,89 @@ class HomeActivity : AppCompatActivity(), View {
         homeFragment = HomeFragment()
         searchFilterFragment = SearchFilterFragment(viewModel)
         homeSearchedFragment = HomeSearchedFragment(viewModel)
-        homeSV = binding.svHome
+        homeSB = binding.searchBar
+        homeSV = binding.searchView
         reportAddBtn = binding.btnAddReport
 
         BottomNavigationViewHandler(this, binding.bottomNavigationView)
 
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragmentHome, homeFragment)
-            commit()
-        }
+        setSupportActionBar(homeSB)
+
+        FragmentBuilder(supportFragmentManager).replace(R.id.fragment_home, homeFragment).commit()
+
+        FragmentBuilder(supportFragmentManager).replace(R.id.fragment_filter, searchFilterFragment)
+            .commit()
+
+        currentFragment = homeFragment
     }
 
-    override fun eventHandler() {
-        homeSV.setOnSearchClickListener {
-            viewModel.getCategoryData()
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentHome, searchFilterFragment)
-                commit()
-            }
-        }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.search_bar_menu, menu)
+        return true
+    }
 
-        homeSV.setOnCloseListener {
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentHome, homeFragment)
-                commit()
-            }
-            false
-        }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_descending -> {
+                if (!isAscending) {
+                    item.setIcon(R.drawable.baseline_keyboard_double_arrow_up_24)
+                } else {
+                    item.setIcon(R.drawable.baseline_keyboard_double_arrow_down_24)
+                }
 
-        homeSV.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.searchQuery.value = query
-//                viewModel.filterQuery.value = ""
-                viewModel.getReportDataSearched()
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.fragmentHome, homeSearchedFragment)
-                    commit()
+                isAscending = !isAscending
+
+                if (currentFragment == homeFragment) {
+                    homeFragment.setSort(isAscending)
+                } else {
+                    homeSearchedFragment.setSort(isAscending)
                 }
                 return true
             }
 
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.searchQuery.value = newText
-                return true
+
+    override fun eventHandler() {
+
+        homeSV.editText.addTextChangedListener { text ->
+            viewModel.searchQuery.value = text.toString()
+        }
+
+        homeSV.editText.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                viewModel.filterQuery.value = null
+                viewModel.getReportDataSearched()
+
+                FragmentBuilder(supportFragmentManager).replace(
+                    R.id.fragment_home,
+                    homeSearchedFragment
+                ).commit()
+                currentFragment = homeSearchedFragment
+
+                homeSV.hide()
+                return@setOnKeyListener true
             }
-
-        })
-
+            return@setOnKeyListener false
+        }
 
         viewModel.filterQuery.observe(this) {
-            if(it == ""){
+            if (it == "" || it == null) {
                 return@observe
             }
-
-            viewModel.searchQuery.value = ""
+            viewModel.searchQuery.value = null
             viewModel.reportList.value = ArrayList()
             viewModel.getReportDataFiltered()
 
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentHome, homeSearchedFragment)
-                commit()
-            }
+            FragmentBuilder(supportFragmentManager).replace(
+                R.id.fragment_home,
+                homeSearchedFragment
+            ).commit()
+            currentFragment = homeSearchedFragment
+
+            homeSV.hide()
         }
 
         reportAddBtn.setOnClickListener {

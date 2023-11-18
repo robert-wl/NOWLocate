@@ -1,34 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="SpinnerTheme">
-<!--        <item name="android:textColor">#333333</item>-->
-        <item name="android:fontFamily">@font/open_sans</item>
-<!--        <item name="android:textStyle">bold</item>-->
-    </style>
-    <style name="ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:fontFamily">@font/open_sans_bold</item>
-        <item name="android:homeAsUpIndicator">@drawable/baseline_arrow_back_24</item>
-    </style>
-    <style name="BottomNavbar" parent="Widget.MaterialComponents.ActionBar.Primary">
-        <item name="android:fontFamily">@font/open_sans_bold</item>
-        <item name="android:homeAsUpIndicator">@drawable/baseline_arrow_back_24</item>
-        <item name="android:background">@color/blue</item>
-    </style>
-    <style name="InputLinearLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="android:background">@drawable/edittext_border</item>
-        <item name="boxBackgroundColor">@color/light_blue</item>
-    </style>
-    <style name="InputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="endIconTint">@color/dark_gray</item>
-        <item name="hintTextColor">@color/light_blue</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="boxBackgroundMode">filled</item>
-        <item name="boxBackgroundColor">@color/transparent</item>
-        <item name="backgroundColor">@color/transparent</item>
-        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
-        <item name="android:layout_marginStart">-14dp</item>
-<!--        <item name="boxStrokeWidth">2dp</item>-->
-    </style>
+	<style name="SpinnerTheme">
+		<!--        <item name="android:textColor">#333333</item>-->
+		<item name="android:fontFamily">@font/open_sans</item>
+		<!--        <item name="android:textStyle">bold</item>-->
+	</style>
+
+	<style name="ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+		<item name="android:fontFamily">@font/open_sans_bold</item>
+		<item name="android:homeAsUpIndicator">@drawable/baseline_arrow_back_24</item>
+	</style>
+
+	<style name="BottomNavigationBar" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+		<item name="android:fontFamily">@font/open_sans_bold</item>
+		<item name="android:homeAsUpIndicator">@drawable/baseline_arrow_back_24</item>
+		<item name="itemTextColor">@color/bottom_bar_icon</item>
+		<item name="android:background">@color/white</item>
+		<item name="itemIconTint">@color/bottom_bar_icon</item>
+		<item name="labelVisibilityMode">unlabeled</item>
+		<item name="itemIconSize">32dp</item>
+		<item name="android:layout_gravity">bottom</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="menu">@menu/nav_menu</item>
+	</style>
+
+	<style name="FloatingActionButton" parent="Widget.Design.FloatingActionButton">
+		<item name="android:layout_margin">16dp</item>
+		<item name="android:backgroundTint">@color/light_blue</item>
+		<item name="srcCompat">@drawable/baseline_add_24</item>
+		<item name="tint">@color/white</item>
+		<item name="android:contentDescription">@string/submit</item>
+		<item name="android:layout_gravity">bottom|end</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+
+	<style name="InputLinearLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+		<item name="android:background">@drawable/edittext_border</item>
+		<item name="boxBackgroundColor">@color/light_blue</item>
+	</style>
+
+	<style name="InputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+		<item name="endIconTint">@color/dark_gray</item>
+		<item name="hintTextColor">@color/light_blue</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="boxBackgroundMode">filled</item>
+		<item name="boxBackgroundColor">@color/transparent</item>
+		<item name="backgroundColor">@color/transparent</item>
+		<item name="boxStrokeColor">@color/text_input_box_stroke</item>
+		<item name="android:layout_marginStart">-14dp</item>
+	</style>
+
+	<style name="SearchBar" parent="Widget.Material3.SearchBar">
+		<item name="android:layout_marginBottom">10dp</item>
+		<item name="backgroundTint">@color/light_blue_transparent</item>
+		<item name="android:background">@drawable/bottom_border</item>
+	</style>
+
+	<style name="TopNavigation" parent="@style/Widget.MaterialComponents.CardView">
+		<item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut
+		</item>
+		<item name="cardBackgroundColor">@color/white</item>
+		<item name="strokeColor">@color/white</item>
+		<item name="addElevationShadow">true</item>
+		<item name="elevation">5dp</item>
+	</style>
+
+	<style name="ShapeAppearanceOverlay.MaterialCardView.Cut" parent="">
+		<item name="thickness">0dp</item>
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSizeTopRight">0dp</item>
+		<item name="cornerSizeTopLeft">0dp</item>
+		<item name="cornerSizeBottomRight">8dp</item>
+		<item name="cornerSizeBottomLeft">8dp</item>
+	</style>
+
+	<style name="SearchView" parent="Widget.Material3.SearchView">
+		<item name="backgroundTint">@color/light_blue_transparent</item>
+		<item name="colorPrimary">@color/white</item>
+	</style>
 
 </resources>

@@ -70,7 +70,7 @@ class ReportRepository {
                 val querySnapshot = documentReference.whereEqualTo("category", it.toString()).get().await()
 
                 if(!querySnapshot.isEmpty){
-                    val filter = Filter(it.toString(), querySnapshot.size())
+                    val filter = Filter(it.toString(), querySnapshot.size(), it)
                     filterList.add(filter)
                 }
             }

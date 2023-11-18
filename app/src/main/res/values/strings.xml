@@ -39,7 +39,7 @@
     <string name="save">Save</string>
     <string name="report_detail">Report Detail</string>
     <string name="reported_by">Reported by:</string>
-    <string name="at_01_01_2000">at 01-01-2000</string>
+    <string name="at_01_01_2000">at 01–01–2000</string>
     <string name="dynamic_button">Dynamic Button</string>
     <string name="delete_button">Delete Button</string>
     <string name="write_a_message">Write a message</string>
@@ -49,4 +49,5 @@
     <string name="last_message">Last message</string>
     <string name="please_sign_in_to_continue">Please sign in to continue</string>
     <string name="register">Register</string>
+	<string name="filter_items">%1$s Items</string>
 </resources>
