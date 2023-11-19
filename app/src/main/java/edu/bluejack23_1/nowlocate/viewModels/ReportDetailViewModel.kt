@@ -16,6 +16,7 @@ import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.ChatActivity
 import edu.bluejack23_1.nowlocate.views.activity.ConversationActivity
 import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
+import edu.bluejack23_1.nowlocate.views.activity.ProfileActivity
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -71,6 +72,25 @@ class ReportDetailViewModel : ViewModel() {
     fun handleDelete() {
         reportRepository.deleteReport(report.value?.id!!)
         activityToStart.value = HomeActivity::class
+    }
+
+    fun handleMoveToProfile(context: Context){
+        viewModelScope.launch {
+            if(isSelf.value!!){
+                IntentHelper.moveToWithExtra(context, ProfileActivity::class.java, "user", authRepository.getCurrentUser())
+            } else {
+                val result = report.value?.reportedBy?.let {
+                    userRepository.getUser(it)
+                }
+
+                if (result?.isFailure == true) {
+                    return@launch
+                }
+
+                val user = result?.getOrNull()
+                IntentHelper.moveToWithExtra(context, ProfileActivity::class.java, "user", user!!)
+            }
+        }
     }
 
 }

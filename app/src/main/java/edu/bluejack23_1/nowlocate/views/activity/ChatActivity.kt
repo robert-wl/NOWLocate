@@ -43,14 +43,14 @@ class ChatActivity : AppCompatActivity(), View {
         viewModel = ViewModelProvider(this)[ChatViewModel::class.java]
         binding.viewModel = viewModel
 
-        val chat = intent.getParcelableExtra("chat", Chat::class.java)
+        val chatExtra = intent.getParcelableExtra("chat", Chat::class.java)
 
-        if(chat == null){
+        if(chatExtra == null){
             IntentHelper.moveBack(this)
             return
         }
 
-        viewModel.handleExtrasData(chat)
+        viewModel.handleExtrasData(chatExtra)
         viewModel.getUserMessages()
     }
 

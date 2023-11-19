@@ -24,6 +24,7 @@ class ReportDetailActivity : AppCompatActivity(), View {
     private lateinit var dynamicBtn: ImageButton
     private lateinit var reportIV: ImageView
     private lateinit var alertDialog: AlertDialog.Builder
+    private lateinit var profileIV: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,7 @@ class ReportDetailActivity : AppCompatActivity(), View {
         deleteBtn = binding.btnDelete
         dynamicBtn = binding.btnDynamic
         reportIV = binding.ivImage
+        profileIV = binding.ivProfileImage
 
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Confirmation")
@@ -104,6 +106,10 @@ class ReportDetailActivity : AppCompatActivity(), View {
 
         alertDialog.setNegativeButton("No"){_, _ ->
 
+        }
+
+        profileIV.setOnClickListener{
+            viewModel.handleMoveToProfile(this)
         }
 
     }
