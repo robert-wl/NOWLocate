@@ -5,10 +5,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import edu.bluejack23_1.nowlocate.databinding.ActivityEditProfileBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
@@ -20,9 +23,11 @@ class EditProfileActivity : AppCompatActivity(), View {
 
     private lateinit var binding : ActivityEditProfileBinding
     private lateinit var viewModel: EditProfileViewModel
+    private lateinit var profileImageCIV: CircleImageView
     private lateinit var genderSpinner: Spinner
     private lateinit var saveButton: Button
     private lateinit var backButton: ImageButton
+    private lateinit var changePasswordLL: LinearLayout
 
     private lateinit var alertDialog: AlertDialog.Builder
 
@@ -51,6 +56,8 @@ class EditProfileActivity : AppCompatActivity(), View {
         genderSpinner = binding.spinnerGender
         saveButton = binding.btnSave
         backButton = binding.btnBack
+        profileImageCIV = binding.civProfileImage
+        changePasswordLL = binding.llChangePassword
 
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Confirmation")
@@ -96,9 +103,17 @@ class EditProfileActivity : AppCompatActivity(), View {
             alertDialog.show()
         }
 
+        viewModel.image.observe(this) {
+            Picasso.get().load(it).into(profileImageCIV)
+        }
+
         viewModel.activityToStart.observe(this){ activityToStart ->
             IntentHelper.moveTo(this, activityToStart.java)
             return@observe
+        }
+
+        changePasswordLL.setOnClickListener {
+            IntentHelper.moveTo(this, ChangePasswordActivity::class.java)
         }
 
     }

@@ -18,8 +18,6 @@ import kotlin.reflect.KClass
 
 class ProfileViewModel: ViewModel() {
     private val user = MutableLiveData<User>()
-    val firstName = MutableLiveData<String>()
-    val lastName = MutableLiveData<String>()
     val username = MutableLiveData<String>()
     val email = MutableLiveData<String>()
     val image = MutableLiveData<Uri>()
@@ -57,8 +55,6 @@ class ProfileViewModel: ViewModel() {
         if(userExtras == null) {
             val userData = authRepository.getCurrentUser()
             user.value = userData
-            firstName.value = userData.firstName
-            lastName.value = userData.lastName
             username.value = userData.username
             email.value = userData.email
             image.value = Uri.parse(userData.image)

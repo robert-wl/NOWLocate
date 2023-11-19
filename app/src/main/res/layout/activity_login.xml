@@ -31,11 +31,12 @@
 				android:fontFamily="@font/noto_sans_bold"
 				android:text="LOGO INI"
 				android:textAlignment="center"
-				android:textColor="@color/orange"
+				android:textColor="@color/light_blue"
 				android:textSize="40sp"
 				android:textStyle="bold" />
 
 		</LinearLayout>
+
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -44,44 +45,61 @@
 			android:gravity="start"
 			android:orientation="vertical">
 
-			<com.google.android.material.textfield.TextInputLayout
-				style="@style/InputLayout"
+			<com.google.android.material.card.MaterialCardView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="10dp"
-				android:hint="@string/email"
-				app:endIconMode="none"
-				tools:ignore="RtlSymmetry">
+				android:layout_marginBottom="20dp"
+				app:cardBackgroundColor="@color/light_blue_transparent"
+				app:cardCornerRadius="10dp">
 
-				<com.google.android.material.textfield.TextInputEditText
-					android:id="@+id/etEmail"
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/InputLayout"
 					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:inputType="text"
-					android:text="@={viewModel.email}"
-					android:textColor="#000" />
+					android:layout_height="wrap_content"
+					android:hint="@string/email"
+					android:padding="2dp"
+					app:endIconMode="none"
+					tools:ignore="RtlSymmetry">
 
-			</com.google.android.material.textfield.TextInputLayout>
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/etEmail"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:background="@color/transparent"
+						android:fontFamily="@font/inter_medium"
+						android:inputType="text"
+						android:text="@={viewModel.email}"
+						android:textColor="#000" />
 
-			<com.google.android.material.textfield.TextInputLayout
-				style="@style/InputLayout"
+				</com.google.android.material.textfield.TextInputLayout>
+			</com.google.android.material.card.MaterialCardView>
+
+			<com.google.android.material.card.MaterialCardView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="10dp"
-				android:hint="@string/password"
-				app:endIconMode="password_toggle"
-				tools:ignore="RtlSymmetry">
+				app:cardBackgroundColor="@color/light_blue_transparent"
+				app:cardCornerRadius="10dp">
 
-				<com.google.android.material.textfield.TextInputEditText
-					android:id="@+id/etPassword"
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/InputLayout"
 					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:inputType="textPassword"
-					android:text="@={viewModel.password}"
-					android:textColor="#000" />
+					android:layout_height="wrap_content"
+					android:hint="@string/password"
+					app:endIconMode="password_toggle"
+					tools:ignore="RtlSymmetry">
 
-			</com.google.android.material.textfield.TextInputLayout>
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/etPassword"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:background="@color/transparent"
+						android:fontFamily="@font/inter_medium"
+						android:inputType="textPassword"
+						android:text="@={viewModel.password}"
+						android:textColor="#000" />
 
+				</com.google.android.material.textfield.TextInputLayout>
+			</com.google.android.material.card.MaterialCardView>
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -96,7 +114,7 @@
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:fontFamily="@font/open_sans_bold"
+					android:fontFamily="@font/inter_medium"
 					android:text="@string/remember_me"
 					android:textColor="@color/dark_gray"
 					android:textSize="15sp" />
@@ -105,15 +123,14 @@
 					android:id="@+id/tvForgotPassword"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:fontFamily="@font/open_sans_bold"
-					android:text="@string/forgot_password"
+					android:fontFamily="@font/inter_medium"
+					android:text="@string/forgot_password_login"
 					android:textAlignment="textEnd"
 					android:textColor="@color/dark_gray"
 					android:textSize="15sp" />
 
 			</LinearLayout>
 		</LinearLayout>
-
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -129,7 +146,7 @@
 				android:layout_marginBottom="20dp"
 				android:width="250dp"
 				android:backgroundTint="@color/light_blue"
-				android:fontFamily="@font/noto_sans_bold"
+				android:fontFamily="@font/inter_medium"
 				android:text="@string/sign_in"
 				android:textSize="20sp"
 				app:cornerRadius="10dp" />
@@ -142,7 +159,7 @@
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:fontFamily="@font/noto_sans"
+					android:fontFamily="@font/inter"
 					android:text="@string/don_t_have_an_account"
 					android:textColor="@color/dark_gray"
 					android:textSize="15sp" />
@@ -151,7 +168,7 @@
 					android:id="@+id/tvRegister"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:fontFamily="@font/noto_sans_bold"
+					android:fontFamily="@font/inter_bold"
 					android:paddingLeft="5dp"
 					android:text="@string/register"
 					android:textColor="@color/orange"

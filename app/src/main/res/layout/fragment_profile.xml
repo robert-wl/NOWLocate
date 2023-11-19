@@ -13,7 +13,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/light_blue_transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +43,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvReport"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="10dp"/>
 
             <ProgressBar
                 android:id="@+id/pbReport"

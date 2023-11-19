@@ -9,11 +9,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.squareup.picasso.Picasso
 import edu.bluejack23_1.nowlocate.databinding.ActivityCreateReportBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
@@ -28,7 +28,6 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
     private lateinit var categorySpinner: Spinner
     private lateinit var addReportBtn: Button
     private lateinit var pickImageBtn: ImageButton
-    private lateinit var imageView: ImageView
     private lateinit var alertDialog: AlertDialog.Builder
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +53,6 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
         categorySpinner = binding.spinnerCategory
         addReportBtn = binding.btnAddReport
         pickImageBtn = binding.btnPickImage
-        imageView = binding.ivImage
 
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Confirmation")
@@ -101,8 +99,8 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
             pickImageGallery()
         }
 
-        viewModel.itemImage.observe(this){ itemImage ->
-            imageView.setImageURI(itemImage)
+        viewModel.itemImage.observe(this){ it ->
+            Picasso.get().load(it).into(pickImageBtn)
         }
 
         viewModel.activityToStart.observe(this){ activityToStart ->

@@ -1,9 +1,8 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
-import androidx.lifecycle.LiveData
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import edu.bluejack23_1.nowlocate.models.User
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.ProfileActivity
@@ -15,6 +14,7 @@ class EditProfileViewModel : ViewModel() {
     val email = MutableLiveData<String>()
     val username = MutableLiveData<String>()
     val gender = MutableLiveData<String>()
+    val image = MutableLiveData<Uri>()
 
     val errorMessage = MutableLiveData<String>()
     val activityToStart = MutableLiveData<KClass<*>>()
@@ -29,6 +29,7 @@ class EditProfileViewModel : ViewModel() {
         email.value = user.email
         username.value = user.username
         gender.value = user.gender
+        image.value = Uri.parse(user.image)
     }
 
     fun handleEditProfile(){

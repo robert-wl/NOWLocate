@@ -28,7 +28,7 @@
 
 	<style name="FloatingActionButton" parent="Widget.Design.FloatingActionButton">
 		<item name="android:layout_margin">16dp</item>
-		<item name="android:backgroundTint">@color/light_blue</item>
+		<item name="android:backgroundTint">@color/blue</item>
 		<item name="srcCompat">@drawable/baseline_add_24</item>
 		<item name="tint">@color/white</item>
 		<item name="android:contentDescription">@string/submit</item>
@@ -45,12 +45,13 @@
 	<style name="InputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
 		<item name="endIconTint">@color/dark_gray</item>
 		<item name="hintTextColor">@color/light_blue</item>
-		<item name="android:paddingTop">5dp</item>
+<!--		<item name="android:paddingTop">5dp</item>-->
 		<item name="boxBackgroundMode">filled</item>
 		<item name="boxBackgroundColor">@color/transparent</item>
 		<item name="backgroundColor">@color/transparent</item>
+		<item name="boxStrokeWidth">0dp</item>
+		<item name="boxStrokeWidthFocused">0dp</item>
 		<item name="boxStrokeColor">@color/text_input_box_stroke</item>
-		<item name="android:layout_marginStart">-14dp</item>
 	</style>
 
 	<style name="SearchBar" parent="Widget.Material3.SearchBar">
@@ -80,6 +81,11 @@
 	<style name="SearchView" parent="Widget.Material3.SearchView">
 		<item name="backgroundTint">@color/light_blue_transparent</item>
 		<item name="colorPrimary">@color/white</item>
+	</style>
+
+	<style name="ProfileTopView" parent="Widget.MaterialComponents.CardView">
+		<item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut
+		</item>
 	</style>
 
 </resources>

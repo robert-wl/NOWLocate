@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="preloaded_fonts" translatable="false">
-        <item>@font/alata</item>
-        <item>@font/doppio_one</item>
-        <item>@font/kanit_medium</item>
-        <item>@font/montserrat_medium</item>
-        <item>@font/noto_sans</item>
-        <item>@font/noto_sans_bold</item>
-        <item>@font/open_sans</item>
-        <item>@font/open_sans_bold</item>
-        <item>@font/roboto</item>
-    </array>
+	<array name="preloaded_fonts" translatable="false">
+		<item>@font/alata</item>
+		<item>@font/doppio_one</item>
+		<item>@font/inter</item>
+		<item>@font/inter_bold</item>
+		<item>@font/inter_medium</item>
+		<item>@font/kanit_medium</item>
+		<item>@font/montserrat_medium</item>
+		<item>@font/noto_sans</item>
+		<item>@font/noto_sans_bold</item>
+		<item>@font/open_sans</item>
+		<item>@font/open_sans_bold</item>
+		<item>@font/roboto</item>
+	</array>
 </resources>

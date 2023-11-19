@@ -14,7 +14,8 @@
     <string name="forget_password_text">Enter the email connected to your account. We’ll send an email with instructions to reset your password.</string>
     <string name="reset_password">Reset Password</string>
     <string name="remember_me">Remember me</string>
-    <string name="forgot_password">Forgot password?</string>
+    <string name="forgot_password_login">Forgot password?</string>
+    <string name="forgot_password">Forgot password</string>
     <string name="sign_in">Sign In</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="edit_profile">Edit Profile</string>
@@ -25,7 +26,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="back_button">Back button</string>
-    <string name="save_button">Save button</string>
     <string name="search_results">Search Results:</string>
     <string name="create_report">Create Report</string>
     <string name="item_name">Item name</string>
@@ -50,4 +50,9 @@
     <string name="please_sign_in_to_continue">Please sign in to continue</string>
     <string name="register">Register</string>
 	<string name="filter_items">%1$s Items</string>
+    <string name="profile">Profile</string>
+    <string name="report_name">Report Name</string>
+    <string name="report_category">Report Category</string>
+    <string name="report_short_description">Report Short Description</string>
+    <string name="profile_image">Profile Image</string>
 </resources>
