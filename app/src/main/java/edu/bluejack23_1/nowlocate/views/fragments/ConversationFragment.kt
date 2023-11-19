@@ -59,9 +59,12 @@ class ConversationFragment : Fragment(), ViewFragment {
         }
 
         viewModel.chats.observe(viewLifecycleOwner){
-            conversationAdapter.conversationList = it
-            conversationAdapter.notifyDataSetChanged()
+            conversationAdapter.updateData(it)
         }
+    }
+
+    fun handleSearch(query: String){
+        conversationAdapter.filterData(query)
     }
 
 }
