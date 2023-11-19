@@ -28,6 +28,7 @@ class EditReportActivity : AppCompatActivity(), View {
     private lateinit var reportIV: ImageView
     private lateinit var saveBtn: ImageButton
     private lateinit var alertDialog: AlertDialog.Builder
+    private lateinit var profileIV: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,7 @@ class EditReportActivity : AppCompatActivity(), View {
         lastseenET = binding.etLastSeen
         saveBtn = binding.btnSave
         reportIV = binding.ivReport
+        profileIV = binding.ivProfileImage
 
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Confirmation")
@@ -98,6 +100,9 @@ class EditReportActivity : AppCompatActivity(), View {
 
         alertDialog.setNegativeButton("No"){_, _ ->
 
+        }
+        profileIV.setOnClickListener{
+            viewModel.handleMoveToProfile(this)
         }
     }
 

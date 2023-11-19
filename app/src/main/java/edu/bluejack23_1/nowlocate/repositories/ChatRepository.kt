@@ -1,12 +1,12 @@
 package edu.bluejack23_1.nowlocate.repositories
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.bluejack23_1.nowlocate.models.Chat
 import edu.bluejack23_1.nowlocate.models.ChatDoc
-import edu.bluejack23_1.nowlocate.models.Message
 import edu.bluejack23_1.nowlocate.models.MessageDoc
 import edu.bluejack23_1.nowlocate.models.User
 import kotlinx.coroutines.tasks.await
@@ -58,9 +58,15 @@ class ChatRepository {
     }
 
     fun sendMessage(id: String, message: MessageDoc) {
-        collection.document(id).collection("messages").add(message)
-        collection.document(id).update("lastMessage", message.message)
-        collection.document(id).update("lastTime", Date())
+        val batch = FirebaseFirestore.getInstance().batch()
+        val chatRef = collection.document(id)
+        val messagesRef = chatRef.collection("messages").document(message.id)
+        batch.set(messagesRef, message)
+        batch.update(chatRef, mapOf(
+            "lastMessage" to message.message,
+            "lastTime" to FieldValue.serverTimestamp()
+        ))
+        batch.commit()
     }
 
     suspend fun docToChat(chatDoc: ChatDoc, sender: User): Chat {
@@ -86,12 +92,25 @@ class ChatRepository {
                 )
             )
             .addSnapshotListener { value, e ->
-                chatDocs.clear()
-                if (value != null && !value.isEmpty) {
-                    for (chatDoc in value.documents) {
-                        chatDoc.toObject(ChatDoc::class.java)?.let { chatDocs.add(it) }
+                value?.let { snapshot ->
+                    for (documentChange in snapshot.documentChanges) {
+                        val chatDoc = documentChange.document.toObject(ChatDoc::class.java)
+                        when (documentChange.type) {
+                            DocumentChange.Type.ADDED -> {
+                                chatDocs.add(chatDoc)
+                            }
+                            DocumentChange.Type.MODIFIED -> {
+                                val index = chatDocs.indexOfFirst { it.id == chatDoc.id }
+                                if (index != -1) {
+                                    chatDocs[index] = chatDoc
+                                }
+                            }
+                            DocumentChange.Type.REMOVED -> {
+                                chatDocs.removeAll { it.id == chatDoc.id }
+                            }
+                        }
                     }
-                    chatData.value = chatDocs
+                    chatData.value = ArrayList(chatDocs)
                 }
             }
     }
@@ -100,12 +119,26 @@ class ChatRepository {
         val messageDocs = ArrayList<MessageDoc>()
         collection.document(id).collection("messages")
             .addSnapshotListener { value, e ->
-                messageDocs.clear()
-                if (value != null && !value.isEmpty) {
-                    for (chatDoc in value.documents) {
-                        chatDoc.toObject(MessageDoc::class.java)?.let { messageDocs.add(it) }
+                value?.let { snapshot ->
+                    for (documentChange in snapshot.documentChanges) {
+                        val messageDoc = documentChange.document.toObject(MessageDoc::class.java)
+                        messageDoc.id = documentChange.document.id
+                        when (documentChange.type) {
+                            DocumentChange.Type.ADDED -> {
+                                messageDocs.add(messageDoc)
+                            }
+                            DocumentChange.Type.MODIFIED -> {
+                                val index = messageDocs.indexOfFirst { it.id == messageDoc.id }
+                                if (index != -1) {
+                                    messageDocs[index] = messageDoc
+                                }
+                            }
+                            DocumentChange.Type.REMOVED -> {
+                                messageDocs.removeAll { it.id == messageDoc.id }
+                            }
+                        }
                     }
-                    messageData.value = messageDocs
+                    messageData.value = ArrayList(messageDocs)
                 }
             }
     }

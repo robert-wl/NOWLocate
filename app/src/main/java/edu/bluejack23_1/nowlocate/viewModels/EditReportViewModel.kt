@@ -1,17 +1,20 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.ReportRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
+import edu.bluejack23_1.nowlocate.views.activity.ProfileActivity
 import edu.bluejack23_1.nowlocate.views.activity.ReportDetailActivity
 import kotlinx.coroutines.launch
 import java.text.DateFormat
@@ -144,4 +147,9 @@ class EditReportViewModel: ViewModel() {
 //            activityToStart.value = HomeActivity::class
         }
     }
+
+    fun handleMoveToProfile(context: Context){
+        IntentHelper.moveToWithExtra(context, ProfileActivity::class.java, "user", authRepository.getCurrentUser())
+    }
+
 }

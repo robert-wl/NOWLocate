@@ -15,6 +15,7 @@ import edu.bluejack23_1.nowlocate.databinding.ActivityProfileBinding
 import edu.bluejack23_1.nowlocate.handlers.BottomNavigationViewHandler
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
+import edu.bluejack23_1.nowlocate.models.User
 import edu.bluejack23_1.nowlocate.viewModels.ProfileViewModel
 import edu.bluejack23_1.nowlocate.views.fragments.ProfileFragment
 
@@ -37,7 +38,10 @@ class ProfileActivity : AppCompatActivity(), View {
         bindingHandler()
         elementHandler()
         eventHandler()
-        viewModel.handleExtrasData(null)
+
+        val userExtra = intent.getParcelableExtra("user", User::class.java)
+
+        viewModel.handleExtrasData(userExtra)
 
         setContentView(binding.root)
     }

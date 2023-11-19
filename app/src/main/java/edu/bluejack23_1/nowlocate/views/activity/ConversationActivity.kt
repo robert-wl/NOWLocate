@@ -2,8 +2,11 @@ package edu.bluejack23_1.nowlocate.views.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.search.SearchBar
+import com.google.android.material.search.SearchView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityConversationBinding
 import edu.bluejack23_1.nowlocate.handlers.BottomNavigationViewHandler
@@ -15,7 +18,7 @@ class ConversationActivity : AppCompatActivity(), View {
 
     private lateinit var binding: ActivityConversationBinding
     private lateinit var viewModel: ConversationViewModel
-    private lateinit var conversationFragment: Fragment
+    private lateinit var conversationFragment: ConversationFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,8 @@ class ConversationActivity : AppCompatActivity(), View {
     }
 
     override fun eventHandler() {
-
+        viewModel.searchQuery.observe(this){
+            conversationFragment.handleSearch(it)
+        }
     }
 }

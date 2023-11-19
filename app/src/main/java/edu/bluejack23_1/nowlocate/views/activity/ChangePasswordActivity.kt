@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityChangePasswordBinding
@@ -21,6 +22,8 @@ class ChangePasswordActivity : AppCompatActivity(), View {
     private lateinit var binding: ActivityChangePasswordBinding
     private lateinit var viewModel: ChangePasswordViewModel
     private lateinit var saveBtn: Button
+
+    private lateinit var alertDialog: AlertDialog.Builder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,11 @@ class ChangePasswordActivity : AppCompatActivity(), View {
     override fun elementHandler() {
         backBtn = binding.btnBack
         saveBtn = binding.btnSave
+
+        alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Confirmation")
+        alertDialog.setMessage("Are you sure to change your password?")
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
     }
 
     override fun eventHandler() {
@@ -49,10 +57,17 @@ class ChangePasswordActivity : AppCompatActivity(), View {
             IntentHelper.moveBack(this)
         }
         saveBtn.setOnClickListener {
-            viewModel.handleChangePassword()
+            alertDialog.show()
         }
         viewModel.errorMessage.observe(this){errorMsg ->
             ToastHelper.showMessage(this, errorMsg)
+        }
+        alertDialog.setPositiveButton("Yes"){_, _ ->
+            viewModel.handleChangePassword()
+        }
+
+        alertDialog.setNegativeButton("No"){_, _ ->
+
         }
     }
 
