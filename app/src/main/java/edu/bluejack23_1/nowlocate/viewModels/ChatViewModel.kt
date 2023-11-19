@@ -52,7 +52,7 @@ class ChatViewModel : ViewModel() {
             return
         }
         val user = authRepository.getCurrentUser()
-        chatRepository.sendMessage(chat.value!!.id, MessageDoc(user.id, messageString, Date()))
+        chatRepository.sendMessage(chat.value!!.id, MessageDoc(UUID.randomUUID().toString(), user.id, messageString, Date()))
         message.value = ""
     }
 

@@ -50,4 +50,7 @@
     <string name="please_sign_in_to_continue">Please sign in to continue</string>
     <string name="register">Register</string>
 	<string name="filter_items">%1$s Items</string>
+    <string name="home">Home</string>
+    <string name="chat">Chat</string>
+    <string name="profile">Profile</string>
 </resources>
