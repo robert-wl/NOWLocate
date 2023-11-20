@@ -10,17 +10,20 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
+import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityCreateReportBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
+import edu.bluejack23_1.nowlocate.interfaces.GalleryAccess
 import edu.bluejack23_1.nowlocate.models.CategoryType
 import edu.bluejack23_1.nowlocate.viewModels.CreateReportViewModel
 
-class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.interfaces.View {
+class CreateReportActivity : AppCompatActivity(), GalleryAccess, edu.bluejack23_1.nowlocate.interfaces.View {
 
     private lateinit var binding: ActivityCreateReportBinding
     private lateinit var viewModel: CreateReportViewModel
@@ -49,10 +52,10 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
     }
 
     override fun elementHandler() {
-        backBtn = binding.btnBack
+        backBtn = binding.buttonBack
         categorySpinner = binding.spinnerCategory
         addReportBtn = binding.btnAddReport
-        pickImageBtn = binding.btnPickImage
+        pickImageBtn = binding.buttonPickImage
 
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Confirmation")
@@ -83,15 +86,15 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
             alertDialog.show()
         }
 
-        alertDialog.setPositiveButton("Yes"){_, _ ->
+        alertDialog.setPositiveButton("Yes") { _, _ ->
             viewModel.handleCreateReport()
         }
 
-        alertDialog.setNegativeButton("No"){_, _ ->
+        alertDialog.setNegativeButton("No") { _, _ ->
 
         }
 
-        viewModel.getErrorMessage().observe(this){errorMessage ->
+        viewModel.getErrorMessage().observe(this) { errorMessage ->
             ToastHelper.showMessage(this, errorMessage)
         }
 
@@ -99,14 +102,14 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
             pickImageGallery()
         }
 
-        viewModel.itemImage.observe(this){ it ->
-            Picasso.get().load(it).into(pickImageBtn)
+        viewModel.itemImage.observe(this) { it ->
+            Picasso.get().load(it).placeholder(R.drawable.baseline_person_black_24).into(pickImageBtn)
         }
 
-        viewModel.activityToStart.observe(this){ activityToStart ->
+        viewModel.activityToStart.observe(this) { activityToStart ->
             val extras = viewModel.extrasParcel.value
 
-            if(extras == null){
+            if (extras == null) {
                 IntentHelper.moveTo(this, activityToStart.java)
                 return@observe
             }
@@ -115,20 +118,14 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
         }
     }
 
-    private fun spinnerHandler(){
+    private fun spinnerHandler() {
         val categories = mutableListOf("Select Category")
         categories.addAll(CategoryType.values().map { it.toString() })
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         categorySpinner.adapter = adapter
     }
 
-    private fun pickImageGallery(){
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        changeImage.launch(intent)
-    }
-
-    private val changeImage =
+    override val changeImage: ActivityResultLauncher<Intent> =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
@@ -136,4 +133,5 @@ class CreateReportActivity : AppCompatActivity(), edu.bluejack23_1.nowlocate.int
                 viewModel.itemImage.value = it.data?.data
             }
         }
+
 }

@@ -1,7 +1,6 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +23,6 @@ class ProfileActivity : AppCompatActivity(), View {
     private lateinit var binding: ActivityProfileBinding
     private lateinit var viewModel: ProfileViewModel
     private lateinit var editProfileBtn: ImageButton
-    private lateinit var changePasswordBtn: Button
     private lateinit var logoutBtn: ImageButton
     private lateinit var addReportFAB: FloatingActionButton
     private lateinit var emailTV: TextView
@@ -54,18 +52,18 @@ class ProfileActivity : AppCompatActivity(), View {
         binding.viewModel = viewModel
     }
 
-    override fun elementHandler(){
+    override fun elementHandler() {
         editProfileBtn = binding.btnEditProfile
-        changePasswordBtn = binding.btnChangePassword
         addReportFAB = binding.btnAddReport
         emailTV = binding.tvEmail
         usernameTV = binding.tvUsername
         logoutBtn = binding.btnSignOut
-        profileImageCIV = binding.civProfileImage
+        profileImageCIV = binding.circleImageViewProfileImage
 
         profileFragment = ProfileFragment()
 
-        FragmentBuilder(supportFragmentManager).replace(R.id.fragment_profile, profileFragment).commit()
+        FragmentBuilder(supportFragmentManager).replace(R.id.fragment_profile, profileFragment)
+            .commit()
 
         BottomNavigationViewHandler(this, binding.bottomNavigationView)
     }
@@ -79,16 +77,14 @@ class ProfileActivity : AppCompatActivity(), View {
             IntentHelper.moveTo(this, EditProfileActivity::class.java)
         }
 
-        changePasswordBtn.setOnClickListener {
-            IntentHelper.moveTo(this, ChangePasswordActivity::class.java)
-        }
 
         addReportFAB.setOnClickListener {
             IntentHelper.moveTo(this, CreateReportActivity::class.java)
         }
 
         viewModel.image.observe(this) {
-            Picasso.get().load(it).into(profileImageCIV)
+            Picasso.get().load(it).placeholder(R.drawable.baseline_person_black_24)
+                .into(profileImageCIV)
         }
 
         viewModel.activityToStart.observe(this) {

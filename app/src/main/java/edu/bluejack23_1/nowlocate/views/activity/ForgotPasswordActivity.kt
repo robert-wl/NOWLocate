@@ -37,8 +37,8 @@ class ForgotPasswordActivity : AppCompatActivity(), View {
     }
 
     override fun elementHandler(){
-        backBtn = binding.btnBack
-        resetBtn = binding.btnForgotPassword
+        backBtn = binding.buttonBack
+        resetBtn = binding.buttonForgotPassword
     }
 
     override fun eventHandler() {

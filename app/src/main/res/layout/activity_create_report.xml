@@ -32,7 +32,7 @@
 				android:src="@drawable/baseline_camera_alt_24" />
 
 			<ImageButton
-				android:id="@+id/btn_pick_image"
+				android:id="@+id/button_pick_image"
 				android:layout_width="match_parent"
 				android:layout_height="300dp"
 				android:layout_gravity="center_horizontal"
@@ -63,7 +63,7 @@
 							app:cardCornerRadius="200dp">
 
 							<ImageButton
-								android:id="@+id/btn_back"
+								android:id="@+id/button_back"
 								android:layout_width="25dp"
 								android:layout_height="25dp"
 								android:layout_gravity="center"
@@ -142,12 +142,12 @@
 									tools:ignore="RtlSymmetry">
 
 									<com.google.android.material.textfield.TextInputEditText
-										android:id="@+id/et_item_name"
+										android:id="@+id/edit_text_item_name"
 										android:layout_width="match_parent"
 										android:layout_height="match_parent"
 										android:background="@color/transparent"
 										android:fontFamily="@font/inter_medium"
-										android:inputType="text"
+										android:inputType="textMultiLine"
 										android:text="@={viewModel.itemName}"
 										android:textColor="#000" />
 
@@ -187,7 +187,7 @@
 									tools:ignore="RtlSymmetry">
 
 									<com.google.android.material.textfield.TextInputEditText
-										android:id="@+id/et_short_description"
+										android:id="@+id/edit_text_short_description"
 										android:layout_width="match_parent"
 										android:layout_height="match_parent"
 										android:background="@color/transparent"
@@ -215,12 +215,12 @@
 									tools:ignore="RtlSymmetry">
 
 									<com.google.android.material.textfield.TextInputEditText
-										android:id="@+id/et_description"
+										android:id="@+id/edit_text_description"
 										android:layout_width="match_parent"
 										android:layout_height="match_parent"
 										android:background="@color/transparent"
 										android:fontFamily="@font/inter_medium"
-										android:inputType="text"
+										android:inputType="textMultiLine"
 										android:text="@={viewModel.description}"
 										android:textColor="#000" />
 
@@ -243,12 +243,12 @@
 									tools:ignore="RtlSymmetry">
 
 									<com.google.android.material.textfield.TextInputEditText
-										android:id="@+id/et_last_seen"
+										android:id="@+id/edit_text_last_seen"
 										android:layout_width="match_parent"
 										android:layout_height="match_parent"
 										android:background="@color/transparent"
 										android:fontFamily="@font/inter_medium"
-										android:inputType="text"
+										android:inputType="textMultiLine"
 										android:text="@={viewModel.lastSeen}"
 										android:textColor="#000" />
 

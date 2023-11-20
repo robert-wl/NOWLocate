@@ -3,9 +3,12 @@ package edu.bluejack23_1.nowlocate.viewModels
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import edu.bluejack23_1.nowlocate.models.User
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.ProfileActivity
+import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
 class EditProfileViewModel : ViewModel() {
@@ -15,6 +18,7 @@ class EditProfileViewModel : ViewModel() {
     val username = MutableLiveData<String>()
     val gender = MutableLiveData<String>()
     val image = MutableLiveData<Uri>()
+    val oldImage = MutableLiveData<Uri>()
 
     val errorMessage = MutableLiveData<String>()
     val activityToStart = MutableLiveData<KClass<*>>()
@@ -30,6 +34,7 @@ class EditProfileViewModel : ViewModel() {
         username.value = user.username
         gender.value = user.gender
         image.value = Uri.parse(user.image)
+        oldImage.value = Uri.parse(user.image)
     }
 
     fun handleEditProfile(){
@@ -38,6 +43,7 @@ class EditProfileViewModel : ViewModel() {
         val usernameString = username.value ?: ""
         val emailString = email.value ?: ""
         val genderString = gender.value ?: ""
+        val imageUri = image.value ?: Uri.parse("")
 
         if (firstNameString.isEmpty()){
             errorMessage.value = "First name must not be empty"
@@ -64,15 +70,36 @@ class EditProfileViewModel : ViewModel() {
             return
         }
 
+        if (imageUri.toString() == ""){
+            errorMessage.value = "Image must be selected"
+            return
+        }
+
         var user = authRepository.getCurrentUser()
         user.firstName = firstNameString
         user.lastName = lastNameString
         user.username = usernameString
         user.gender = genderString
-        userRepository.updateUserData(user)
+        updateUserData(user)
 
         activityToStart.value = ProfileActivity::class
+    }
 
+    private fun updateUserData(user: User){
+        viewModelScope.launch {
+
+            if(image.value.toString() != oldImage.value.toString()){
+                val uri = userRepository.uploadUserImage(image.value)
+                user.image = uri ?: ""
+            }
+            else {
+                user.image = oldImage.value.toString()
+            }
+
+
+            authRepository.signIn(user)
+            userRepository.updateUserData(user)
+        }
     }
 
 }

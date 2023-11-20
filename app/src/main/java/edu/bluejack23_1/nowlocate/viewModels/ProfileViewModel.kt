@@ -4,7 +4,6 @@ package edu.bluejack23_1.nowlocate.viewModels
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -40,7 +39,6 @@ class ProfileViewModel: ViewModel() {
             val result = reportRepository.getLatestReport(page * limit, isAscending.value!!)
 
             if(result.isSuccess){
-                Log.wtf("HomeViewModel",  result.getOrNull()?.size.toString())
                 reportList.value = result.getOrNull()
             }
         }
@@ -59,8 +57,6 @@ class ProfileViewModel: ViewModel() {
             image.value = Uri.parse(userData.image)
         } else {
             user.value = userExtras
-            firstName.value = userExtras.firstName
-            lastName.value = userExtras.lastName
             username.value = userExtras.username
             email.value = userExtras.email
             image.value = Uri.parse(userExtras.image)

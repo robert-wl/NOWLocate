@@ -8,7 +8,7 @@ import edu.bluejack23_1.nowlocate.helpers.SharedPreferencesHelper
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SharedPreferencesHelper.initialize(this);
+        SharedPreferencesHelper.initialize(this)
         IntentHelper.moveTo(this, LoginActivity::class.java)
     }
 }

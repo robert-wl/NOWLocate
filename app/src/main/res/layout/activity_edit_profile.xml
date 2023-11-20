@@ -22,52 +22,38 @@
 			android:background="@color/white"
 			android:orientation="vertical">
 
-			<LinearLayout
+			<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
+				android:layout_height="match_parent"
 				android:padding="10dp">
 
-				<LinearLayout
-					android:layout_width="match_parent"
+				<androidx.cardview.widget.CardView
+					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:background="@color/transparent"
+					app:cardCornerRadius="200dp">
+
+					<ImageButton
+						android:id="@+id/button_back"
+						android:layout_width="25dp"
+						android:layout_height="25dp"
+						android:layout_gravity="center"
+						android:layout_margin="4dp"
+						android:background="@color/transparent"
+						android:contentDescription="@string/logout_button"
+						android:scaleType="fitCenter"
+						android:src="@drawable/baseline_arrow_back_24_2" />
+				</androidx.cardview.widget.CardView>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_gravity="center"
+					android:fontFamily="@font/inter_bold"
 					android:gravity="center"
-					android:orientation="horizontal">
-
-					<FrameLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent">
-
-						<androidx.cardview.widget.CardView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							app:cardCornerRadius="200dp">
-
-							<ImageButton
-								android:id="@+id/btn_back"
-								android:layout_width="25dp"
-								android:layout_height="25dp"
-								android:layout_gravity="center"
-								android:layout_margin="4dp"
-								android:background="@color/transparent"
-								android:contentDescription="@string/logout_button"
-								android:scaleType="fitCenter"
-								android:src="@drawable/baseline_arrow_back_24_2" />
-						</androidx.cardview.widget.CardView>
-
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="match_parent"
-							android:layout_gravity="center"
-							android:fontFamily="@font/inter_bold"
-							android:gravity="center"
-							android:text="@string/edit_profile"
-							android:textColor="@color/black"
-							android:textSize="20sp" />
-					</FrameLayout>
-				</LinearLayout>
-			</LinearLayout>
+					android:text="@string/edit_profile"
+					android:textColor="@color/black"
+					android:textSize="20sp" />
+			</FrameLayout>
 
 
 			<LinearLayout
@@ -84,7 +70,7 @@
 					android:layout_height="wrap_content">
 
 					<de.hdodenhof.circleimageview.CircleImageView
-						android:id="@+id/civ_profile_image"
+						android:id="@+id/circle_image_view_profile_image"
 						android:layout_width="150dp"
 						android:layout_height="150dp"
 						android:layout_gravity="center_horizontal"
@@ -295,7 +281,7 @@
 				app:cardCornerRadius="10dp">
 
 				<LinearLayout
-					android:id="@+id/ll_change_password"
+					android:id="@+id/linear_layout_change_password"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent">
 
@@ -328,7 +314,7 @@
 			android:paddingHorizontal="25dp">
 
 			<Button
-				android:id="@+id/btn_save"
+				android:id="@+id/button_save"
 				android:layout_width="match_parent"
 				android:layout_height="55dp"
 				android:layout_marginBottom="20dp"
