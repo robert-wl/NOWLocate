@@ -62,7 +62,6 @@ class HomeActivity : AppCompatActivity(), View {
         reportAddBtn = binding.btnAddReport
 
         BottomNavigationViewHandler(this, binding.bottomNavigationView)
-
         setSupportActionBar(homeSB)
 
         FragmentBuilder(supportFragmentManager).replace(R.id.fragment_home, homeFragment).commit()

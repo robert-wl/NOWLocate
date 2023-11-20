@@ -82,69 +82,36 @@ class EditReportActivity : AppCompatActivity(), View, GalleryAccess {
             return
         }
 
-        spinnerHandler()
         viewModel.handleExtrasData(report)
     }
 
-    private fun spinnerHandler() {
-        val categories = mutableListOf("Select Category")
-        categories.addAll(CategoryType.values().map { it.toString() })
-        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, categories)
-        categorySpinner.adapter = adapter
-    }
-
     override fun eventHandler() {
-        backButton.setOnClickListener {
+        backBtn.setOnClickListener {
             IntentHelper.moveTo(this, HomeActivity::class.java, false)
         }
 
-        saveButton.setOnClickListener {
+        saveBtn.setOnClickListener {
             alertDialog.show()
         }
 
         viewModel.reportImage.observe(this) {
-            Picasso.get().load(it).into(pickImageButton)
+            Picasso.get().load(it).into(reportIV)
         }
 
-        viewModel.userImage.observe(this) {
-            Picasso.get().load(it).into(profileImageView)
+        viewModel.errorMessage.observe(this) { errorMessage ->
+            ToastHelper.showMessage(this, errorMessage)
         }
 
-        viewModel.errorMessage.observe(this) {
-            ToastHelper.showMessage(this, it)
-        }
-
-        viewModel.reportCategory.observe(this) {
-            val index = CategoryType.values().indexOf(CategoryType.fromString(it))
-            categorySpinner.setSelection(index + 1)
-        }
-
-        viewModel.activityToStart.observe(this) {
-            IntentHelper.moveTo(this, it.java, false)
-        }
-
-        alertDialog.setPositiveButton("Yes") { _, _ ->
+        alertDialog.setPositiveButton("Yes"){_, _ ->
+            Log.wtf("EditReportActivity", "eventHandler: " + viewModel.reportImage.value)
             viewModel.handleEditReport()
         }
 
-        alertDialog.setNegativeButton("No") { _, _ ->
+        alertDialog.setNegativeButton("No"){_, _ ->
 
         }
-
-        profileImageView.setOnClickListener {
+        profileIV.setOnClickListener{
             viewModel.handleMoveToProfile(this)
-        }
-
-        pickImageButton.setOnClickListener {
-            pickImageGallery()
-        }
-    }
-
-    override val changeImage: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            viewModel.reportImage.value = it.data?.data
         }
     }
 

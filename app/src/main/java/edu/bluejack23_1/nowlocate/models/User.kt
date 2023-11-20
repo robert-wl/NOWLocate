@@ -10,7 +10,8 @@ data class User(
     val email: String = "",
     var username: String = "",
     var image: String = "",
-    var gender: String = ""
+    var gender: String = "",
+    var token: String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",

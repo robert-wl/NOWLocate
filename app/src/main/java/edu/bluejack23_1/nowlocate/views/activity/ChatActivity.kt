@@ -1,7 +1,11 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.ScrollView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +14,7 @@ import edu.bluejack23_1.nowlocate.adapters.ChatAdapter
 import edu.bluejack23_1.nowlocate.databinding.ActivityChatBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.SystemHelper
+import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.models.Chat
 import edu.bluejack23_1.nowlocate.viewModels.ChatViewModel
@@ -22,6 +27,7 @@ class ChatActivity : AppCompatActivity(), View {
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var chatRV: RecyclerView
     private lateinit var backBtn: ImageButton
+    private lateinit var messagesSV: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +66,8 @@ class ChatActivity : AppCompatActivity(), View {
         chatAdapter.messageList = ArrayList()
         chatRV.layoutManager = LinearLayoutManager(this)
         chatRV.adapter = chatAdapter
-
+        messagesSV = binding.svMessages
+        messagesSV.post { messagesSV.fullScroll(ScrollView.FOCUS_DOWN) }
     }
 
     override fun eventHandler() {
