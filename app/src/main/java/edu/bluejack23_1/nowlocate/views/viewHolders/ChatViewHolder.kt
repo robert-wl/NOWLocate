@@ -2,6 +2,7 @@ package edu.bluejack23_1.nowlocate.views.viewHolders
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -38,7 +39,7 @@ class ChatViewHolder(itemView: View, private var chat: Chat) : ViewHolder(itemVi
             messageLinearLayout.gravity = Gravity.END or Gravity.CENTER
             chatMessage.setBackgroundColor(Color.parseColor("#30C3CD"))
             chatMessage.setTextColor(Color.parseColor("#FFFFFF"))
-            Picasso.get().load(chat.sender.image).into(receiverImageView)
+            Picasso.get().load(chat.sender.image ?: "").placeholder(R.drawable.baseline_person_24).into(receiverImageView)
         }
         else {
             senderImageView.isVisible = true
@@ -46,7 +47,13 @@ class ChatViewHolder(itemView: View, private var chat: Chat) : ViewHolder(itemVi
             messageLinearLayout.gravity = Gravity.START or Gravity.CENTER
             chatMessage.setBackgroundColor(Color.parseColor("#F4F4F4"))
             chatMessage.setTextColor(Color.parseColor("#000000"))
-            Picasso.get().load(chat.recipient.image).into(senderImageView)
+            Log.wtf("ChatViewHolder", "setData: " + chat.recipient.image)
+
+            if(chat.recipient.image.isEmpty()){
+                chat.recipient.image = "aaa"
+            }
+
+            Picasso.get().load(chat.recipient.image).placeholder(R.drawable.baseline_person_24).into(senderImageView)
         }
 //        Picasso.get().load(message.sender.image).into(this.chatImageView)
     }

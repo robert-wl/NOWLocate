@@ -6,7 +6,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
@@ -21,7 +20,6 @@ import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.GalleryAccess
 import edu.bluejack23_1.nowlocate.interfaces.View
-import edu.bluejack23_1.nowlocate.models.CategoryType
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.viewModels.EditReportViewModel
 
@@ -86,16 +84,16 @@ class EditReportActivity : AppCompatActivity(), View, GalleryAccess {
     }
 
     override fun eventHandler() {
-        backBtn.setOnClickListener {
+        backButton.setOnClickListener {
             IntentHelper.moveTo(this, HomeActivity::class.java, false)
         }
 
-        saveBtn.setOnClickListener {
+        saveButton.setOnClickListener {
             alertDialog.show()
         }
 
         viewModel.reportImage.observe(this) {
-            Picasso.get().load(it).into(reportIV)
+            Picasso.get().load(it).into(pickImageButton)
         }
 
         viewModel.errorMessage.observe(this) { errorMessage ->
@@ -110,8 +108,16 @@ class EditReportActivity : AppCompatActivity(), View, GalleryAccess {
         alertDialog.setNegativeButton("No"){_, _ ->
 
         }
-        profileIV.setOnClickListener{
+        profileImageView.setOnClickListener{
             viewModel.handleMoveToProfile(this)
+        }
+    }
+
+    override val changeImage: ActivityResultLauncher<Intent> = registerForActivityResult(
+    ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            viewModel.reportImage.value = it.data?.data
         }
     }
 

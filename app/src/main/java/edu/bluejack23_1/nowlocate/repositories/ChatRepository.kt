@@ -1,5 +1,6 @@
 package edu.bluejack23_1.nowlocate.repositories
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldValue
@@ -69,6 +70,8 @@ class ChatRepository {
             "lastTime" to FieldValue.serverTimestamp()
         ))
         batch.commit().addOnSuccessListener {
+            Log.wtf("PUSH NOTIFICATION1", chat.recipient.token)
+            Log.wtf("PUSH NOTIFICATION2", chat.sender.token)
             firebaseNotificationService.pushChatNotification(
                 chat.recipient.token,
                 "${chat.sender.firstName} ${chat.sender.lastName}",

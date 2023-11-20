@@ -13,7 +13,7 @@ class SharedPreferencesHelper {
         }
 
         fun setString(key: String, value: String) {
-            sharedPreferences.edit().putString(key, value).apply()
+            sharedPreferences.edit().putString(key, value)?.apply()
         }
 
         fun getString(key: String): String? {
