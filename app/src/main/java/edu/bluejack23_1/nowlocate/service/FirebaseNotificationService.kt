@@ -5,27 +5,28 @@ import android.app.NotificationManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.google.firebase.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.firebase.messaging.messaging
-import com.google.firebase.messaging.remoteMessage
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
 
+
 class FirebaseNotificationService : FirebaseMessagingService() {
 
-    private val fm = Firebase.messaging
+
+    private val firebaseMessaging = FirebaseMessaging.getInstance()
     fun pushChatNotification(token: String, title: String, body: String, userId: String) {
-        fm.send(
-            remoteMessage(token) {
-                messageId = messageId.toString()
-                addData("title", title)
-                addData("body", body)
-                addData("userId", userId)
-            }
+        val data = hashMapOf(
+            "title" to title,
+            "body" to userId,
+            "userId" to userId
         )
+        val message = RemoteMessage.Builder(token)
+            .setData(data)
+            .build()
+        firebaseMessaging.send(message)
     }
 
     override fun onNewToken(token: String) {
@@ -37,6 +38,9 @@ class FirebaseNotificationService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val authRepository = AuthRepository()
         val currUser = authRepository.getCurrentUser()
+
+        Log.wtf("a", "${remoteMessage.notification?.title}")
+        Log.wtf("a", "${remoteMessage.data["title"]}")
 
         val title = remoteMessage.data["title"] ?: return
         val body = remoteMessage.data["body"] ?: return

@@ -20,6 +20,7 @@ data class User(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
+        parcel.readString() ?: "",
         parcel.readString() ?: ""
     )
 
@@ -31,6 +32,7 @@ data class User(
         parcel.writeString(username)
         parcel.writeString(image)
         parcel.writeString(gender)
+        parcel.writeString(token)
     }
 
     override fun describeContents(): Int {

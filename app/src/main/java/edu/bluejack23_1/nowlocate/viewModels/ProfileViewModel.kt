@@ -37,11 +37,19 @@ class ProfileViewModel: ViewModel() {
         isLoading.value = true
 
         viewModelScope.launch {
-            val result = reportRepository.getLatestReport(page * limit, isAscending.value!!)
+            val result = reportRepository.getUserLatestReport(isAscending.value!!)
 
             if(result.isSuccess){
-                Log.wtf("HomeViewModel",  result.getOrNull()?.size.toString())
-                reportList.value = result.getOrNull()
+                val temp: ArrayList<Report> = ArrayList()
+                for (report in result.getOrNull()!!){
+                    if(temp.size >= limit * page){
+                        break
+                    }
+                    if(report.reportedBy == user.value!!.id){
+                        temp.add(report)
+                    }
+                }
+                reportList.value = temp
             }
         }
 
@@ -63,6 +71,7 @@ class ProfileViewModel: ViewModel() {
             email.value = userExtras.email
             image.value = Uri.parse(userExtras.image)
         }
+        getData()
     }
 
     fun handleLogout(){

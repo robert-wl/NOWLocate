@@ -63,7 +63,7 @@ class ProfileActivity : AppCompatActivity(), View {
         logoutBtn = binding.btnSignOut
         profileImageCIV = binding.civProfileImage
 
-        profileFragment = ProfileFragment()
+        profileFragment = ProfileFragment(viewModel)
 
         FragmentBuilder(supportFragmentManager).replace(R.id.fragment_profile, profileFragment).commit()
 
