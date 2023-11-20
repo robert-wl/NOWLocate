@@ -50,5 +50,9 @@ enum class CategoryType {
         override fun toString(): String {
             return "Toys"
         }
-    },
+    };
+
+    companion object {
+        fun fromString(s: String): CategoryType? = values().find { it.toString() == s }
+    }
 }

@@ -71,6 +71,8 @@ class ChatRepository {
         ))
         Log.wtf("a", chat.sender.token)
         batch.commit().addOnSuccessListener {
+            Log.wtf("PUSH NOTIFICATION1", chat.recipient.token)
+            Log.wtf("PUSH NOTIFICATION2", chat.sender.token)
             firebaseNotificationService.pushChatNotification(
                 chat.sender.token,
                 "${chat.sender.firstName} ${chat.sender.lastName}",

@@ -2,25 +2,20 @@ package edu.bluejack23_1.nowlocate.viewModels
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
-import edu.bluejack23_1.nowlocate.models.Chat
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.ChatRepository
 import edu.bluejack23_1.nowlocate.repositories.ReportRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.ChatActivity
-import edu.bluejack23_1.nowlocate.views.activity.ConversationActivity
 import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
 import edu.bluejack23_1.nowlocate.views.activity.ProfileActivity
 import kotlinx.coroutines.launch
 import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.UUID
 import kotlin.reflect.KClass
 
 class ReportDetailViewModel : ViewModel() {
@@ -29,6 +24,7 @@ class ReportDetailViewModel : ViewModel() {
     var report = MutableLiveData<Report>()
     var reportDate = MutableLiveData<String>()
     var reportImage = MutableLiveData<Uri>()
+    var userImage = MutableLiveData<Uri>()
     var name = MutableLiveData<String>()
     var id = MutableLiveData<String>()
     val activityToStart = MutableLiveData<KClass<*>>()
@@ -57,6 +53,8 @@ class ReportDetailViewModel : ViewModel() {
 
             name.value = user?.firstName + " " + user?.lastName
             isSelf.value = authRepository.isSelf(user?.id)
+            userImage.value = Uri.parse(user?.image)
+
             id.value = user?.id
         }
     }

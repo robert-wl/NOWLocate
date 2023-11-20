@@ -58,4 +58,8 @@
     <string name="report_category">Report Category</string>
     <string name="report_short_description">Report Short Description</string>
     <string name="profile_image">Profile Image</string>
+    <string name="describe_your_item">Describe your item</string>
+    <string name="search_conversation">Search Conversation</string>
+    <string name="conversation">Conversation</string>
+	<string name="send">Send</string>
 </resources>

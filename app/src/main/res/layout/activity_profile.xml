@@ -34,7 +34,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="match_parent"
 					android:layout_gravity="center"
-					android:fontFamily="@font/doppio_one"
+					android:fontFamily="@font/inter_bold"
 					android:text="@string/profile"
 					android:textColor="@color/black"
 					android:textSize="20sp" />
@@ -79,7 +79,7 @@
 
 						<LinearLayout
 							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
+							android:layout_height="80dp"
 							android:background="@drawable/gradient_blue"
 							android:orientation="horizontal"
 							android:padding="10dp">
@@ -92,9 +92,9 @@
 								android:orientation="vertical">
 
 								<de.hdodenhof.circleimageview.CircleImageView
-									android:id="@+id/civ_profile_image"
-									android:layout_width="match_parent"
-									android:layout_height="wrap_content"
+									android:id="@+id/circle_image_view_profile_image"
+									android:layout_width="55dp"
+									android:layout_height="55dp"
 									android:layout_gravity="start"
 									android:layout_marginEnd="10dp"
 									android:src="@drawable/image_20"
@@ -114,29 +114,20 @@
 									android:id="@+id/tv_username"
 									android:layout_width="match_parent"
 									android:layout_height="match_parent"
-									android:fontFamily="@font/doppio_one"
+									android:fontFamily="@font/inter_bold"
 									android:text="@={viewModel.username}"
 									android:textColor="@color/white"
-									android:textSize="30sp" />
+									android:textSize="22sp" />
 
 								<TextView
 									android:id="@+id/tv_email"
 									android:layout_width="match_parent"
 									android:layout_height="match_parent"
-									android:fontFamily="@font/doppio_one"
+									android:fontFamily="@font/inter"
 									android:text="@={viewModel.email}"
 									android:textColor="@color/white"
 									android:textSize="12sp"
 									android:textStyle="normal" />
-
-								<Button
-									android:id="@+id/btnChangePassword"
-									android:layout_width="match_parent"
-									android:layout_height="50dp"
-									android:fontFamily="@font/open_sans"
-									android:text="@string/change_password"
-									android:textSize="12sp"
-									android:visibility="gone" />
 
 							</LinearLayout>
 
@@ -165,9 +156,11 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
+
 				<View
 					android:layout_width="match_parent"
-					android:layout_height="125dp"/>
+					android:layout_height="125dp" />
+
 				<androidx.fragment.app.FragmentContainerView
 					android:id="@+id/fragment_profile"
 					android:layout_width="match_parent"

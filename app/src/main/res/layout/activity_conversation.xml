@@ -1,71 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".views.activity.ConversationActivity">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".views.activity.ConversationActivity">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="edu.bluejack23_1.nowlocate.viewModels.ConversationViewModel" />
-    </data>
+	<data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+		<variable
+			name="viewModel"
+			type="edu.bluejack23_1.nowlocate.viewModels.ConversationViewModel" />
+	</data>
 
-        <LinearLayout
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/edittext_border">
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
 
-            <EditText
-                android:text="@={viewModel.searchQuery}"
-                android:padding="5dp"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@color/transparent"/>
+		<androidx.cardview.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
 
-            <ImageButton
-                android:background="@color/transparent"
-                android:src="@drawable/baseline_search_24"
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
 
-        </LinearLayout>
+				<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp">
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"
+						android:layout_gravity="center"
+						android:fontFamily="@font/inter_bold"
+						android:gravity="center"
+						android:text="@string/conversation"
+						android:textColor="@color/black"
+						android:textSize="20sp" />
+				</FrameLayout>
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragmentConversation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+				<com.google.android.material.card.MaterialCardView
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_marginHorizontal="10dp"
+					android:layout_marginBottom="10dp"
+					android:layout_weight="1"
+					app:cardBackgroundColor="@color/light_blue_transparent"
+					app:cardCornerRadius="100dp"
+					app:strokeWidth="0dp">
 
-        </LinearLayout>
+					<EditText
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_margin="5dp"
+						android:autofillHints="@string/search_conversation"
+						android:background="@color/transparent"
+						android:drawableStart="@drawable/baseline_search_24"
+						android:drawablePadding="5dp"
+						android:fontFamily="@font/inter_medium"
+						android:hint="@string/search_conversation"
+						android:inputType="text"
+						android:padding="10dp"
+						android:text="@={viewModel.searchQuery}" />
+				</com.google.android.material.card.MaterialCardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom">
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation_view"
-                style="@style/BottomNavigationBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/nav_menu" />
-        </LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
 
-    </FrameLayout>
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="120dp" />
+
+			<androidx.fragment.app.FragmentContainerView
+				android:id="@+id/fragmentConversation"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" />
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="bottom"
+			android:orientation="vertical">
+
+			<com.google.android.material.bottomnavigation.BottomNavigationView
+				android:id="@+id/bottom_navigation_view"
+				style="@style/BottomNavigationBar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="bottom"
+				app:labelVisibilityMode="unlabeled"
+				app:menu="@menu/nav_menu" />
+		</LinearLayout>
+
+	</FrameLayout>
 
 </layout>

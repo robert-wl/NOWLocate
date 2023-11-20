@@ -1,86 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".views.activity.ChatActivity">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".views.activity.ChatActivity">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="edu.bluejack23_1.nowlocate.viewModels.ChatViewModel" />
-    </data>
+	<data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+		<variable
+			name="viewModel"
+			type="edu.bluejack23_1.nowlocate.viewModels.ChatViewModel" />
+	</data>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="@color/gray">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
 
-            <ImageButton
-                android:src="@drawable/baseline_arrow_back_ios_24"
-                android:id="@+id/btnBack"
-                android:background="@color/transparent"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="10dp"/>
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tvName"
-                android:text="@={viewModel.name}"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+			<androidx.cardview.widget.CardView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:cardCornerRadius="200dp">
 
-        </LinearLayout>
+				<ImageButton
+					android:id="@+id/button_back"
+					android:layout_width="25dp"
+					android:layout_height="25dp"
+					android:layout_gravity="center"
+					android:layout_margin="4dp"
+					android:background="@color/transparent"
+					android:contentDescription="@string/logout_button"
+					android:scaleType="fitCenter"
+					android:src="@drawable/baseline_arrow_back_24_2" />
+			</androidx.cardview.widget.CardView>
 
-        <ScrollView
-            android:id="@+id/svMessages"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="5dp">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_gravity="center"
+				android:fontFamily="@font/inter_bold"
+				android:gravity="center"
+				android:text="@={viewModel.name}"
+				android:textColor="@color/black"
+				android:textSize="20sp" />
+		</FrameLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMessages"
-                android:background="@color/transparent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+		<ScrollView
+			android:id="@+id/scroll_view_messages"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:padding="5dp">
 
-        </ScrollView>
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/recycler_view_messages"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/transparent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_gravity="bottom">
+		</ScrollView>
 
-            <EditText
-                android:padding="5dp"
-                android:hint="@string/write_a_message"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="50dp"
-                android:background="@drawable/edittext_border"
-                android:text="@={viewModel.message}"/>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:orientation="horizontal"
+			android:padding="10dp">
 
-            <ImageButton
-                android:id="@+id/btnSend"
-                android:src="@drawable/baseline_send_black_24"
-                android:background="@drawable/edittext_border"
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="0dp"
+				android:layout_height="50dp"
+				android:layout_marginHorizontal="10dp"
+				android:layout_weight="1"
+				app:cardBackgroundColor="@color/light_blue_transparent"
+				app:cardCornerRadius="100dp"
+				app:strokeWidth="0dp">
 
-        </LinearLayout>
+				<EditText
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_marginHorizontal="10dp"
+					android:background="@color/transparent"
+					android:gravity="start|center"
+					android:hint="@string/write_a_message"
+					android:padding="5dp"
+					android:text="@={viewModel.message}"
+					android:autofillHints=""
+					android:inputType="text" />
+			</com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				app:cardBackgroundColor="@color/light_blue"
+				app:cardCornerRadius="10dp"
+				app:strokeWidth="0dp">
 
+				<ImageButton
+					android:id="@+id/button_send"
+					android:layout_width="50dp"
+					android:layout_height="50dp"
+					android:background="@color/transparent"
+					android:src="@drawable/baseline_send_black_24"
+					android:contentDescription="@string/send" />
+			</com.google.android.material.card.MaterialCardView>
 
+		</LinearLayout>
+
+	</LinearLayout>
 
 
 </layout>

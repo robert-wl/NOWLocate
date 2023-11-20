@@ -1,13 +1,14 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
 import android.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityReportDetailBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
@@ -24,7 +25,7 @@ class ReportDetailActivity : AppCompatActivity(), View {
     private lateinit var dynamicBtn: ImageButton
     private lateinit var reportIV: ImageView
     private lateinit var alertDialog: AlertDialog.Builder
-    private lateinit var profileIV: ImageView
+    private lateinit var profileCIV: CircleImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +46,11 @@ class ReportDetailActivity : AppCompatActivity(), View {
     }
 
     override fun elementHandler(){
-        backBtn = binding.btnBack
+        backBtn = binding.buttonBack
         deleteBtn = binding.btnDelete
         dynamicBtn = binding.btnDynamic
-        reportIV = binding.ivImage
-        profileIV = binding.civProfileImage
+        reportIV = binding.imageViewReportImage
+        profileCIV = binding.circleImageViewProfileImage
 
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Confirmation")
@@ -75,8 +76,12 @@ class ReportDetailActivity : AppCompatActivity(), View {
             alertDialog.show()
         }
 
-        viewModel.reportImage.observe(this) { reportImage ->
-            Picasso.get().load(reportImage).into(reportIV)
+        viewModel.reportImage.observe(this) {
+            Picasso.get().load(it).into(reportIV)
+        }
+
+        viewModel.userImage.observe(this) {
+            Picasso.get().load(it).placeholder(R.drawable.baseline_person_black_24).into(profileCIV)
         }
 
         viewModel.isSelf.observe(this) { isSelf ->
@@ -108,7 +113,7 @@ class ReportDetailActivity : AppCompatActivity(), View {
 
         }
 
-        profileIV.setOnClickListener{
+        profileCIV.setOnClickListener{
             viewModel.handleMoveToProfile(this)
         }
 
