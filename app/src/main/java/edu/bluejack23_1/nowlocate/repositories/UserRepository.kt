@@ -8,7 +8,7 @@ import edu.bluejack23_1.nowlocate.models.User
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
-class UserRepository {
+class   UserRepository {
     private val db = FirebaseFirestore.getInstance()
     private val storageDB = FirebaseStorage.getInstance()
 
