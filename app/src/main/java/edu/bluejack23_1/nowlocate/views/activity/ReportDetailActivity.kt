@@ -49,7 +49,7 @@ class ReportDetailActivity : AppCompatActivity(), View {
         deleteBtn = binding.btnDelete
         dynamicBtn = binding.btnDynamic
         reportIV = binding.ivImage
-        profileIV = binding.ivProfileImage
+        profileIV = binding.civProfileImage
 
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Confirmation")

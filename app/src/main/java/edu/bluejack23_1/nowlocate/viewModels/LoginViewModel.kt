@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.messaging.FirebaseMessaging
 import edu.bluejack23_1.nowlocate.helpers.SharedPreferencesHelper
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlin.reflect.KClass
 
 class LoginViewModel() : ViewModel() {
@@ -24,7 +26,7 @@ class LoginViewModel() : ViewModel() {
     init {
         email.value = authRepository.getRememberMeEmailValue()
         password.value = authRepository.getRememberMePasswordValue()
-        rememberMe.value = email.value != "" && password.value != ""
+        rememberMe.value = (email.value != "" && email.value != null) && (password.value != "" && password.value != null)
 
         if(rememberMe.value != null && rememberMe.value != false){
             signInHandler()
@@ -63,7 +65,6 @@ class LoginViewModel() : ViewModel() {
                 }
 
                 val user = userResult.getOrNull()!!
-
                 authRepository.signIn(user);
 
                 activityToStart.value = HomeActivity::class

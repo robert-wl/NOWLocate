@@ -59,8 +59,6 @@ class ProfileViewModel: ViewModel() {
             image.value = Uri.parse(userData.image)
         } else {
             user.value = userExtras
-            firstName.value = userExtras.firstName
-            lastName.value = userExtras.lastName
             username.value = userExtras.username
             email.value = userExtras.email
             image.value = Uri.parse(userExtras.image)

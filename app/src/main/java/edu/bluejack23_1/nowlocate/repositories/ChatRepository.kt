@@ -9,6 +9,7 @@ import edu.bluejack23_1.nowlocate.models.Chat
 import edu.bluejack23_1.nowlocate.models.ChatDoc
 import edu.bluejack23_1.nowlocate.models.MessageDoc
 import edu.bluejack23_1.nowlocate.models.User
+import edu.bluejack23_1.nowlocate.service.FirebaseNotificationService
 import kotlinx.coroutines.tasks.await
 import java.util.Date
 import java.util.UUID
@@ -19,6 +20,7 @@ class ChatRepository {
     private val collection = db.collection("chats")
     private val userRepository = UserRepository()
     private val authRepository = AuthRepository()
+    private val firebaseNotificationService = FirebaseNotificationService()
 
     private suspend fun chatExists(id1: String, id2: String): Chat? {
         val chatQuery = collection
@@ -57,16 +59,23 @@ class ChatRepository {
         return docToChat(chatDoc, sender)
     }
 
-    fun sendMessage(id: String, message: MessageDoc) {
+    fun sendMessage(chat: Chat, message: MessageDoc) {
         val batch = FirebaseFirestore.getInstance().batch()
-        val chatRef = collection.document(id)
+        val chatRef = collection.document(chat.id)
         val messagesRef = chatRef.collection("messages").document(message.id)
         batch.set(messagesRef, message)
         batch.update(chatRef, mapOf(
             "lastMessage" to message.message,
             "lastTime" to FieldValue.serverTimestamp()
         ))
-        batch.commit()
+        batch.commit().addOnSuccessListener {
+            firebaseNotificationService.pushChatNotification(
+                chat.recipient.token,
+                "${chat.sender.firstName} ${chat.sender.lastName}",
+                message.message,
+                chat.recipient.id
+            )
+        }
     }
 
     suspend fun docToChat(chatDoc: ChatDoc, sender: User): Chat {

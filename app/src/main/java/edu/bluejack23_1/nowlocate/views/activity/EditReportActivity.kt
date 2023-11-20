@@ -59,7 +59,7 @@ class EditReportActivity : AppCompatActivity(), View {
         lastseenET = binding.etLastSeen
         saveBtn = binding.btnSave
         reportIV = binding.ivReport
-        profileIV = binding.ivProfileImage
+        profileIV = binding.civProfileImage
 
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Confirmation")
