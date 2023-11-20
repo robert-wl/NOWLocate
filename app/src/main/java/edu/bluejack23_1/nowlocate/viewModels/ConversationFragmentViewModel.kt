@@ -18,10 +18,8 @@ class ConversationFragmentViewModel: ViewModel() {
     private val authRepository = AuthRepository()
 
     fun getUserChats(){
-        viewModelScope.launch {
-            val user = authRepository.getCurrentUser()
-            chatRepository.addRealTimeConversationListener(user.id, chatDocs)
-        }
+        val user = authRepository.getCurrentUser()
+        chatRepository.addRealTimeConversationListener(user.id, chatDocs)
     }
 
     fun updateChatData(data: ArrayList<ChatDoc>){

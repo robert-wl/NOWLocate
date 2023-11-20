@@ -69,11 +69,12 @@ class ChatRepository {
             "lastMessage" to message.message,
             "lastTime" to FieldValue.serverTimestamp()
         ))
+        Log.wtf("a", chat.sender.token)
         batch.commit().addOnSuccessListener {
             Log.wtf("PUSH NOTIFICATION1", chat.recipient.token)
             Log.wtf("PUSH NOTIFICATION2", chat.sender.token)
             firebaseNotificationService.pushChatNotification(
-                chat.recipient.token,
+                chat.sender.token,
                 "${chat.sender.firstName} ${chat.sender.lastName}",
                 message.message,
                 chat.recipient.id

@@ -73,6 +73,7 @@ class AuthRepository {
         SharedPreferencesHelper.setString("lastname", user.lastName)
         SharedPreferencesHelper.setString("gender", user.gender)
         SharedPreferencesHelper.setString("image", user.image)
+        SharedPreferencesHelper.setString("token", user.token)
     }
 
     fun getCurrentUser(): User {
@@ -83,7 +84,8 @@ class AuthRepository {
             SharedPreferencesHelper.getString("email")!!,
             SharedPreferencesHelper.getString("username")!!,
             SharedPreferencesHelper.getString("image")!!,
-            SharedPreferencesHelper.getString("gender")!!
+            SharedPreferencesHelper.getString("gender")!!,
+                    SharedPreferencesHelper.getString("token")!!
         )
     }
 

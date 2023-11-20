@@ -4,6 +4,7 @@ package edu.bluejack23_1.nowlocate.viewModels
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +16,7 @@ import edu.bluejack23_1.nowlocate.views.activity.LoginActivity
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel: ViewModel() {
     private val user = MutableLiveData<User>()
     val username = MutableLiveData<String>()
     val email = MutableLiveData<String>()
@@ -32,14 +33,23 @@ class ProfileViewModel : ViewModel() {
     private val authRepository = AuthRepository()
 
 
-    fun getData() {
+    fun getData(){
         isLoading.value = true
 
         viewModelScope.launch {
-            val result = reportRepository.getLatestReport(page * limit, isAscending.value!!)
+            val result = reportRepository.getUserLatestReport(isAscending.value!!)
 
-            if (result.isSuccess) {
-                reportList.value = result.getOrNull()
+            if(result.isSuccess){
+                val temp: ArrayList<Report> = ArrayList()
+                for (report in result.getOrNull()!!){
+                    if(temp.size >= limit * page){
+                        break
+                    }
+                    if(report.reportedBy == user.value!!.id){
+                        temp.add(report)
+                    }
+                }
+                reportList.value = temp
             }
         }
 
@@ -61,6 +71,7 @@ class ProfileViewModel : ViewModel() {
             email.value = userExtras.email
             image.value = Uri.parse(userExtras.image)
         }
+        getData()
     }
 
     fun handleLogout() {

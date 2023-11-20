@@ -60,6 +60,33 @@ class ReportRepository {
         }
     }
 
+    suspend fun getUserLatestReport(isAscending: Boolean): Result<ArrayList<Report>> {
+        val direction = if(isAscending) Query.Direction.ASCENDING else Query.Direction.DESCENDING
+        val documentReference = db
+            .collection("reports")
+            .orderBy("reportDate", direction)
+
+        return try {
+            val querySnapshot = documentReference.get().await()
+
+            if(!querySnapshot.isEmpty){
+                val reports = ArrayList<Report>()
+
+                for(document in querySnapshot.documents){
+                    val report = document.toObject(Report::class.java)
+                    reports.add(report!!)
+                }
+
+                Result.success(reports)
+            } else {
+                Result.failure(Exception("Report not found"))
+            }
+        } catch (e: Exception){
+            Log.wtf("a", e)
+            Result.failure(e)
+        }
+    }
+
     suspend fun getAllCategory(): Result<ArrayList<Filter>> {
         val documentReference = db.collection("reports")
 

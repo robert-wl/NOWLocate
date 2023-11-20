@@ -18,7 +18,7 @@ import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.viewModels.ProfileViewModel
 
 
-class ProfileFragment : Fragment(), ViewFragment {
+class ProfileFragment(private val viewModelPassed: ProfileViewModel) : Fragment(), ViewFragment {
     private lateinit var reportRV: RecyclerView
     private lateinit var binding: FragmentProfileBinding
     private lateinit var reportAdapter: ReportAdapter
@@ -40,13 +40,11 @@ class ProfileFragment : Fragment(), ViewFragment {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
-        binding.viewModel = viewModel
+        this.viewModel = viewModelPassed
 
         elementHandler()
         eventHandler()
 
-        viewModel.getData()
     }
     override fun elementHandler() {
         reportRV = binding.rvReport
@@ -61,6 +59,10 @@ class ProfileFragment : Fragment(), ViewFragment {
     }
 
     override fun eventHandler() {
+        viewModel.isAscending.observe(viewLifecycleOwner){
+            viewModel.getData()
+        }
+
         viewModel.reportList.observe(viewLifecycleOwner) {
             reportAdapter.reportList = it
             reportAdapter.notifyDataSetChanged()
@@ -101,7 +103,7 @@ class ProfileFragment : Fragment(), ViewFragment {
                 orderByTV.text = "Descending"
             }
 
-            viewModel.getData()
+//            viewModel.getData()
         }
     }
 
