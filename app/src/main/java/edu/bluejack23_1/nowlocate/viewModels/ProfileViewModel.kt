@@ -28,6 +28,7 @@ class ProfileViewModel: ViewModel() {
     val reportList = MutableLiveData<ArrayList<Report>>()
     val isLoading = MutableLiveData<Boolean>(false)
     val isAscending = MutableLiveData<Boolean>(false)
+    var isSelf = MutableLiveData<Boolean>()
     var page = 1
 
 
@@ -69,11 +70,13 @@ class ProfileViewModel: ViewModel() {
             username.value = userData.username
             email.value = userData.email
             image.value = Uri.parse(userData.image)
+            isSelf.value = true
         } else {
             user.value = userExtras
             username.value = userExtras.username
             email.value = userExtras.email
             image.value = Uri.parse(userExtras.image)
+            isSelf.value = false
         }
         getData()
     }

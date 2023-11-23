@@ -69,6 +69,13 @@ class ProfileActivity : AppCompatActivity(), View {
     }
 
     override fun eventHandler() {
+        viewModel.isSelf.observe(this){
+            if(it){
+                editProfileBtn.visibility = android.view.View.VISIBLE
+            } else {
+                editProfileBtn.visibility = android.view.View.GONE
+            }
+        }
         logoutBtn.setOnClickListener {
             viewModel.handleLogout()
         }

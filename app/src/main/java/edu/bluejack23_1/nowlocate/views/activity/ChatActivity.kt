@@ -23,6 +23,7 @@ class ChatActivity : AppCompatActivity(), View {
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var chatRV: RecyclerView
     private lateinit var backBtn: ImageButton
+    private var first = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +80,14 @@ class ChatActivity : AppCompatActivity(), View {
         viewModel.messages.observe(this){
             chatAdapter.messageList = it
             chatAdapter.notifyDataSetChanged()
-            chatRV.scrollToPosition(chatAdapter.itemCount - 1)
+            val layoutManager = chatRV.layoutManager as LinearLayoutManager
+            val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
+            val total = chatAdapter.itemCount
+
+            if (lastVisiblePosition + 6 >= total || first) {
+                chatRV.scrollToPosition(chatAdapter.itemCount - 1)
+                first = false
+            }
         }
     }
 }

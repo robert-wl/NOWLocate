@@ -75,12 +75,13 @@ class EditProfileViewModel : ViewModel() {
             return
         }
 
-        var user = authRepository.getCurrentUser()
+        val user = authRepository.getCurrentUser()
         user.firstName = firstNameString
         user.lastName = lastNameString
         user.username = usernameString
         user.gender = genderString
         updateUserData(user)
+        authRepository.signIn(user)
 
         activityToStart.value = ProfileActivity::class
     }
