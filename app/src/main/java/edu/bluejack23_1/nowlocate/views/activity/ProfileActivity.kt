@@ -77,7 +77,6 @@ class ProfileActivity : AppCompatActivity(), View {
             IntentHelper.moveTo(this, EditProfileActivity::class.java)
         }
 
-
         addReportFAB.setOnClickListener {
             IntentHelper.moveTo(this, CreateReportActivity::class.java)
         }

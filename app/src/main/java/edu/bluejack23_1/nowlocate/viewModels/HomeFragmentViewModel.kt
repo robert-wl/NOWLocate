@@ -7,12 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.repositories.ReportRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragmentViewModel: ViewModel() {
     val reportList = MutableLiveData<ArrayList<Report>>()
-    val isLoading = MutableLiveData<Boolean>(false)
-    val isAscending = MutableLiveData<Boolean>(false)
+    val isLoading = MutableLiveData(false)
+    val isAscending = MutableLiveData(false)
     var page = 1
 
     private var limit = 5
@@ -27,10 +30,11 @@ class HomeFragmentViewModel: ViewModel() {
             if(result.isSuccess){
                 reportList.value = result.getOrNull()
             }
+            withContext(Dispatchers.Main) {
+                if (isActive) {
+                    isLoading.value = false
+                }
+            }
         }
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            isLoading.value = false
-        }, 2000)
     }
 }

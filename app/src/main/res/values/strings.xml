@@ -62,4 +62,6 @@
     <string name="search_conversation">Search Conversation</string>
     <string name="conversation">Conversation</string>
 	<string name="send">Send</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
 </resources>

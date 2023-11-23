@@ -62,4 +62,6 @@
 	<string name="search_conversation">Percakapan Pencarian</string>
 	<string name="conversation">Percakapan</string>
 	<string name="send">Kirim</string>
+	<string name="old_password">Password lama</string>
+	<string name="new_password">Password baru</string>
 </resources>

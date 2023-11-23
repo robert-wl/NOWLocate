@@ -23,7 +23,6 @@ class ChatActivity : AppCompatActivity(), View {
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var chatRV: RecyclerView
     private lateinit var backBtn: ImageButton
-    private lateinit var messagesSV: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +61,7 @@ class ChatActivity : AppCompatActivity(), View {
         chatAdapter.messageList = ArrayList()
         chatRV.layoutManager = LinearLayoutManager(this)
         chatRV.adapter = chatAdapter
-        messagesSV = binding.scrollViewMessages
-        messagesSV.post { messagesSV.fullScroll(ScrollView.FOCUS_DOWN) }
+
     }
 
     override fun eventHandler() {
@@ -81,6 +79,7 @@ class ChatActivity : AppCompatActivity(), View {
         viewModel.messages.observe(this){
             chatAdapter.messageList = it
             chatAdapter.notifyDataSetChanged()
+            chatRV.scrollToPosition(chatAdapter.itemCount - 1)
         }
     }
 }

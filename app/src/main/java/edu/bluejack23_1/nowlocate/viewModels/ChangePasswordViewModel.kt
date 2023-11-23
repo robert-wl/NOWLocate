@@ -10,33 +10,35 @@ import kotlinx.coroutines.launch
 
 class ChangePasswordViewModel : ViewModel() {
 
-    val password = MutableLiveData<String>()
-    val confirmPassword = MutableLiveData<String>()
+    val oldPassword = MutableLiveData("")
+    val newPassword = MutableLiveData("")
+    val confirmPassword = MutableLiveData("")
     val errorMessage = MutableLiveData<String>()
 
     private val authRepository = AuthRepository()
 
     fun handleChangePassword(){
         viewModelScope.launch{
-            val passwordString = password.value ?: ""
+            val oldPasswordString = oldPassword.value ?: ""
+            val newPasswordString = newPassword.value ?: ""
             val confirmPasswordString = confirmPassword.value ?: ""
 
-            if(passwordString.isEmpty() || confirmPasswordString.isEmpty()){
+            if(oldPasswordString.isEmpty() || newPasswordString.isEmpty() || confirmPasswordString.isEmpty()){
                 errorMessage.value = "All fields must not be empty"
                 return@launch
             }
 
-            if(!ValidationHelper.isAlphaNumeric(passwordString)){
+            if(!ValidationHelper.isAlphaNumeric(newPasswordString)){
                 errorMessage.value = "Password must be alphanumeric"
                 return@launch
             }
 
-            if(passwordString != confirmPasswordString){
+            if(newPasswordString != confirmPasswordString){
                 errorMessage.value = "Confirm password must be the same as password"
                 return@launch
             }
 
-            errorMessage.value = authRepository.updateUserPassword(passwordString)
+            errorMessage.value = authRepository.updateUserPassword(oldPasswordString, newPasswordString)
         }
 
     }

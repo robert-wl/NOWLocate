@@ -73,19 +73,18 @@ class ProfileFragment(private val viewModelPassed: ProfileViewModel) : Fragment(
                 reportPB.visibility = View.VISIBLE
                 return@observe
             }
-
             reportPB.visibility = View.GONE
         }
 
         reportRV.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(dy < 0) return
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val visibleItemCount = layoutManager.childCount
-                val pastVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
+                val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
                 val total = reportAdapter.itemCount
 
-                if(visibleItemCount + pastVisibleItem >= total && !viewModel.isLoading.value!!){
-                    viewModel.page++
+                if (lastVisiblePosition + 1 >= total && !viewModel.isLoading.value!!) {
+                    viewModel.page = total / 5 + 1
                     viewModel.getData()
                 }
             }

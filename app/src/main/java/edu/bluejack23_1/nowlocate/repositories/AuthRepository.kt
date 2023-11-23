@@ -1,6 +1,5 @@
 package edu.bluejack23_1.nowlocate.repositories
 
-import android.util.Log
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
@@ -94,20 +93,21 @@ class AuthRepository {
         auth.signOut()
     }
 
-    suspend fun updateUserPassword(password: String): String {
+    suspend fun updateUserPassword(oldPassword: String, newPassword: String): String {
         val user = auth.currentUser ?: return "User not found"
-        val credential = EmailAuthProvider.getCredential(user.email!!, password)
+        val credential = EmailAuthProvider.getCredential(user.email!!, oldPassword)
 
         val reauthResult = reauthenticate(user, credential)
-
-        Log.wtf("a", reauthResult)
 
         if (reauthResult != "Success") {
             return reauthResult
         }
 
-        val updateResult = updatePassword(user, password)
-        return updateResult
+        if (oldPassword == newPassword) {
+            return "New password must not be the same as Old password"
+        }
+
+        return updatePassword(user, newPassword)
     }
 
     private suspend fun reauthenticate(user: FirebaseUser, credential: AuthCredential): String {
@@ -115,9 +115,9 @@ class AuthRepository {
         user.reauthenticate(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    tcs.setResult("New password must not be the same as the old password")
-                } else {
                     tcs.setResult("Success")
+                } else {
+                    tcs.setResult("Old password does not match")
                 }
             }
         return tcs.task.await()

@@ -5,7 +5,6 @@
 	tools:context=".views.fragments.HomeSearchedFragment">
 
 	<data>
-
 		<variable
 			name="viewModel"
 			type="edu.bluejack23_1.nowlocate.viewModels.HomeViewModel" />

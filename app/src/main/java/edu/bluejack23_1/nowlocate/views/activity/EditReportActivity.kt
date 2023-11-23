@@ -96,6 +96,10 @@ class EditReportActivity : AppCompatActivity(), View, GalleryAccess {
             Picasso.get().load(it).into(pickImageButton)
         }
 
+        viewModel.userImage.observe(this){
+            Picasso.get().load(it).into(profileImageView)
+        }
+
         viewModel.errorMessage.observe(this) { errorMessage ->
             ToastHelper.showMessage(this, errorMessage)
         }
@@ -110,6 +114,9 @@ class EditReportActivity : AppCompatActivity(), View, GalleryAccess {
         }
         profileImageView.setOnClickListener{
             viewModel.handleMoveToProfile(this)
+        }
+        pickImageButton.setOnClickListener {
+            pickImageGallery()
         }
     }
 

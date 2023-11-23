@@ -61,7 +61,6 @@ class ChangePasswordActivity : AppCompatActivity(), View {
         alertDialog.setPositiveButton("Yes"){_, _ ->
             viewModel.handleChangePassword()
         }
-
         alertDialog.setNegativeButton("No"){_, _ ->
 
         }

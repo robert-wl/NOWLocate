@@ -7,7 +7,6 @@
 	tools:context=".views.activity.HomeActivity">
 
 	<data>
-
 		<variable
 			name="viewModel"
 			type="edu.bluejack23_1.nowlocate.viewModels.HomeViewModel" />
@@ -75,7 +74,7 @@
 				android:id="@+id/search_view"
 				style="@style/SearchView"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="match_parent"
 				app:layout_anchor="@id/search_bar">
 
 				<androidx.fragment.app.FragmentContainerView

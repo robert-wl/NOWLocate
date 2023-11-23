@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ class ConversationFragment : Fragment(), ViewFragment {
     private lateinit var conversationRV: RecyclerView
     private lateinit var viewModel: ConversationFragmentViewModel
     private lateinit var conversationAdapter: ConversationAdapter
+    private lateinit var conversationProgressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +50,7 @@ class ConversationFragment : Fragment(), ViewFragment {
         conversationAdapter.conversationList = ArrayList()
         conversationRV.layoutManager = LinearLayoutManager(requireContext())
         conversationRV.adapter = conversationAdapter
+        conversationProgressBar = binding.pbConversation
 
     }
 
@@ -60,6 +63,14 @@ class ConversationFragment : Fragment(), ViewFragment {
 
         viewModel.chats.observe(viewLifecycleOwner){
             conversationAdapter.updateData(it)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner){
+            if(it){
+                conversationProgressBar.visibility = View.VISIBLE
+            } else {
+                conversationProgressBar.visibility = View.GONE
+            }
         }
     }
 

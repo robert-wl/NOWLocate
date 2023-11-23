@@ -13,7 +13,10 @@ import edu.bluejack23_1.nowlocate.models.User
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.ReportRepository
 import edu.bluejack23_1.nowlocate.views.activity.LoginActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.reflect.KClass
 
 class ProfileViewModel: ViewModel() {
@@ -42,20 +45,21 @@ class ProfileViewModel: ViewModel() {
             if(result.isSuccess){
                 val temp: ArrayList<Report> = ArrayList()
                 for (report in result.getOrNull()!!){
-                    if(temp.size >= limit * page){
-                        break
-                    }
                     if(report.reportedBy == user.value!!.id){
                         temp.add(report)
+                    }
+                    if(temp.size >= limit * page){
+                        break
                     }
                 }
                 reportList.value = temp
             }
+            withContext(Dispatchers.Main) {
+                if (isActive) {
+                    isLoading.value = false
+                }
+            }
         }
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            isLoading.value = false
-        }, 2000)
     }
 
     fun handleExtrasData(userExtras: User?) {

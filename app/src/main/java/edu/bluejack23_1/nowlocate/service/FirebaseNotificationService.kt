@@ -41,9 +41,8 @@ class FirebaseNotificationService : FirebaseMessagingService() {
         val currUser = authRepository.getCurrentUser()
 
         Log.wtf("PUSH NOTIFICATION2222", remoteMessage.data.toString())
-        val title = remoteMessage.data["title"] ?: return
-        val body = remoteMessage.data["body"] ?: return
-        val target = remoteMessage.data["userId"] ?: return
+        val title = remoteMessage.notification?.title ?: "Title"
+        val body = remoteMessage.notification?.body ?: "Body"
 
 //        if (target == currUser.id) {
 //            return
