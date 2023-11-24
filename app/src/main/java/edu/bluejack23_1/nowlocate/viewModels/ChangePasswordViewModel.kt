@@ -1,9 +1,10 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import edu.bluejack23_1.nowlocate.R
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.helpers.ValidationHelper
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import kotlinx.coroutines.launch
@@ -24,17 +25,17 @@ class ChangePasswordViewModel : ViewModel() {
             val confirmPasswordString = confirmPassword.value ?: ""
 
             if(oldPasswordString.isEmpty() || newPasswordString.isEmpty() || confirmPasswordString.isEmpty()){
-                errorMessage.value = "All fields must not be empty"
+                errorMessage.value = StringHelper.getString(R.string.empty_field_error_message)
                 return@launch
             }
 
             if(!ValidationHelper.isAlphaNumeric(newPasswordString)){
-                errorMessage.value = "Password must be alphanumeric"
+                errorMessage.value = StringHelper.getString(R.string.alphanumeric_error_message)
                 return@launch
             }
 
             if(newPasswordString != confirmPasswordString){
-                errorMessage.value = "Confirm password must be the same as password"
+                errorMessage.value = StringHelper.getString(R.string.password_not_match_error_message)
                 return@launch
             }
 

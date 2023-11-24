@@ -1,11 +1,11 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import edu.bluejack23_1.nowlocate.databinding.ActivityLoginBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
@@ -30,6 +30,16 @@ class LoginActivity : AppCompatActivity(), View {
         eventHandler()
 
         setContentView(binding.root)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("ON LOGIN", "ON STOP")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("ON LOGIN", "ON PAUSE")
     }
 
     override fun bindingHandler() {

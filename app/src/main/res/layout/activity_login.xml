@@ -25,15 +25,10 @@
 			android:gravity="center"
 			android:orientation="vertical">
 
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:fontFamily="@font/noto_sans_bold"
-				android:text="LOGO INI"
-				android:textAlignment="center"
-				android:textColor="@color/light_blue"
-				android:textSize="40sp"
-				android:textStyle="bold" />
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="200dp"
+				android:src="@drawable/logo" />
 
 		</LinearLayout>
 
@@ -171,7 +166,7 @@
 					android:fontFamily="@font/inter_bold"
 					android:paddingLeft="5dp"
 					android:text="@string/register"
-					android:textColor="@color/orange"
+					android:textColor="@color/light_blue"
 					android:textSize="15sp" />
 			</LinearLayout>
 

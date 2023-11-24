@@ -9,9 +9,11 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.databinding.ActivityRegisterBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.viewModels.RegisterViewModel
 
@@ -86,7 +88,8 @@ class RegisterActivity : AppCompatActivity(), View {
     }
 
     private fun spinnerHandler(){
-        val genders = listOf("-", "Male", "Female", "Other")
+        val genders = listOf("-", StringHelper.getString(R.string.male), StringHelper.getString(R.string.female), StringHelper.getString(
+            R.string.female))
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genders)
         genderSpinner.adapter = adapter
     }

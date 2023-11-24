@@ -20,7 +20,7 @@
 			android:layout_width="48dp"
 			android:layout_height="48dp"
 			android:src="@drawable/outline_camera_alt_24"
-			android:contentDescription="TODO" />
+			android:contentDescription="@string/todo" />
 
 		<TextView
 			android:id="@+id/tv_filter_name"

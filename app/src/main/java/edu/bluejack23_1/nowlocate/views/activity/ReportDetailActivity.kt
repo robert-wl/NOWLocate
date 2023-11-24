@@ -12,6 +12,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityReportDetailBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.interfaces.View
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.viewModels.ReportDetailViewModel
@@ -53,8 +54,8 @@ class ReportDetailActivity : AppCompatActivity(), View {
         profileCIV = binding.circleImageViewProfileImage
 
         alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Confirmation")
-        alertDialog.setMessage("Are you sure to delete this report?")
+        alertDialog.setTitle(StringHelper.getString(R.string.confirmation))
+        alertDialog.setMessage(StringHelper.getString(R.string.delete_report_confirmation))
         alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
 
 
@@ -105,11 +106,11 @@ class ReportDetailActivity : AppCompatActivity(), View {
             IntentHelper.moveToFinish(this, activityToStart.java)
         }
 
-        alertDialog.setPositiveButton("Yes"){_, _ ->
+        alertDialog.setPositiveButton(StringHelper.getString(R.string.yes)){_, _ ->
             viewModel.handleDelete()
         }
 
-        alertDialog.setNegativeButton("No"){_, _ ->
+        alertDialog.setNegativeButton(StringHelper.getString(R.string.no)){_, _ ->
 
         }
 

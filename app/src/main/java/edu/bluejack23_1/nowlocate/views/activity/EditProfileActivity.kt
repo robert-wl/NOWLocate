@@ -19,6 +19,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityEditProfileBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.GalleryAccess
 import edu.bluejack23_1.nowlocate.interfaces.View
@@ -66,8 +67,8 @@ class EditProfileActivity : AppCompatActivity(), View, GalleryAccess {
         changePasswordLL = binding.linearLayoutChangePassword
 
         alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Confirmation")
-        alertDialog.setMessage("Are you sure to edit your profile?")
+        alertDialog.setTitle(StringHelper.getString(R.string.confirmation))
+        alertDialog.setMessage(StringHelper.getString(R.string.edit_profile_confirmation))
         alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
 
     }
@@ -86,11 +87,11 @@ class EditProfileActivity : AppCompatActivity(), View, GalleryAccess {
             }
         }
 
-        alertDialog.setPositiveButton("Yes") { _, _ ->
+        alertDialog.setPositiveButton(StringHelper.getString(R.string.yes)) { _, _ ->
             viewModel.handleEditProfile()
         }
 
-        alertDialog.setNegativeButton("No") { _, _ ->
+        alertDialog.setNegativeButton(StringHelper.getString(R.string.no)) { _, _ ->
 
         }
 
@@ -126,7 +127,7 @@ class EditProfileActivity : AppCompatActivity(), View, GalleryAccess {
     }
 
     private fun spinnerHandler() {
-        val genders = listOf("-", "Male", "Female", "Other")
+        val genders = listOf("-", StringHelper.getString(R.string.male), StringHelper.getString(R.string.female), StringHelper.getString(R.string.female))
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genders)
         genderSpinner.adapter = adapter
         genderSpinner.setSelection(genders.indexOf(authRepository.getCurrentUser().gender))

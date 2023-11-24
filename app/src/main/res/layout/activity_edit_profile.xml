@@ -90,7 +90,8 @@
 							android:layout_width="32dp"
 							android:layout_height="32dp"
 							android:background="@color/transparent"
-							android:src="@drawable/outline_camera_alt_24" />
+							android:src="@drawable/outline_camera_alt_24"
+							android:contentDescription="@string/todo" />
 					</androidx.cardview.widget.CardView>
 				</FrameLayout>
 
@@ -110,7 +111,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="20dp"
 				android:fontFamily="@font/inter_bold"
-				android:text="Personal Information"
+				android:text="@string/personal_information"
 				android:textColor="@color/blue"
 				android:textSize="20sp" />
 
@@ -299,7 +300,7 @@
 						android:layout_height="24dp"
 						android:src="@drawable/baseline_keyboard_arrow_right_24"
 						android:alpha="0.5"
-						android:contentDescription=""
+						android:contentDescription="@string/todo"
 						android:layout_gravity="center|end"/>
 				</LinearLayout>
 			</com.google.android.material.card.MaterialCardView>

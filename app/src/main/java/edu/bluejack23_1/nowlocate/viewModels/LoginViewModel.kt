@@ -1,16 +1,14 @@
 package edu.bluejack23_1.nowlocate.viewModels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.messaging.FirebaseMessaging
-import edu.bluejack23_1.nowlocate.helpers.SharedPreferencesHelper
+import edu.bluejack23_1.nowlocate.R
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
 import edu.bluejack23_1.nowlocate.views.activity.HomeActivity
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import kotlin.reflect.KClass
 
 class LoginViewModel() : ViewModel() {
@@ -26,41 +24,42 @@ class LoginViewModel() : ViewModel() {
     init {
         email.value = authRepository.getRememberMeEmailValue()
         password.value = authRepository.getRememberMePasswordValue()
-        rememberMe.value = (email.value != "" && email.value != null) && (password.value != "" && password.value != null)
+        rememberMe.value =
+            (email.value != "" && email.value != null) && (password.value != "" && password.value != null)
 
-        if(rememberMe.value != null && rememberMe.value != false){
+        if (rememberMe.value != null && rememberMe.value != false) {
             signInHandler()
         }
     }
 
-    fun signInHandler(){
+    fun signInHandler() {
         val emailString = email.value ?: ""
         val passwordString = password.value ?: ""
         val rememberMeBool = rememberMe.value ?: false
 
-        if(emailString.isEmpty()){
-            errorMessage.value = "Email must be filled"
+        if (emailString.isEmpty()) {
+            errorMessage.value = StringHelper.getString(R.string.email_empty)
             return
         }
 
-        if(passwordString.isEmpty()){
-            errorMessage.value = "Password must be filled"
+        if (passwordString.isEmpty()) {
+            errorMessage.value = StringHelper.getString(R.string.password_empty)
             return
         }
         signIn(emailString, passwordString, rememberMeBool);
     }
 
-    private fun signIn(email: String, password: String, rememberMe: Boolean){
+    private fun signIn(email: String, password: String, rememberMe: Boolean) {
         viewModelScope.launch {
             val result = authRepository.signIn(email, password)
 
-            if(result.isSuccess){
+            if (result.isSuccess) {
                 handleRememberMe(email, password, rememberMe)
 
                 val userResult = userRepository.getUser(result.getOrNull()!!.uid)
 
-                if(userResult.isFailure){
-                    errorMessage.value = userResult.exceptionOrNull()?.message ?: "Unknown error"
+                if (userResult.isFailure) {
+                    errorMessage.value = userResult.exceptionOrNull()?.message ?: StringHelper.getString(R.string.unknown_error)
                     return@launch
                 }
 
@@ -70,12 +69,13 @@ class LoginViewModel() : ViewModel() {
                 activityToStart.value = HomeActivity::class
                 return@launch
             }
-            errorMessage.value = result.exceptionOrNull()?.message ?: "Unknown error"
+
+            errorMessage.value = result.exceptionOrNull()?.message ?: StringHelper.getString(R.string.unknown_error)
         }
     }
 
-    private fun handleRememberMe(email: String, password: String, rememberMe: Boolean){
-        if(rememberMe){
+    private fun handleRememberMe(email: String, password: String, rememberMe: Boolean) {
+        if (rememberMe) {
             authRepository.setRememberMeValues(email, password)
             return;
         }

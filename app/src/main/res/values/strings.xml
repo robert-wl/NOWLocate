@@ -64,4 +64,48 @@
 	<string name="send">Send</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
+	<string name="todo">TODO</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="create_an_account_to_continue">Create an account to continue</string>
+    <string name="login">Login</string>
+    <string name="sort">Sort</string>
+    <string name="report_name_empty" type="id">Report name must not be empty</string>
+    <string name="report_category_empty" type="id">Report category must not be empty</string>
+    <string name="report_short_description_empty" type="id">Short description must not be empty</string>
+    <string name="report_long_description_empty" type="id">Description must not be empty</string>
+    <string name="report_last_seen_empty" type="id">Last seen must not be empty</string>
+    <string name="report_image_empty" type="id">Image must not be empty</string>
+    <string name="report_name_invalid" type="id">Report name must be at least 2 words</string>
+    <string name="report_last_seen_invalid" type="id">Last seen must have a substring in a dd-mm-yyyy
+        format
+    </string>
+    <string name="report_short_description_invalid" type="id">Short description length must not be more than 25 characters
+    </string>
+    <string name="report_long_description_invalid" type="id">Description length must not be more than 500 characters
+    </string>
+    <string name="report_image_invalid" type="id">Image must be uploaded</string>
+    <string name="empty_field_error_message" type="id">All fields must not be empty</string>
+    <string name="alphanumeric_error_message" type="id">Password must be alphanumeric</string>
+    <string name="password_not_match_error_message" type="id">Confirm password must be the same as password
+    </string>
+    <string name="first_name_empty" type="id">First name must not be empty</string>
+    <string name="last_name_empty" type="id">Last name must not be empty</string>
+    <string name="username_empty" type="id">Username must not be empty</string>
+    <string name="email_empty" type="id">Email must not be empty</string>
+    <string name="gender_empty" type="id">Gender must be selected</string>
+    <string name="email_not_found">Email not found</string>
+    <string name="reset_password_email_sent">Check your email to reset password</string>
+    <string name="unknown_error">An unknown error occurred</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="change_password_confirmation">Are you sure to change your password?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="create_report_confirmation">Are you sure to create this report?</string>
+    <string name="select_category">Select Category</string>
+    <string name="edit_profile_confirmation">Are you sure to edit your profile?</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="edit_report_confirmation">Are you sure to save this report?</string>
+    <string name="delete_report_confirmation">Are you sure to delete this report?</string>
+    <string name="password_empty">Password must not be empty</string>
 </resources>

@@ -28,7 +28,7 @@
 				android:layout_gravity="center_horizontal"
 				android:layout_marginTop="60dp"
 				android:background="@color/transparent"
-				android:contentDescription="TODO"
+				android:contentDescription="@string/todo"
 				android:scaleType="centerCrop"
 				android:src="@drawable/baseline_camera_alt_24" />
 
@@ -38,7 +38,7 @@
 				android:layout_height="300dp"
 				android:layout_gravity="center_horizontal"
 				android:background="@color/transparent"
-				android:contentDescription="TODO"
+				android:contentDescription="@string/todo"
 				android:scaleType="centerCrop" />
 
 			<LinearLayout

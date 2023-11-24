@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import edu.bluejack23_1.nowlocate.databinding.ActivityEditReportBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.GalleryAccess
 import edu.bluejack23_1.nowlocate.interfaces.View
@@ -69,8 +70,8 @@ class EditReportActivity : AppCompatActivity(), View, GalleryAccess {
         profileImageView = binding.circleImageViewProfileImage
 
         alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Confirmation")
-        alertDialog.setMessage("Are you sure to save this report?")
+        alertDialog.setTitle(StringHelper.getString(edu.bluejack23_1.nowlocate.R.string.confirmation))
+        alertDialog.setMessage(StringHelper.getString(edu.bluejack23_1.nowlocate.R.string.edit_report_confirmation))
         alertDialog.setIcon(R.drawable.ic_dialog_alert)
 
         val report = intent.getParcelableExtra("report", Report::class.java)
@@ -100,16 +101,16 @@ class EditReportActivity : AppCompatActivity(), View, GalleryAccess {
             Picasso.get().load(it).into(profileImageView)
         }
 
-        viewModel.errorMessage.observe(this) { errorMessage ->
-            ToastHelper.showMessage(this, errorMessage)
+        viewModel.errorMessage.observe(this) {
+            ToastHelper.showMessage(this, it)
         }
 
-        alertDialog.setPositiveButton("Yes"){_, _ ->
+        alertDialog.setPositiveButton(StringHelper.getString(edu.bluejack23_1.nowlocate.R.string.yes)){ _, _ ->
             Log.wtf("EditReportActivity", "eventHandler: " + viewModel.reportImage.value)
             viewModel.handleEditReport()
         }
 
-        alertDialog.setNegativeButton("No"){_, _ ->
+        alertDialog.setNegativeButton(StringHelper.getString(edu.bluejack23_1.nowlocate.R.string.no)){ _, _ ->
 
         }
         profileImageView.setOnClickListener{

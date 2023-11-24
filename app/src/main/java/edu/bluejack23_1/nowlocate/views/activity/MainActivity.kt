@@ -1,7 +1,5 @@
 package edu.bluejack23_1.nowlocate.views.activity
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -10,10 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
 import edu.bluejack23_1.nowlocate.helpers.SharedPreferencesHelper
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        StringHelper.initialize(this.application);
         SharedPreferencesHelper.initialize(this);
         askNotificationPermission()
         IntentHelper.moveTo(this, LoginActivity::class.java)

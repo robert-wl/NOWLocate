@@ -6,7 +6,9 @@ import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.helpers.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.Report
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
@@ -72,57 +74,57 @@ class EditReportViewModel : ViewModel() {
         val reportImageString = reportImage.value ?: Uri.parse("")
 
         if (itemNameString.isEmpty()) {
-            errorMessage.value = "Report name must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.report_name_empty)
             return
         }
 
         if (itemCategoryString.isEmpty()) {
-            errorMessage.value = "Report category must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.report_category_empty)
             return
         }
 
         if (shortDescriptionString.isEmpty()) {
-            errorMessage.value = "Short description must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.report_short_description_empty)
             return
         }
 
         if (descriptionString.isEmpty()) {
-            errorMessage.value = "Description must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.report_long_description_empty)
             return
         }
 
         if (lastSeenString.isEmpty()) {
-            errorMessage.value = "Last seen must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.report_last_seen_empty)
             return
         }
 
         if (reportImageString.toString().isEmpty()) {
-            errorMessage.value = "Image must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.report_image_empty)
             return
         }
 
         if (ValidationHelper.numOfWords(itemNameString) < 2) {
-            errorMessage.value = "Report name must be at least 2 words"
+            errorMessage.value = StringHelper.getString(R.string.report_name_invalid)
             return
         }
 
         if (!ValidationHelper.hasValidDate(lastSeenString)) {
-            errorMessage.value = "Last seen must have a substring in a dd-mm-yyyy format"
+            errorMessage.value = StringHelper.getString(R.string.report_last_seen_invalid)
             return
         }
 
         if (shortDescriptionString.length > 25) {
-            errorMessage.value = "Short description length must not be more than 25 characters"
+            errorMessage.value = StringHelper.getString(R.string.report_short_description_invalid)
             return
         }
 
         if (descriptionString.length > 500) {
-            errorMessage.value = "Description length must not be more than 500 characters"
+            errorMessage.value = StringHelper.getString(R.string.report_long_description_invalid)
             return
         }
 
         if (reportImage.value == null || reportImage.value.toString().isEmpty()) {
-            errorMessage.value = "Image must be uploaded"
+            errorMessage.value = StringHelper.getString(R.string.report_image_invalid)
             return
         }
 

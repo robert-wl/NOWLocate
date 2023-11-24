@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import edu.bluejack23_1.nowlocate.R
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.models.User
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
 import edu.bluejack23_1.nowlocate.repositories.UserRepository
@@ -46,32 +48,32 @@ class EditProfileViewModel : ViewModel() {
         val imageUri = image.value ?: Uri.parse("")
 
         if (firstNameString.isEmpty()){
-            errorMessage.value = "First name must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.first_name_empty)
             return
         }
 
         if (lastNameString.isEmpty()){
-            errorMessage.value = "Last name must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.last_name_empty)
             return
         }
 
         if (usernameString.isEmpty()){
-            errorMessage.value = "Username must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.username_empty)
             return
         }
 
         if (emailString.isEmpty()){
-            errorMessage.value = "Email must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.email_empty)
             return
         }
 
         if(genderString == "-"){
-            errorMessage.value = "Gender must be selected"
+            errorMessage.value = StringHelper.getString(R.string.gender_empty)
             return
         }
 
         if (imageUri.toString() == ""){
-            errorMessage.value = "Image must be selected"
+            errorMessage.value = StringHelper.getString(R.string.report_image_empty)
             return
         }
 

@@ -3,6 +3,8 @@ package edu.bluejack23_1.nowlocate.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import edu.bluejack23_1.nowlocate.R
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.helpers.ValidationHelper
 import edu.bluejack23_1.nowlocate.models.User
 import edu.bluejack23_1.nowlocate.repositories.AuthRepository
@@ -37,37 +39,37 @@ class RegisterViewModel : ViewModel(){
         val genderString = gender.value ?: ""
 
         if (firstNameString.isEmpty()){
-            errorMessage.value = "First name must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.first_name_empty)
             return
         }
 
         if (lastNameString.isEmpty()){
-            errorMessage.value = "Last name must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.last_name_empty)
             return
         }
 
         if (usernameString.isEmpty()){
-            errorMessage.value = "Username must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.username_empty)
             return
         }
 
         if (emailString.isEmpty()){
-            errorMessage.value = "Email must not be empty"
+            errorMessage.value = StringHelper.getString(R.string.email_empty)
             return
         }
 
         if(genderString == "-"){
-            errorMessage.value = "Gender must be selected"
+            errorMessage.value = StringHelper.getString(R.string.gender_empty)
             return
         }
 
         if(!ValidationHelper.isAlphaNumeric(passwordString)){
-            errorMessage.value = "Password must be alphanumeric"
+            errorMessage.value = StringHelper.getString(R.string.alphanumeric_error_message)
             return
         }
 
         if(passwordString != confirmPasswordString){
-            errorMessage.value = "Confirm password must be the same as password"
+            errorMessage.value = StringHelper.getString(R.string.password_not_match_error_message)
             return
         }
 
@@ -79,7 +81,7 @@ class RegisterViewModel : ViewModel(){
             val result = authRepository.createAuthAccount(email, password)
 
             if(result.isFailure){
-                errorMessage.value = result.exceptionOrNull()?.message ?: "Unknown error"
+                errorMessage.value = result.exceptionOrNull()?.message ?: StringHelper.getString(R.string.unknown_error)
                 return@launch
             }
             val user = result.getOrNull() ?: return@launch

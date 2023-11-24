@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.databinding.ActivityCreateReportBinding
 import edu.bluejack23_1.nowlocate.helpers.IntentHelper
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.helpers.ToastHelper
 import edu.bluejack23_1.nowlocate.interfaces.GalleryAccess
 import edu.bluejack23_1.nowlocate.models.CategoryType
@@ -58,8 +59,8 @@ class CreateReportActivity : AppCompatActivity(), GalleryAccess, edu.bluejack23_
         pickImageBtn = binding.buttonPickImage
 
         alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Confirmation")
-        alertDialog.setMessage("Are you sure to create this report?")
+        alertDialog.setTitle(StringHelper.getString(R.string.confirmation))
+        alertDialog.setMessage(StringHelper.getString(R.string.create_report_confirmation))
         alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
 
 
@@ -86,11 +87,11 @@ class CreateReportActivity : AppCompatActivity(), GalleryAccess, edu.bluejack23_
             alertDialog.show()
         }
 
-        alertDialog.setPositiveButton("Yes") { _, _ ->
+        alertDialog.setPositiveButton(StringHelper.getString(R.string.yes)) { _, _ ->
             viewModel.handleCreateReport()
         }
 
-        alertDialog.setNegativeButton("No") { _, _ ->
+        alertDialog.setNegativeButton(StringHelper.getString(R.string.no)) { _, _ ->
 
         }
 
@@ -102,7 +103,7 @@ class CreateReportActivity : AppCompatActivity(), GalleryAccess, edu.bluejack23_
             pickImageGallery()
         }
 
-        viewModel.itemImage.observe(this) { it ->
+        viewModel.itemImage.observe(this) {
             Picasso.get().load(it).placeholder(R.drawable.baseline_person_black_24).into(pickImageBtn)
         }
 
@@ -119,7 +120,7 @@ class CreateReportActivity : AppCompatActivity(), GalleryAccess, edu.bluejack23_
     }
 
     private fun spinnerHandler() {
-        val categories = mutableListOf("Select Category")
+        val categories = mutableListOf(StringHelper.getString(R.string.select_category))
         categories.addAll(CategoryType.values().map { it.toString() })
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         categorySpinner.adapter = adapter

@@ -2,7 +2,6 @@ package edu.bluejack23_1.nowlocate.views.viewHolders
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -39,7 +38,6 @@ class ConversationViewHolder : ViewHolder {
     fun setData(chat: Chat) {
         this.chat = chat
 
-        Log.wtf("chat", chat.recipient.toString())
         conversationFirstName.text = chat.recipient.firstName
         conversationLastName.text = chat.recipient.lastName
         conversationLastMessage.text = chat.lastMessage
