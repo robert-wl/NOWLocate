@@ -108,4 +108,5 @@
     <string name="edit_report_confirmation">Are you sure to save this report?</string>
     <string name="delete_report_confirmation">Are you sure to delete this report?</string>
     <string name="password_empty">Password must not be empty</string>
+    <string name="ascending">Ascending</string>
 </resources>

@@ -103,4 +103,5 @@
 	<string name="edit_report_confirmation">Apakah Anda yakin untuk menyimpan laporan ini?</string>
 	<string name="delete_report_confirmation">Apakah Anda yakin untuk menghapus laporan ini?</string>
 	<string name="password_empty">Password tidak boleh kosong</string>
+	<string name="ascending">Naik</string>
 </resources>

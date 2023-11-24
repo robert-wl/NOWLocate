@@ -1,19 +1,19 @@
 package edu.bluejack23_1.nowlocate.views.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_1.nowlocate.R
 import edu.bluejack23_1.nowlocate.adapters.ReportAdapter
 import edu.bluejack23_1.nowlocate.databinding.FragmentProfileBinding
+import edu.bluejack23_1.nowlocate.helpers.StringHelper
 import edu.bluejack23_1.nowlocate.interfaces.ViewFragment
 import edu.bluejack23_1.nowlocate.viewModels.ProfileViewModel
 
@@ -96,10 +96,10 @@ class ProfileFragment(private val viewModelPassed: ProfileViewModel) : Fragment(
 
             if(nextValue){
                 orderByIV.setImageResource(R.drawable.baseline_keyboard_arrow_up_24)
-                orderByTV.text = "Ascending"
+                orderByTV.text = StringHelper.getString(R.string.ascending)
             } else {
                 orderByIV.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
-                orderByTV.text = "Descending"
+                orderByTV.text = StringHelper.getString(R.string.descending)
             }
 
 //            viewModel.getData()
